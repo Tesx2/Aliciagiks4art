@@ -1,0 +1,709 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>YHCC Club - A5 Campaign Poster Workspace</title>
+  <style>
+    :root {
+      /* Theme 1: Eco Dawn Default */
+      --primary-color: oklch(24% 0.082 244);   /* Deep Health Blue */
+      --accent-green: oklch(62% 0.17 150);    /* Climate Green */
+      --accent-green-glow: oklch(75% 0.15 150);
+      --light-bg: oklch(94% 0.04 150);        /* Clean Mint Tint */
+      --health-red: oklch(55% 0.22 25);       /* Health Red */
+      --amber-glow: oklch(78% 0.16 80);       /* Sunbeam Amber */
+      --pure-white: oklch(100% 0 0);
+      --card-white: oklch(100% 0 0);
+      --text-on-dark: oklch(100% 0 0);
+      
+      /* UI Workspace Chrome */
+      --ui-bg: oklch(93% 0.008 240);
+      --ui-panel: oklch(100% 0 0);
+      --ui-text: oklch(24% 0.015 240);
+      --ui-text-muted: oklch(55% 0.01 240);
+      --ui-border: oklch(88% 0.01 240);
+      --ui-accent: oklch(58% 0.16 150);
+
+      --font-display: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --font-serif: "Georgia", "Iowan Old Style", serif;
+      --font-mono: 'JetBrains Mono', 'IBM Plex Mono', monospace;
+    }
+
+    /* Colorway Theme Overrides */
+    body.theme-midnight {
+      --primary-color: oklch(14% 0.045 250);
+      --accent-green: oklch(68% 0.18 160);
+      --accent-green-glow: oklch(80% 0.14 160);
+      --light-bg: oklch(22% 0.06 250);
+      --card-white: oklch(18% 0.05 250);
+      --pure-white: oklch(20% 0.05 250);
+      --text-on-dark: oklch(95% 0.01 240);
+    }
+
+    body.theme-golden {
+      --primary-color: oklch(28% 0.04 140);
+      --accent-green: oklch(48% 0.12 145);
+      --accent-green-glow: oklch(60% 0.11 145);
+      --light-bg: oklch(96% 0.02 85);
+      --card-white: oklch(98% 0.01 85);
+      --pure-white: oklch(99% 0 0);
+      --text-on-dark: oklch(24% 0.04 140);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--ui-bg);
+      color: var(--ui-text);
+      font-family: var(--font-display);
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    /* Top Dashboard Header */
+    .app-header {
+      background: var(--ui-panel);
+      border-bottom: 1px solid var(--ui-border);
+      padding: 14px 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 10;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.02);
+    }
+
+    .header-logo-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .header-icon {
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, var(--primary-color), var(--accent-green));
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      color: white;
+      font-weight: 800;
+      font-size: 16px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+
+    .header-title-text h1 {
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .header-title-text p {
+      font-size: 11px;
+      color: var(--ui-text-muted);
+    }
+
+    .dimension-badge {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      background: var(--ui-bg);
+      padding: 6px 12px;
+      border-radius: 6px;
+      border: 1px solid var(--ui-border);
+      font-weight: bold;
+    }
+
+    /* Main Container Layout */
+    .app-workspace {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    /* Control Workspace Panel (Left Side) */
+    .control-sidebar {
+      width: 400px;
+      background: var(--ui-panel);
+      border-right: 1px solid var(--ui-border);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      overflow-y: auto;
+    }
+
+    .control-section {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .section-title {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--ui-text-muted);
+      font-weight: 700;
+      border-bottom: 1px solid var(--ui-border);
+      padding-bottom: 6px;
+    }
+
+    /* Option toggle grid */
+    .option-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      background: var(--ui-bg);
+      padding: 4px;
+      border-radius: 8px;
+    }
+
+    .option-button {
+      background: transparent;
+      border: none;
+      font-family: var(--font-display);
+      font-size: 11px;
+      font-weight: 600;
+      padding: 8px 2px;
+      border-radius: 6px;
+      cursor: pointer;
+      color: var(--ui-text-muted);
+      transition: all 0.2s ease;
+      text-align: center;
+    }
+
+    .option-button.active {
+      background: var(--ui-panel);
+      color: var(--ui-text);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.06);
+    }
+
+    /* Live Customizer Input Fields */
+    .input-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .input-wrapper label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--ui-text-muted);
+      text-transform: uppercase;
+    }
+
+    .input-field {
+      font-family: var(--font-display);
+      font-size: 13px;
+      padding: 10px 12px;
+      border-radius: 6px;
+      border: 1px solid var(--ui-border);
+      background: var(--ui-bg);
+      color: var(--ui-text);
+      transition: border-color 0.2s;
+    }
+
+    .input-field:focus {
+      outline: none;
+      border-color: var(--ui-accent);
+    }
+
+    /* Interactive switch switches */
+    .switch-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 12.5px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    .switch-row input {
+      display: none;
+    }
+
+    .switch-indicator {
+      width: 36px;
+      height: 20px;
+      background: var(--ui-border);
+      border-radius: 10px;
+      position: relative;
+      transition: background 0.2s;
+    }
+
+    .switch-indicator::after {
+      content: '';
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: white;
+      top: 2px;
+      left: 2px;
+      transition: transform 0.2s;
+    }
+
+    .switch-row input:checked + .switch-indicator {
+      background: var(--ui-accent);
+    }
+
+    .switch-row input:checked + .switch-indicator::after {
+      transform: translateX(16px);
+    }
+
+    /* Interactive Theme Palette Selector */
+    .theme-card-picker {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+
+    .theme-chip {
+      border: 1px solid var(--ui-border);
+      border-radius: 8px;
+      padding: 10px 6px;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s;
+      background: var(--ui-bg);
+    }
+
+    .theme-chip.active {
+      border-color: var(--ui-accent);
+      background: var(--ui-panel);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+    }
+
+    .theme-chip-title {
+      font-size: 11px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .theme-dot-row {
+      display: flex;
+      justify-content: center;
+      gap: 4px;
+    }
+
+    .theme-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+
+    /* Visualizer & Preview Display Frame */
+    .preview-stage {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+      overflow: auto;
+      perspective: 2000px;
+      position: relative;
+      background: radial-gradient(circle, oklch(91% 0.01 240) 0%, oklch(84% 0.01 240) 100%);
+      transition: background 0.5s ease;
+    }
+
+    /* Environments for the 3D Views */
+    .preview-stage.mockup-street {
+      background: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.82)), 
+                  url("https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1200&q=80") center/cover no-repeat;
+    }
+
+    .preview-stage.mockup-frame {
+      background: linear-gradient(135deg, oklch(95% 0.01 90) 0%, oklch(88% 0.01 90) 100%);
+    }
+
+    /* POSTER A5 CANVAS (A5 Aspect ratio: ~1:1.414) */
+    .poster-canvas {
+      width: 440px;
+      height: 622px;
+      background: var(--primary-color);
+      position: relative;
+      box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 34px 26px;
+      transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      transform-style: preserve-3d;
+    }
+
+    /* Studio Easel Frame State */
+    .preview-stage.mockup-frame .poster-canvas {
+      transform: scale(0.94);
+      border: 14px solid #1c1917;
+      box-shadow: 
+        0 25px 50px rgba(0,0,0,0.35),
+        0 10px 20px rgba(0,0,0,0.15);
+      border-radius: 4px;
+    }
+
+    /* 3D Wall Poster State */
+    .preview-stage.mockup-street .poster-canvas {
+      transform: rotateY(-16deg) rotateX(8deg) rotateZ(-1.5deg);
+      box-shadow: 
+        -15px 15px 35px rgba(0,0,0,0.7),
+        -1px 0 0 rgba(255,255,255,0.15) inset;
+      border-radius: 1px;
+    }
+
+    /* Spec view guidelines */
+    .crop-target {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      border: 1px dashed rgba(255, 255, 255, 0.4);
+      pointer-events: none;
+      display: none;
+    }
+
+    .preview-stage.mockup-flat .crop-target {
+      display: block;
+    }
+
+    .ct-tl { top: 6px; left: 6px; border-right: none; border-bottom: none; }
+    .ct-tr { top: 6px; right: 6px; border-left: none; border-bottom: none; }
+    .ct-bl { bottom: 6px; left: 6px; border-right: none; border-top: none; }
+    .ct-br { bottom: 6px; right: 6px; border-left: none; border-top: none; }
+
+    .bleed-guide-line {
+      position: absolute;
+      inset: 16px;
+      border: 1px dashed rgba(16, 185, 129, 0.45);
+      pointer-events: none;
+      display: none;
+      z-index: 100;
+    }
+
+    .preview-stage.mockup-flat .bleed-guide-line {
+      display: block;
+    }
+
+    /* TECHNICAL PRINT MARKS FOR FLAT VIEW */
+    .calibration-bars {
+      position: absolute;
+      top: 6px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 3px;
+      pointer-events: none;
+      display: none;
+    }
+
+    .preview-stage.mockup-flat .calibration-bars {
+      display: flex;
+    }
+
+    .cal-box {
+      width: 12px;
+      height: 6px;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+
+    /* POSTER GRAPHICS SECTION */
+
+    /* 1. Header Banner */
+    .poster-header {
+      text-align: center;
+      z-index: 3;
+    }
+
+    .header-banner {
+      background: var(--pure-white);
+      color: var(--primary-color);
+      border-radius: 6px;
+      padding: 12px 14px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+      border-bottom: 4px solid var(--accent-green);
+      display: inline-block;
+      width: 100%;
+      transition: background-color 0.3s;
+    }
+
+    .banner-main-title {
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      line-height: 1.35;
+    }
+
+    .banner-sub-title {
+      font-size: 8.5px;
+      font-weight: 700;
+      color: var(--ui-text-muted);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-top: 4px;
+      display: block;
+    }
+
+    /* 2. Panoramic Sunrise Background */
+    .poster-landscape-bg {
+      position: absolute;
+      bottom: 110px;
+      left: 0;
+      width: 100%;
+      height: 270px;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* 3. Central Emblem: Leaf + Red Cross Fusion */
+    .poster-central-symbol {
+      position: relative;
+      width: 170px;
+      height: 170px;
+      margin: 8px auto;
+      z-index: 3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .symbol-glow-effect {
+      position: absolute;
+      width: 140px;
+      height: 140px;
+      background: radial-gradient(circle, var(--accent-green) 0%, rgba(0,0,0,0) 70%);
+      opacity: 0.45;
+      filter: blur(14px);
+      z-index: 1;
+      transition: opacity 0.3s;
+    }
+
+    .symbol-svg {
+      width: 100%;
+      height: 100%;
+      z-index: 2;
+      filter: drop-shadow(0 6px 12px rgba(0,0,0,0.3));
+    }
+
+    /* 4. Poster Campaign Details & CTA */
+    .poster-info-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      background: rgba(255, 255, 255, 0.96);
+      border-radius: 6px;
+      padding: 10px 14px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+      z-index: 3;
+      width: 100%;
+      border-left: 4px solid var(--accent-green);
+    }
+
+    .info-content {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .info-tagline {
+      font-size: 11.5px;
+      font-weight: 800;
+      color: var(--primary-color);
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+    }
+
+    .info-details {
+      font-size: 9.5px;
+      font-weight: 500;
+      color: #334155;
+      line-height: 1.35;
+    }
+
+    .qr-container {
+      width: 50px;
+      height: 50px;
+      background: white;
+      border: 1px solid #cbd5e1;
+      border-radius: 4px;
+      padding: 3px;
+      flex-shrink: 0;
+    }
+
+    /* 5. Footer: Sponsors & Presenting School */
+    .poster-footer {
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+    }
+
+    .sponsors-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      width: 100%;
+      align-items: center;
+      justify-items: center;
+      background: var(--pure-white);
+      border-radius: 6px;
+      padding: 8px 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      transition: background-color 0.3s;
+    }
+
+    .sponsor-item {
+      height: 28px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .sponsor-logo {
+      max-height: 100%;
+      max-width: 100%;
+    }
+
+    .school-logo-img {
+      max-height: 100%;
+      max-width: 100%;
+      object-fit: contain;
+    }
+
+    .presenter-identity {
+      text-align: center;
+    }
+
+    .presenter-school {
+      color: var(--text-on-dark);
+      font-family: var(--font-serif);
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      line-height: 1.2;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+      transition: color 0.3s;
+    }
+
+    .presenter-meta {
+      color: var(--accent-green-glow);
+      font-size: 9.5px;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      margin-top: 4px;
+      font-weight: 600;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+      transition: color 0.3s;
+    }
+
+    /* Primary trigger button styles */
+    .btn-action-primary {
+      background: var(--ui-accent);
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: opacity 0.15s ease;
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+    }
+
+    .btn-action-primary:hover {
+      opacity: 0.9;
+    }
+
+    /* Print styling to map to 100% full quality A5 canvas size */
+    @media print {
+      body {
+        background: white !important;
+        overflow: visible !important;
+      }
+      .app-header, .control-sidebar {
+        display: none !important;
+      }
+      .preview-stage {
+        padding: 0 !important;
+        background: transparent !important;
+      }
+      .poster-canvas {
+        width: 148mm !important;
+        height: 210mm !important;
+        box-shadow: none !important;
+        transform: none !important;
+        border: none !important;
+        border-radius: 0 !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top bar -->
+  <header class="app-header">
+    <div class="app-title-group">
+      <div class="header-icon">Y</div>
+      <div>
+        <h1 class="app-title">YHCC Club A5 Poster Design Studio</h1>
+        <p class="app-subtitle">Campaign Visual Workspace & Print Specimen</p>
+      </div>
+    </div>
+    
+    <div style="display: flex; align-items: center; gap: 16px;">
+      <div class="format-badge">ISO A5 Standard Size</div>
+    </div>
+  </header>
+
+  <!-- Workspace Container -->
+  <main class="app-workspace">
+    
+    <!-- Left Sidebar: Controls -->
+    <aside class="control-sidebar">
+      
+      <div class="control-section">
+        <span class="section-title">Visual Specimen Layout</span>
+        <div class="btn-group">
+          <button type="button" class="btn-toggle active" id="btn-flat" onclick="switchView('flat')">Flat Spec</button>
+          <button type="button" class="btn-toggle" id="btn-frame" onclick="switchView('frame')">Framed</button>
+          <button type="button" class="btn-toggle" id="btn-street" onclick="switchView('street')">Wall Board</button>
+        </div>
+      </div>
+
+      <div class="control-section">
+        <span class="section-title">Colorway Palette</span>
+        <div class="theme-card-picker">
+          <div class="theme-chip active" id="chip-dawn" onclick="applyTheme('dawn')">
+            <div class="theme-chip-title">Eco Dawn</div>
+            <div class="theme-dot-row">
+              <div class="theme-dot" style="background-color: oklch(24% 0.082 244)"></div>
+              <div class="theme-dot" style="background-color: oklch(62% 0.17 150)"></div>
+              <div class="theme-dot" style="background-color: oklch(94% 0.04 150)"></div>
+            </div>
+          </div>
+          <div class="theme-chip" id="chip-midnight" onclick="applyTheme('midnight')">
+            <div class="theme-chip-title">Midnight</div>
+            <div class="theme-dot-row">
+              <div class="theme-dot" style="background-color: oklch(14% 0.045 250)"></div>
+              <div class="theme-dot" style="background-color: oklch(68% 0.18 160)"></div>
+              <div class="theme-dot" style="background-color: oklch(22% 0.06 250)"></div>
+            </div>
+          </div>
+          <div class="theme-chip" id="chip-golden" onclick="applyTheme('golden')">
+            <div class="theme-chip-title">Golden Sand</div>
+            <div class="theme-dot-row">

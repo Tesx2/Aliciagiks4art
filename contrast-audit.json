@@ -1,0 +1,55 @@
+{
+  "generatedAt": "2026-08-11T09:29:34.260Z",
+  "variables": {
+    "--bg-primary": "#F6EDF7",
+    "--bg-dark": "#FFF",
+    "--accent-pink": "#A8228E",
+    "--accent-lilac": "#420D58",
+    "--text-light": "#120417",
+    "--container-max": "1200px",
+    "--shadow-sm": "0 6px 18px rgba(0,0,0,0.28)",
+    "--shadow-lg": "0 18px 36px rgba(0,0,0,0.45)",
+    "--transition-fast": "180ms",
+    "--transition-base": "240ms",
+    "--leading": "1.5",
+    "--max-width-text": "70ch"
+  },
+  "results": [
+    {
+      "fgVar": "--text-light",
+      "bgVar": "--bg-primary",
+      "fg": "#120417",
+      "bg": "#F6EDF7",
+      "contrast": 17.41,
+      "passAA": true,
+      "passAAA": true
+    },
+    {
+      "fgVar": "--text-light",
+      "bgVar": "--bg-dark",
+      "fg": "#120417",
+      "bg": "#FFF",
+      "contrast": 19.9,
+      "passAA": true,
+      "passAAA": true
+    },
+    {
+      "fgVar": "--text-on-accent",
+      "bgVar": "--accent-pink",
+      "fg": "#120417",
+      "bg": "#A8228E",
+      "contrast": 3.11,
+      "passAA": false,
+      "passAAA": false
+    },
+    {
+      "fgVar": "--text-on-accent",
+      "bgVar": "--accent-lilac",
+      "fg": "#120417",
+      "bg": "#420D58",
+      "contrast": 1.35,
+      "passAA": false,
+      "passAAA": false
+    }
+  ]
+}
