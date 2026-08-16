@@ -63,8 +63,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function openLightboxItem(item, index){
     // Close or reset any previous media
-    try{ if(lbVideo){ lbVideo.pause(); lbVideo.src = ''; lbVideo.style.display = 'none'; } }catch(e){}
-    try{ if(lbImage){ lbImage.src = ''; lbImage.style.display = 'none'; } }catch(e){}
+    try{ if(lbVideo){ lbVideo.pause(); lbVideo.src = ''; lbVideo.hidden = true; } }catch(e){}
+    try{ if(lbImage){ lbImage.src = ''; lbImage.hidden = true; } }catch(e){}
 
     lbTitle.textContent = item.title || '';
     lbDesc.textContent = item.desc || '';
@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if(lbVideo){
         lbVideo.src = item.src;
         if(item.poster) lbVideo.setAttribute('poster', item.poster); else lbVideo.removeAttribute('poster');
-        lbVideo.style.display = '';
+        lbVideo.hidden = false;
         lbVideo.controls = true;
         lbVideo.muted = true; // start muted to avoid unexpected sound (user can unmute)
         lbVideo.playsInline = true;
@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if(lbImage){
         lbImage.src = item.src;
         lbImage.alt = item.alt || item.title || '';
-        lbImage.style.display = '';
+        lbImage.hidden = false;
       }
     }
 
@@ -122,10 +122,16 @@ document.addEventListener('DOMContentLoaded', () => {
       // Build category filter buttons
       const filtersEl = document.getElementById('categoryFilters');
       if(filtersEl){
-        // "Featured" button (default active)
+        const allBtn = document.createElement('button');
+        allBtn.type = 'button';
+        allBtn.className = 'filter-btn active';
+        allBtn.dataset.category = 'All';
+        allBtn.textContent = 'All';
+        filtersEl.appendChild(allBtn);
+
         const featBtn = document.createElement('button');
         featBtn.type = 'button';
-        featBtn.className = 'filter-btn active';
+        featBtn.className = 'filter-btn';
         featBtn.dataset.category = 'Featured';
         featBtn.textContent = 'Featured';
         filtersEl.appendChild(featBtn);
@@ -149,23 +155,24 @@ document.addEventListener('DOMContentLoaded', () => {
         });
       }
 
-      // Render initial view to Featured (single most recent)
-      if(featuredItem){
-        gallery.classList.add('featured-gallery');
-        renderGallery([featuredItem]);
-      }else{
-        gallery.classList.remove('featured-gallery');
-        renderGallery([]);
-      }
+      // Render all projects by default
+      gallery.classList.remove('featured-gallery');
+      renderGallery(allItems);
 
     }catch(err){
       console.warn('Could not load manifest:', err);
+      if (gallery) {
+        gallery.innerHTML = '<p class="gallery-empty">Projects could not load. Open this site through a local server (not as a file) so the gallery can read the project manifest.</p>';
+      }
     }
   }
 
   function createCard(item, index){
     const article = document.createElement('article');
     article.className = 'card';
+    article.setAttribute('role', 'button');
+    article.setAttribute('tabindex', '0');
+    article.setAttribute('aria-label', `View ${item.title || 'project'}${item.category ? ` — ${item.category}` : ''}`);
     article.dataset.title = item.title || '';
     article.dataset.desc = item.desc || '';
     article.dataset.src = item.src;
@@ -175,27 +182,33 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const figure = document.createElement('figure');
 
+    if (item.category) {
+      const tag = document.createElement('span');
+      tag.className = 'card-category';
+      tag.textContent = item.category;
+      figure.appendChild(tag);
+    }
+
     if(item.type === 'video'){
       const vid = document.createElement('video');
       vid.src = item.src;
       if(item.poster) vid.setAttribute('poster', item.poster);
-      vid.setAttribute('controls', '');
       vid.setAttribute('playsinline', '');
-      vid.muted = true;
-      vid.preload = 'metadata';
-      vid.style.display = 'block';
+      vid.setAttribute('muted', '');
+      vid.setAttribute('preload', 'metadata');
+      vid.setAttribute('aria-hidden', 'true');
       figure.appendChild(vid);
 
-      // Video badge indicator
       const badge = document.createElement('span');
       badge.className = 'video-badge';
-      badge.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 5v14l11-7L8 5z" fill="currentColor"/></svg><span class="visually-hidden">Video</span>';
+      badge.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M8 5v14l11-7L8 5z" fill="currentColor"/></svg><span>Motion</span>';
       figure.appendChild(badge);
     } else {
       const img = document.createElement('img');
       img.src = item.src;
       img.alt = item.alt || item.title || '';
       img.loading = 'lazy';
+      img.decoding = 'async';
       figure.appendChild(img);
     }
 
@@ -224,6 +237,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function filterGallery(category, ctx){
     // ctx = { allItems, featuredItem, categories }
+    if(category === 'All'){
+      gallery.classList.remove('featured-gallery');
+      renderGallery(ctx?.allItems || []);
+      return;
+    }
     if(category === 'Featured'){
       if(ctx && ctx.featuredItem){
         gallery.classList.add('featured-gallery');
@@ -259,13 +277,38 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+  gallery && gallery.addEventListener('keydown', (ev) => {
+    if (ev.key !== 'Enter' && ev.key !== ' ') return;
+    const card = ev.target.closest('.card');
+    if (!card) return;
+    ev.preventDefault();
+    const idx = parseInt(card.dataset.index || '-1', 10);
+    if (!isNaN(idx) && idx >= 0) openLightboxByIndex(idx);
+  });
+
+  // Scroll reveal for section entrances
+  const revealEls = document.querySelectorAll('.reveal');
+  if (revealEls.length && 'IntersectionObserver' in window) {
+    const revealObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+
+    revealEls.forEach((el) => revealObserver.observe(el));
+  } else {
+    revealEls.forEach((el) => el.classList.add('is-visible'));
+  }
+
   // Lightbox controls: close, backdrop click, esc
   lbClose && lbClose.addEventListener('click', ()=>{
     lightbox.setAttribute('aria-hidden','true');
     document.body.style.overflow = '';
     // pause and reset video if present
-    try{ if(lbVideo){ lbVideo.pause(); lbVideo.currentTime = 0; lbVideo.src = ''; lbVideo.style.display = 'none'; } }catch(e){}
-    try{ if(lbImage){ lbImage.src = ''; lbImage.style.display = 'none'; } }catch(e){}
+    try{ if(lbVideo){ lbVideo.pause(); lbVideo.currentTime = 0; lbVideo.src = ''; lbVideo.hidden = true; } }catch(e){}
+    try{ if(lbImage){ lbImage.src = ''; lbImage.hidden = true; } }catch(e){}
     currentLightboxIndex = -1;
   });
   lightbox && lightbox.addEventListener('click', (ev)=>{
