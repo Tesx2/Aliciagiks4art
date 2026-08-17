@@ -1,0 +1,22 @@
+# Aliciagiks4art — Graphic & Motion Design Portfolio
+
+> Live portfolio website for Mary Alicia Wangui (Alicia), a remote graphic designer and motion artist building cinematic brand systems, campaign art, motion graphics, and art direction for digital-first brands.
+
+## About Mary Alicia Wangui
+Mary Alicia Wangui works at the intersection of brand systems and moving image. She designs cohesive visual identities and dynamic motion graphics that feel cinematic up close and clear at a glance. She operates remotely and is available worldwide for freelance contracts, agency work, and creative collaborations.
+
+## Creative Services & Capabilities
+- **Branding & Visual Identity:** Distinct brand systems, logo direction, campaign visuals, and cohesive design languages.
+- **Graphic Design:** Key art posters, social graphics, marketing collateral, and polished digital/print creative asset suites.
+- **Motion Graphics:** Animated concepts, kinetic typography, title sequences, social motion, and visual campaign storytelling.
+- **Illustration:** Original art direction, character concepts, editorial illustration, and expressive digital visuals.
+
+## Portfolio Directory
+- [Selected Projects](https://netlify.app): Filtered showcase of professional motion, print, and branding design work.
+- [About the Artist](https://netlify.app): Profile, background summary, and freelance operational parameters.
+- [Contact & Collaboration](https://netlify.app): Built-in intake portal to start new creative projects.
+
+## Project Timelines & Communication
+- **Response Window:** Inquiries receive a professional reply within 24 hours.
+- **Direct Reach:** Prospects can contact Mary Alicia Wangui directly via Email or WhatsApp using the communication links in the contact footer.
+
