@@ -209,6 +209,10 @@ document.addEventListener('DOMContentLoaded', () => {
       img.alt = item.alt || item.title || '';
       img.loading = 'lazy';
       img.decoding = 'async';
+      img.onerror = () => {
+        img.src = 'assets/square.svg';
+        img.onerror = null;
+      };
       figure.appendChild(img);
     }
 
@@ -333,6 +337,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Kick off manifest load
   loadManifestAndBuild();
-
 
 });
