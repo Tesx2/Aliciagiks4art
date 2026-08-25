@@ -34,5 +34,4 @@ Disallow: /
 User-agent: CCBot
 Disallow: /
 
-# Live Netlify Sitemap Location
-Sitemap: https://netlify.app
+Sitemap: https://aliciagiks4art.netlify.app/sitemap.xml

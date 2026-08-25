@@ -16,12 +16,38 @@ document.addEventListener('DOMContentLoaded', () => {
     return `work.html?cat=${encodeURIComponent(categoryName)}`;
   }
 
+  function projectHref(slug) {
+    return `project.html?slug=${encodeURIComponent(slug)}`;
+  }
+
   function formatCategoryLabel(name) {
     return (name || '').replace(/\b\w/g, (char) => char.toUpperCase());
   }
 
   function projectCountLabel(count) {
     return `${count} project${count === 1 ? '' : 's'}`;
+  }
+
+  function makeSlug(category, filename) {
+    const base = (filename || '').replace(/\.[^.]+$/, '');
+    return `${category}-${base}`.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+  }
+
+  function enrichItem(item, categoryName, categoryItems) {
+    const enriched = Object.assign({}, item);
+    enriched.category = enriched.category || categoryName;
+    enriched.slug = enriched.slug || makeSlug(enriched.category, enriched.filename);
+    enriched.year = enriched.year || new Date(enriched.mtime || Date.now()).getFullYear();
+    enriched.client = enriched.client || 'Personal / Freelance';
+    enriched.role = enriched.role || 'Graphic Designer & Motion Artist';
+    enriched.brief = enriched.brief || `A ${formatCategoryLabel(enriched.category)} project — ${enriched.title}. Crafted with bold visual language and refined attention to detail.`;
+    if (!enriched.processStills?.length && categoryItems) {
+      enriched.processStills = categoryItems
+        .filter((other) => other.src !== enriched.src && other.type === 'image')
+        .slice(0, 3)
+        .map((other) => ({ src: other.src, alt: other.alt, title: other.title }));
+    }
+    return enriched;
   }
 
   function applyTheme(theme) {
@@ -32,12 +58,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const savedTheme = localStorage.getItem('site-theme') || 'dark';
   applyTheme(savedTheme);
-  if (themeToggle) {
-    themeToggle.addEventListener('click', () => {
-      const next = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
-      applyTheme(next);
-    });
-  }
+  themeToggle?.addEventListener('click', () => {
+    const next = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+    applyTheme(next);
+  });
 
   const nav = document.querySelector('.nav');
   const menuToggle = document.querySelector('.menu-toggle');
@@ -50,46 +74,40 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.classList.toggle('menu-open', isOpen);
   }
 
-  if (menuToggle) {
-    menuToggle.addEventListener('click', () => {
-      const isOpen = nav && nav.classList.contains('is-open');
-      setMenuState(!isOpen);
-    });
-  }
-
-  navLinks.forEach((link) => {
-    link.addEventListener('click', () => setMenuState(false));
+  menuToggle?.addEventListener('click', () => {
+    setMenuState(!nav?.classList.contains('is-open'));
   });
 
+  navLinks.forEach((link) => link.addEventListener('click', () => setMenuState(false)));
+
   document.addEventListener('click', (event) => {
-    if (!nav || !nav.classList.contains('is-open')) return;
-    if (!nav.contains(event.target)) setMenuState(false);
+    if (!nav?.classList.contains('is-open') || nav.contains(event.target)) return;
+    setMenuState(false);
   });
 
   document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape' && nav && nav.classList.contains('is-open')) {
+    if (event.key === 'Escape' && nav?.classList.contains('is-open')) {
       setMenuState(false);
       menuToggle?.focus();
     }
   });
 
   function openLightboxItem(item, index) {
+    if (!lightbox) return;
     try { if (lbVideo) { lbVideo.pause(); lbVideo.src = ''; lbVideo.hidden = true; } } catch (e) {}
     try { if (lbImage) { lbImage.src = ''; lbImage.hidden = true; } } catch (e) {}
 
     lbTitle.textContent = item.title || '';
-    lbDesc.textContent = item.desc || '';
+    lbDesc.textContent = item.desc || item.brief || '';
 
-    if (item.type === 'video') {
-      if (lbVideo) {
-        lbVideo.src = item.src;
-        if (item.poster) lbVideo.setAttribute('poster', item.poster);
-        else lbVideo.removeAttribute('poster');
-        lbVideo.hidden = false;
-        lbVideo.controls = true;
-        lbVideo.muted = true;
-        lbVideo.playsInline = true;
-      }
+    if (item.type === 'video' && lbVideo) {
+      lbVideo.src = item.src;
+      if (item.poster) lbVideo.setAttribute('poster', item.poster);
+      else lbVideo.removeAttribute('poster');
+      lbVideo.hidden = false;
+      lbVideo.controls = true;
+      lbVideo.muted = true;
+      lbVideo.playsInline = true;
     } else if (lbImage) {
       lbImage.src = item.src;
       lbImage.alt = item.alt || item.title || '';
@@ -107,19 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
     openLightboxItem(currentGalleryItems[idx], idx);
   }
 
-  function createCard(item, index) {
-    const article = document.createElement('article');
-    article.className = 'card';
-    article.setAttribute('role', 'button');
-    article.setAttribute('tabindex', '0');
-    article.setAttribute('aria-label', `View ${item.title || 'project'}${item.category ? ` — ${item.category}` : ''}`);
-    article.dataset.title = item.title || '';
-    article.dataset.desc = item.desc || '';
-    article.dataset.src = item.src;
-    article.dataset.category = item.category || '';
-    article.dataset.type = item.type || 'image';
-    article.dataset.index = String(index);
-
+  function buildCardMedia(item) {
     const figure = document.createElement('figure');
 
     if (item.category) {
@@ -141,7 +147,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const badge = document.createElement('span');
       badge.className = 'video-badge';
-      badge.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M8 5v14l11-7L8 5z" fill="currentColor"/></svg><span>Motion</span>';
+      badge.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M8 5v14l11-7L8 5z" fill="currentColor"/></svg><span>Motion</span>';
       figure.appendChild(badge);
     } else {
       const img = document.createElement('img');
@@ -158,7 +164,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const figcap = document.createElement('figcaption');
     figcap.className = 'overlay';
-    figcap.innerHTML = `<div class="overlay-inner"><h3>${item.title || ''}</h3></div>`;
+    figcap.innerHTML = `<div class="overlay-inner"><h3>${item.title || ''}</h3><p class="card-view-case">View case study →</p></div>`;
     figure.appendChild(figcap);
 
     const cap = document.createElement('div');
@@ -166,8 +172,25 @@ document.addEventListener('DOMContentLoaded', () => {
     cap.textContent = item.title || item.filename || '';
     figure.appendChild(cap);
 
-    article.appendChild(figure);
-    return article;
+    return figure;
+  }
+
+  function createCard(item) {
+    const link = document.createElement('a');
+    link.className = 'card card-tilt';
+    link.href = projectHref(item.slug);
+    link.setAttribute('aria-label', `View case study: ${item.title || 'project'}${item.category ? ` — ${formatCategoryLabel(item.category)}` : ''}`);
+    link.appendChild(buildCardMedia(item));
+    return link;
+  }
+
+  function animateStaggerContainer(container) {
+    if (!container) return;
+    const parentReveal = container.closest('.reveal');
+    container.querySelectorAll(':scope > *').forEach((el, idx) => {
+      el.style.setProperty('--stagger', idx);
+    });
+    if (parentReveal) parentReveal.classList.add('is-visible');
   }
 
   function renderGallery(items) {
@@ -181,8 +204,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const frag = document.createDocumentFragment();
-    currentGalleryItems.forEach((item, idx) => frag.appendChild(createCard(item, idx)));
+    currentGalleryItems.forEach((item) => frag.appendChild(createCard(item)));
     gallery.appendChild(frag);
+    animateStaggerContainer(gallery);
   }
 
   function getFeaturedPerCategory(categories) {
@@ -190,11 +214,10 @@ document.addEventListener('DOMContentLoaded', () => {
       .map((cat) => {
         const items = cat.items || [];
         if (!items.length) return null;
-        return Object.assign({ category: cat.name }, items[0]);
+        return enrichItem(items[0], cat.name, items);
       })
       .filter(Boolean);
   }
-
 
   function renderCategoryGrid(categories) {
     const grid = document.getElementById('categoryGrid');
@@ -203,13 +226,14 @@ document.addEventListener('DOMContentLoaded', () => {
     grid.innerHTML = '';
     const frag = document.createDocumentFragment();
 
-    categories.forEach((cat) => {
+    categories.forEach((cat, idx) => {
       const count = (cat.items || []).length;
       if (!count) return;
 
       const link = document.createElement('a');
       link.className = 'category-card';
       link.href = categoryHref(cat.name);
+      link.style.setProperty('--stagger', idx);
       link.innerHTML = `
         <span class="category-card-name">${formatCategoryLabel(cat.name)}</span>
         <span class="category-card-count">${projectCountLabel(count)}</span>
@@ -219,6 +243,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     grid.appendChild(frag);
+    animateStaggerContainer(grid);
   }
 
   function renderCategoryNav(categories, activeCategory) {
@@ -255,10 +280,24 @@ document.addEventListener('DOMContentLoaded', () => {
     return resp.json();
   }
 
+  function flattenManifest(manifest) {
+    const categories = manifest.categories || [];
+    const bySlug = new Map();
+    const byCategory = new Map();
+
+    categories.forEach((cat) => {
+      const enriched = (cat.items || []).map((item) => enrichItem(item, cat.name, cat.items));
+      byCategory.set(cat.name, enriched);
+      enriched.forEach((item) => bySlug.set(item.slug, item));
+    });
+
+    return { categories, bySlug, byCategory };
+  }
+
   async function initHomePage() {
     try {
       const manifest = await loadManifest();
-      const categories = manifest.categories || [];
+      const { categories } = flattenManifest(manifest);
       renderGallery(getFeaturedPerCategory(categories));
       renderCategoryGrid(categories);
     } catch (err) {
@@ -283,25 +322,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
     try {
       const manifest = await loadManifest();
-      const categories = manifest.categories || [];
-      const category = categories.find((cat) => cat.name === categoryName);
+      const { categories, byCategory } = flattenManifest(manifest);
+      const items = byCategory.get(categoryName);
 
-      if (!category) {
+      if (!items) {
         if (titleEl) titleEl.textContent = 'Category not found';
         if (leadEl) leadEl.textContent = `"${formatCategoryLabel(categoryName)}" does not exist.`;
-        showGalleryError(`Category not found. <a href="index.html#portfolio">Back to featured work</a>`);
+        showGalleryError('Category not found. <a href="index.html#portfolio">Back to featured work</a>');
         return;
       }
 
-      const items = category.items.map((item) => Object.assign({ category: category.name }, item));
-      const label = formatCategoryLabel(category.name);
-
+      const label = formatCategoryLabel(categoryName);
       document.title = `${label} — Aliciagiks4art`;
       if (titleEl) titleEl.textContent = label;
       if (leadEl) leadEl.textContent = `${projectCountLabel(items.length)} in this collection.`;
       if (breadcrumbEl) breadcrumbEl.textContent = label;
 
-      renderCategoryNav(categories, category.name);
+      const canonical = document.querySelector('link[rel="canonical"]');
+      if (canonical) canonical.href = `https://aliciagiks4art.netlify.app/work.html?cat=${encodeURIComponent(categoryName)}`;
+
+      renderCategoryNav(categories, categoryName);
       renderGallery(items);
     } catch (err) {
       console.warn('Could not load manifest:', err);
@@ -309,41 +349,179 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  if (gallery) {
-    gallery.addEventListener('click', (ev) => {
-      const card = ev.target.closest('.card');
-      if (!card) return;
-      const idx = parseInt(card.dataset.index || '-1', 10);
-      if (!Number.isNaN(idx) && idx >= 0) openLightboxByIndex(idx);
-    });
+  function renderFinalMedia(item, container) {
+    if (!container) return;
+    container.innerHTML = '';
 
-    gallery.addEventListener('keydown', (ev) => {
-      if (ev.key !== 'Enter' && ev.key !== ' ') return;
-      const card = ev.target.closest('.card');
-      if (!card) return;
-      ev.preventDefault();
-      const idx = parseInt(card.dataset.index || '-1', 10);
-      if (!Number.isNaN(idx) && idx >= 0) openLightboxByIndex(idx);
+    if (item.type === 'video') {
+      const vid = document.createElement('video');
+      vid.src = item.src;
+      if (item.poster) vid.setAttribute('poster', item.poster);
+      vid.controls = true;
+      vid.playsInline = true;
+      vid.setAttribute('aria-label', item.title || 'Project video');
+      container.appendChild(vid);
+    } else {
+      const img = document.createElement('img');
+      img.src = item.src;
+      img.alt = item.alt || item.title || '';
+      img.loading = 'eager';
+      img.decoding = 'async';
+      container.appendChild(img);
+    }
+  }
+
+  function renderProcessStills(stills, container, section) {
+    if (!container || !section) return;
+    if (!stills?.length) {
+      section.hidden = true;
+      return;
+    }
+
+    section.hidden = false;
+    container.innerHTML = '';
+    stills.forEach((still) => {
+      const figure = document.createElement('figure');
+      figure.className = 'process-item';
+      const img = document.createElement('img');
+      img.src = still.src;
+      img.alt = still.alt || still.title || 'Process still';
+      img.loading = 'lazy';
+      figure.appendChild(img);
+      if (still.title) {
+        const cap = document.createElement('figcaption');
+        cap.textContent = still.title;
+        figure.appendChild(cap);
+      }
+      container.appendChild(figure);
     });
   }
 
-  const revealEls = document.querySelectorAll('.reveal');
-  if (revealEls.length && 'IntersectionObserver' in window) {
-    const revealObserver = new IntersectionObserver((entries, observer) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) return;
-        entry.target.classList.add('is-visible');
-        observer.unobserve(entry.target);
-      });
-    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+  function renderCaseNav(item, siblings) {
+    const navEl = document.getElementById('caseNav');
+    if (!navEl || !siblings?.length) return;
 
-    revealEls.forEach((el) => revealObserver.observe(el));
-  } else {
-    revealEls.forEach((el) => el.classList.add('is-visible'));
+    const idx = siblings.findIndex((s) => s.slug === item.slug);
+    navEl.innerHTML = '';
+
+    if (idx > 0) {
+      const prev = document.createElement('a');
+      prev.className = 'btn btn--ghost case-nav-link';
+      prev.href = projectHref(siblings[idx - 1].slug);
+      prev.textContent = `← ${siblings[idx - 1].title}`;
+      navEl.appendChild(prev);
+    }
+
+    const category = document.createElement('a');
+    category.className = 'btn btn--ghost case-nav-link';
+    category.href = categoryHref(item.category);
+    category.textContent = `All ${formatCategoryLabel(item.category)}`;
+    navEl.appendChild(category);
+
+    if (idx < siblings.length - 1) {
+      const next = document.createElement('a');
+      next.className = 'btn btn--ghost case-nav-link case-nav-next';
+      next.href = projectHref(siblings[idx + 1].slug);
+      next.textContent = `${siblings[idx + 1].title} →`;
+      navEl.appendChild(next);
+    }
+  }
+
+  async function initProjectPage() {
+    const params = new URLSearchParams(window.location.search);
+    const slug = params.get('slug');
+
+    if (!slug) {
+      document.getElementById('projectTitle').textContent = 'Project not found';
+      document.getElementById('projectBrief').textContent = 'No project was selected.';
+      return;
+    }
+
+    try {
+      const manifest = await loadManifest();
+      const { bySlug, byCategory } = flattenManifest(manifest);
+      const item = bySlug.get(slug);
+
+      if (!item) {
+        document.getElementById('projectTitle').textContent = 'Project not found';
+        document.getElementById('projectBrief').textContent = 'This case study could not be found.';
+        return;
+      }
+
+      const siblings = byCategory.get(item.category) || [];
+      const label = formatCategoryLabel(item.category);
+
+      document.title = `${item.title} — Aliciagiks4art`;
+      const canonical = document.querySelector('link[rel="canonical"]');
+      if (canonical) canonical.href = `https://aliciagiks4art.netlify.app/project.html?slug=${encodeURIComponent(slug)}`;
+
+      document.getElementById('projectTitle').textContent = item.title;
+      document.getElementById('caseCategory').textContent = label;
+      document.getElementById('metaClient').textContent = item.client;
+      document.getElementById('metaRole').textContent = item.role;
+      document.getElementById('metaYear').textContent = String(item.year);
+      document.getElementById('projectBrief').textContent = item.brief;
+
+      const breadcrumbCategory = document.getElementById('breadcrumbCategory');
+      if (breadcrumbCategory) {
+        breadcrumbCategory.textContent = label;
+        breadcrumbCategory.href = categoryHref(item.category);
+      }
+      const breadcrumbCurrent = document.getElementById('breadcrumbCurrent');
+      if (breadcrumbCurrent) breadcrumbCurrent.textContent = item.title;
+
+      renderProcessStills(item.processStills, document.getElementById('processStills'), document.getElementById('processSection'));
+      renderFinalMedia(item, document.getElementById('finalPiece'));
+      renderCaseNav(item, siblings);
+    } catch (err) {
+      console.warn('Could not load project:', err);
+      document.getElementById('projectBrief').textContent = 'This case study could not be loaded.';
+    }
+  }
+
+  function initScrollReveal() {
+    const revealEls = document.querySelectorAll('.reveal');
+    if (!revealEls.length) return;
+
+    if ('IntersectionObserver' in window) {
+      const revealObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        });
+      }, { threshold: 0.1, rootMargin: '0px 0px -6% 0px' });
+
+      revealEls.forEach((el) => revealObserver.observe(el));
+    } else {
+      revealEls.forEach((el) => el.classList.add('is-visible'));
+    }
+  }
+
+  function initCardTilt() {
+    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+
+    document.addEventListener('mousemove', (event) => {
+      const card = event.target.closest('.card-tilt');
+      if (!card) return;
+
+      const rect = card.getBoundingClientRect();
+      const x = (event.clientX - rect.left) / rect.width - 0.5;
+      const y = (event.clientY - rect.top) / rect.height - 0.5;
+      card.style.setProperty('--tilt-x', `${y * -6}deg`);
+      card.style.setProperty('--tilt-y', `${x * 6}deg`);
+    });
+
+    document.addEventListener('mouseout', (event) => {
+      const card = event.target.closest('.card-tilt');
+      if (!card) return;
+      card.style.setProperty('--tilt-x', '0deg');
+      card.style.setProperty('--tilt-y', '0deg');
+    });
   }
 
   lbClose?.addEventListener('click', () => {
-    lightbox.setAttribute('aria-hidden', 'true');
+    lightbox?.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
     try { if (lbVideo) { lbVideo.pause(); lbVideo.currentTime = 0; lbVideo.src = ''; lbVideo.hidden = true; } } catch (e) {}
     try { if (lbImage) { lbImage.src = ''; lbImage.hidden = true; } } catch (e) {}
@@ -359,13 +537,16 @@ document.addEventListener('DOMContentLoaded', () => {
       lbClose?.click();
       return;
     }
-
     if (lightbox?.getAttribute('aria-hidden') === 'false') {
       if (ev.key === 'ArrowLeft' && currentLightboxIndex > 0) openLightboxByIndex(currentLightboxIndex - 1);
       if (ev.key === 'ArrowRight' && currentLightboxIndex < currentGalleryItems.length - 1) openLightboxByIndex(currentLightboxIndex + 1);
     }
   });
 
+  initScrollReveal();
+  initCardTilt();
+
   if (page === 'category') initCategoryPage();
+  else if (page === 'project') initProjectPage();
   else initHomePage();
 });

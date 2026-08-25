@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-12T16:08:37.927Z",
+  "generatedAt": "2026-08-25T11:16:44.223Z",
   "categories": [
     {
       "name": "3D",
@@ -11,7 +11,13 @@
           "alt": "3D Animation",
           "mtimeMs": 1786435584946.2725,
           "mtime": "2026-08-11T08:06:24.946Z",
-          "type": "video"
+          "type": "video",
+          "slug": "3d-3d-animation",
+          "year": 2026,
+          "client": "Personal / Freelance",
+          "role": "Graphic Designer & Motion Artist",
+          "brief": "A 3D project — 3D Animation. Crafted with bold visual language, refined composition, and attention to detail across every stage of the creative process.",
+          "processStills": []
         }
       ]
     },
@@ -25,7 +31,29 @@
           "alt": "Drawing 1",
           "mtimeMs": 1786435646967.7617,
           "mtime": "2026-08-11T08:07:26.968Z",
-          "type": "image"
+          "type": "image",
+          "slug": "drawing-drawing-1",
+          "year": 2026,
+          "client": "Personal / Freelance",
+          "role": "Graphic Designer & Motion Artist",
+          "brief": "A Drawing project — Drawing 1. Crafted with bold visual language, refined composition, and attention to detail across every stage of the creative process.",
+          "processStills": [
+            {
+              "src": "geeks4drisony/drawing/drawing 2.webp",
+              "alt": "Drawing 2",
+              "title": "Drawing 2"
+            },
+            {
+              "src": "geeks4drisony/drawing/drawing 3.webp",
+              "alt": "Drawing 3",
+              "title": "Drawing 3"
+            },
+            {
+              "src": "geeks4drisony/drawing/drawing 4.webp",
+              "alt": "Drawing 4",
+              "title": "Drawing 4"
+            }
+          ]
         },
         {
           "src": "geeks4drisony/drawing/drawing 2.webp",
@@ -34,7 +62,29 @@
           "alt": "Drawing 2",
           "mtimeMs": 1786435644559.4358,
           "mtime": "2026-08-11T08:07:24.559Z",
-          "type": "image"
+          "type": "image",
+          "slug": "drawing-drawing-2",
+          "year": 2026,
+          "client": "Personal / Freelance",
+          "role": "Graphic Designer & Motion Artist",
+          "brief": "A Drawing project — Drawing 2. Crafted with bold visual language, refined composition, and attention to detail across every stage of the creative process.",
+          "processStills": [
+            {
+              "src": "geeks4drisony/drawing/drawing 1.jpg",
+              "alt": "Drawing 1",
+              "title": "Drawing 1"
+            },
+            {
+              "src": "geeks4drisony/drawing/drawing 3.webp",
+              "alt": "Drawing 3",
+              "title": "Drawing 3"
+            },
+            {
+              "src": "geeks4drisony/drawing/drawing 4.webp",
+              "alt": "Drawing 4",
+              "title": "Drawing 4"
+            }
+          ]
         },
         {
           "src": "geeks4drisony/drawing/drawing 3.webp",
@@ -43,7 +93,29 @@
           "alt": "Drawing 3",
           "mtimeMs": 1786435643675.4353,
           "mtime": "2026-08-11T08:07:23.675Z",
-          "type": "image"
+          "type": "image",
+          "slug": "drawing-drawing-3",
+          "year": 2026,
+          "client": "Personal / Freelance",
+          "role": "Graphic Designer & Motion Artist",
+          "brief": "A Drawing project — Drawing 3. Crafted with bold visual language, refined composition, and attention to detail across every stage of the creative process.",
+          "processStills": [
+            {
+              "src": "geeks4drisony/drawing/drawing 1.jpg",
+              "alt": "Drawing 1",
+              "title": "Drawing 1"
+            },
+            {
+              "src": "geeks4drisony/drawing/drawing 2.webp",
+              "alt": "Drawing 2",
+              "title": "Drawing 2"
+            },
+            {
+              "src": "geeks4drisony/drawing/drawing 4.webp",
+              "alt": "Drawing 4",
+              "title": "Drawing 4"
+            }
+          ]
         },
         {
           "src": "geeks4drisony/drawing/drawing 4.webp",
@@ -52,7 +124,29 @@
           "alt": "Drawing 4",
           "mtimeMs": 1786435642720.438,
           "mtime": "2026-08-11T08:07:22.720Z",
-          "type": "image"
+          "type": "image",
+          "slug": "drawing-drawing-4",
+          "year": 2026,
+          "client": "Personal / Freelance",
+          "role": "Graphic Designer & Motion Artist",
+          "brief": "A Drawing project — Drawing 4. Crafted with bold visual language, refined composition, and attention to detail across every stage of the creative process.",
+          "processStills": [
+            {
+              "src": "geeks4drisony/drawing/drawing 1.jpg",
+              "alt": "Drawing 1",
+              "title": "Drawing 1"
+            },
+            {
+              "src": "geeks4drisony/drawing/drawing 2.webp",
+              "alt": "Drawing 2",
+              "title": "Drawing 2"
+            },
+            {
+              "src": "geeks4drisony/drawing/drawing 3.webp",
+              "alt": "Drawing 3",
+              "title": "Drawing 3"
+            }
+          ]
         },
         {
           "src": "geeks4drisony/drawing/drawing 5.webp",
@@ -61,7 +155,29 @@
           "alt": "Drawing 5",
           "mtimeMs": 1786435642090.4363,
           "mtime": "2026-08-11T08:07:22.090Z",
-          "type": "image"
+          "type": "image",
+          "slug": "drawing-drawing-5",
+          "year": 2026,
+          "client": "Personal / Freelance",
+          "role": "Graphic Designer & Motion Artist",
+          "brief": "A Drawing project — Drawing 5. Crafted with bold visual language, refined composition, and attention to detail across every stage of the creative process.",
+          "processStills": [
+            {
+              "src": "geeks4drisony/drawing/drawing 1.jpg",
+              "alt": "Drawing 1",
+              "title": "Drawing 1"
+            },
+            {
+              "src": "geeks4drisony/drawing/drawing 2.webp",
+              "alt": "Drawing 2",
+              "title": "Drawing 2"
+            },
+            {
+              "src": "geeks4drisony/drawing/drawing 3.webp",
+              "alt": "Drawing 3",
+              "title": "Drawing 3"
+            }
+          ]
         },
         {
           "src": "geeks4drisony/drawing/drawing 6.webp",
@@ -70,7 +186,29 @@
           "alt": "Drawing 6",
           "mtimeMs": 1786435641552.4373,
           "mtime": "2026-08-11T08:07:21.552Z",
-          "type": "image"
+          "type": "image",
+          "slug": "drawing-drawing-6",
+          "year": 2026,
+          "client": "Personal / Freelance",
+          "role": "Graphic Designer & Motion Artist",
+          "brief": "A Drawing project — Drawing 6. Crafted with bold visual language, refined composition, and attention to detail across every stage of the creative process.",
+          "processStills": [
+            {
+              "src": "geeks4drisony/drawing/drawing 1.jpg",
+              "alt": "Drawing 1",
+              "title": "Drawing 1"
+            },
+            {
+              "src": "geeks4drisony/drawing/drawing 2.webp",
+              "alt": "Drawing 2",
+              "title": "Drawing 2"
+            },
+            {
+              "src": "geeks4drisony/drawing/drawing 3.webp",
+              "alt": "Drawing 3",
+              "title": "Drawing 3"
+            }
+          ]
         },
         {
           "src": "geeks4drisony/drawing/drawing 8.webp",
@@ -79,7 +217,29 @@
           "alt": "Drawing 8",
           "mtimeMs": 1786435640890.4336,
           "mtime": "2026-08-11T08:07:20.890Z",
-          "type": "image"
+          "type": "image",
+          "slug": "drawing-drawing-8",
+          "year": 2026,
+          "client": "Personal / Freelance",
+          "role": "Graphic Designer & Motion Artist",
+          "brief": "A Drawing project — Drawing 8. Crafted with bold visual language, refined composition, and attention to detail across every stage of the creative process.",
+          "processStills": [
+            {
+              "src": "geeks4drisony/drawing/drawing 1.jpg",
+              "alt": "Drawing 1",
+              "title": "Drawing 1"
+            },
+            {
+              "src": "geeks4drisony/drawing/drawing 2.webp",
+              "alt": "Drawing 2",
+              "title": "Drawing 2"
+            },
+            {
+              "src": "geeks4drisony/drawing/drawing 3.webp",
+              "alt": "Drawing 3",
+              "title": "Drawing 3"
+            }
+          ]
         },
         {
           "src": "geeks4drisony/drawing/drawing 7.webp",
@@ -88,7 +248,29 @@
           "alt": "Drawing 7",
           "mtimeMs": 1786435640155.4355,
           "mtime": "2026-08-11T08:07:20.155Z",
-          "type": "image"
+          "type": "image",
+          "slug": "drawing-drawing-7",
+          "year": 2026,
+          "client": "Personal / Freelance",
+          "role": "Graphic Designer & Motion Artist",
+          "brief": "A Drawing project — Drawing 7. Crafted with bold visual language, refined composition, and attention to detail across every stage of the creative process.",
+          "processStills": [
+            {
+              "src": "geeks4drisony/drawing/drawing 1.jpg",
+              "alt": "Drawing 1",
+              "title": "Drawing 1"
+            },
+            {
+              "src": "geeks4drisony/drawing/drawing 2.webp",
+              "alt": "Drawing 2",
+              "title": "Drawing 2"
+            },
+            {
+              "src": "geeks4drisony/drawing/drawing 3.webp",
+              "alt": "Drawing 3",
+              "title": "Drawing 3"
+            }
+          ]
         },
         {
           "src": "geeks4drisony/drawing/drawing 9.webp",
@@ -97,7 +279,29 @@
           "alt": "Drawing 9",
           "mtimeMs": 1786435639659.4375,
           "mtime": "2026-08-11T08:07:19.659Z",
-          "type": "image"
+          "type": "image",
+          "slug": "drawing-drawing-9",
+          "year": 2026,
+          "client": "Personal / Freelance",
+          "role": "Graphic Designer & Motion Artist",
+          "brief": "A Drawing project — Drawing 9. Crafted with bold visual language, refined composition, and attention to detail across every stage of the creative process.",
+          "processStills": [
+            {
+              "src": "geeks4drisony/drawing/drawing 1.jpg",
+              "alt": "Drawing 1",
+              "title": "Drawing 1"
+            },
+            {
+              "src": "geeks4drisony/drawing/drawing 2.webp",
+              "alt": "Drawing 2",
+              "title": "Drawing 2"
+            },
+            {
+              "src": "geeks4drisony/drawing/drawing 3.webp",
+              "alt": "Drawing 3",
+              "title": "Drawing 3"
+            }
+          ]
         },
         {
           "src": "geeks4drisony/drawing/drawing 10.webp",
@@ -106,7 +310,29 @@
           "alt": "Drawing 10",
           "mtimeMs": 1786435639004.4363,
           "mtime": "2026-08-11T08:07:19.004Z",
-          "type": "image"
+          "type": "image",
+          "slug": "drawing-drawing-10",
+          "year": 2026,
+          "client": "Personal / Freelance",
+          "role": "Graphic Designer & Motion Artist",
+          "brief": "A Drawing project — Drawing 10. Crafted with bold visual language, refined composition, and attention to detail across every stage of the creative process.",
+          "processStills": [
+            {
+              "src": "geeks4drisony/drawing/drawing 1.jpg",
+              "alt": "Drawing 1",
+              "title": "Drawing 1"
+            },
+            {
+              "src": "geeks4drisony/drawing/drawing 2.webp",
+              "alt": "Drawing 2",
+              "title": "Drawing 2"
+            },
+            {
+              "src": "geeks4drisony/drawing/drawing 3.webp",
+              "alt": "Drawing 3",
+              "title": "Drawing 3"
+            }
+          ]
         },
         {
           "src": "geeks4drisony/drawing/drawing 11.webp",
@@ -115,7 +341,29 @@
           "alt": "Drawing 11",
           "mtimeMs": 1786435638593.4343,
           "mtime": "2026-08-11T08:07:18.593Z",
-          "type": "image"
+          "type": "image",
+          "slug": "drawing-drawing-11",
+          "year": 2026,
+          "client": "Personal / Freelance",
+          "role": "Graphic Designer & Motion Artist",
+          "brief": "A Drawing project — Drawing 11. Crafted with bold visual language, refined composition, and attention to detail across every stage of the creative process.",
+          "processStills": [
+            {
+              "src": "geeks4drisony/drawing/drawing 1.jpg",
+              "alt": "Drawing 1",
+              "title": "Drawing 1"
+            },
+            {
+              "src": "geeks4drisony/drawing/drawing 2.webp",
+              "alt": "Drawing 2",
+              "title": "Drawing 2"
+            },
+            {
+              "src": "geeks4drisony/drawing/drawing 3.webp",
+              "alt": "Drawing 3",
+              "title": "Drawing 3"
+            }
+          ]
         },
         {
           "src": "geeks4drisony/drawing/drawing 12.webp",
@@ -124,7 +372,29 @@
           "alt": "Drawing 12",
           "mtimeMs": 1786435637906.4343,
           "mtime": "2026-08-11T08:07:17.906Z",
-          "type": "image"
+          "type": "image",
+          "slug": "drawing-drawing-12",
+          "year": 2026,
+          "client": "Personal / Freelance",
+          "role": "Graphic Designer & Motion Artist",
+          "brief": "A Drawing project — Drawing 12. Crafted with bold visual language, refined composition, and attention to detail across every stage of the creative process.",
+          "processStills": [
+            {
+              "src": "geeks4drisony/drawing/drawing 1.jpg",
+              "alt": "Drawing 1",
+              "title": "Drawing 1"
+            },
+            {
+              "src": "geeks4drisony/drawing/drawing 2.webp",
+              "alt": "Drawing 2",
+              "title": "Drawing 2"
+            },
+            {
+              "src": "geeks4drisony/drawing/drawing 3.webp",
+              "alt": "Drawing 3",
+              "title": "Drawing 3"
+            }
+          ]
         },
         {
           "src": "geeks4drisony/drawing/drawing 13.webp",
@@ -133,7 +403,29 @@
           "alt": "Drawing 13",
           "mtimeMs": 1786435637225.4348,
           "mtime": "2026-08-11T08:07:17.225Z",
-          "type": "image"
+          "type": "image",
+          "slug": "drawing-drawing-13",
+          "year": 2026,
+          "client": "Personal / Freelance",
+          "role": "Graphic Designer & Motion Artist",
+          "brief": "A Drawing project — Drawing 13. Crafted with bold visual language, refined composition, and attention to detail across every stage of the creative process.",
+          "processStills": [
+            {
+              "src": "geeks4drisony/drawing/drawing 1.jpg",
+              "alt": "Drawing 1",
+              "title": "Drawing 1"
+            },
+            {
+              "src": "geeks4drisony/drawing/drawing 2.webp",
+              "alt": "Drawing 2",
+              "title": "Drawing 2"
+            },
+            {
+              "src": "geeks4drisony/drawing/drawing 3.webp",
+              "alt": "Drawing 3",
+              "title": "Drawing 3"
+            }
+          ]
         },
         {
           "src": "geeks4drisony/drawing/drawing 15.webp",
@@ -142,7 +434,29 @@
           "alt": "Drawing 15",
           "mtimeMs": 1786435636875.4368,
           "mtime": "2026-08-11T08:07:16.875Z",
-          "type": "image"
+          "type": "image",
+          "slug": "drawing-drawing-15",
+          "year": 2026,
+          "client": "Personal / Freelance",
+          "role": "Graphic Designer & Motion Artist",
+          "brief": "A Drawing project — Drawing 15. Crafted with bold visual language, refined composition, and attention to detail across every stage of the creative process.",
+          "processStills": [
+            {
+              "src": "geeks4drisony/drawing/drawing 1.jpg",
+              "alt": "Drawing 1",
+              "title": "Drawing 1"
+            },
+            {
+              "src": "geeks4drisony/drawing/drawing 2.webp",
+              "alt": "Drawing 2",
+              "title": "Drawing 2"
+            },
+            {
+              "src": "geeks4drisony/drawing/drawing 3.webp",
+              "alt": "Drawing 3",
+              "title": "Drawing 3"
+            }
+          ]
         },
         {
           "src": "geeks4drisony/drawing/drawing 14.webp",
@@ -151,7 +465,29 @@
           "alt": "Drawing 14",
           "mtimeMs": 1786435636118.4377,
           "mtime": "2026-08-11T08:07:16.118Z",
-          "type": "image"
+          "type": "image",
+          "slug": "drawing-drawing-14",
+          "year": 2026,
+          "client": "Personal / Freelance",
+          "role": "Graphic Designer & Motion Artist",
+          "brief": "A Drawing project — Drawing 14. Crafted with bold visual language, refined composition, and attention to detail across every stage of the creative process.",
+          "processStills": [
+            {
+              "src": "geeks4drisony/drawing/drawing 1.jpg",
+              "alt": "Drawing 1",
+              "title": "Drawing 1"
+            },
+            {
+              "src": "geeks4drisony/drawing/drawing 2.webp",
+              "alt": "Drawing 2",
+              "title": "Drawing 2"
+            },
+            {
+              "src": "geeks4drisony/drawing/drawing 3.webp",
+              "alt": "Drawing 3",
+              "title": "Drawing 3"
+            }
+          ]
         },
         {
           "src": "geeks4drisony/drawing/drawing 16.webp",
@@ -160,7 +496,29 @@
           "alt": "Drawing 16",
           "mtimeMs": 1786435635353.4358,
           "mtime": "2026-08-11T08:07:15.353Z",
-          "type": "image"
+          "type": "image",
+          "slug": "drawing-drawing-16",
+          "year": 2026,
+          "client": "Personal / Freelance",
+          "role": "Graphic Designer & Motion Artist",
+          "brief": "A Drawing project — Drawing 16. Crafted with bold visual language, refined composition, and attention to detail across every stage of the creative process.",
+          "processStills": [
+            {
+              "src": "geeks4drisony/drawing/drawing 1.jpg",
+              "alt": "Drawing 1",
+              "title": "Drawing 1"
+            },
+            {
+              "src": "geeks4drisony/drawing/drawing 2.webp",
+              "alt": "Drawing 2",
+              "title": "Drawing 2"
+            },
+            {
+              "src": "geeks4drisony/drawing/drawing 3.webp",
+              "alt": "Drawing 3",
+              "title": "Drawing 3"
+            }
+          ]
         },
         {
           "src": "geeks4drisony/drawing/drawing 17.webp",
@@ -169,7 +527,29 @@
           "alt": "Drawing 17",
           "mtimeMs": 1786435634443.7983,
           "mtime": "2026-08-11T08:07:14.444Z",
-          "type": "image"
+          "type": "image",
+          "slug": "drawing-drawing-17",
+          "year": 2026,
+          "client": "Personal / Freelance",
+          "role": "Graphic Designer & Motion Artist",
+          "brief": "A Drawing project — Drawing 17. Crafted with bold visual language, refined composition, and attention to detail across every stage of the creative process.",
+          "processStills": [
+            {
+              "src": "geeks4drisony/drawing/drawing 1.jpg",
+              "alt": "Drawing 1",
+              "title": "Drawing 1"
+            },
+            {
+              "src": "geeks4drisony/drawing/drawing 2.webp",
+              "alt": "Drawing 2",
+              "title": "Drawing 2"
+            },
+            {
+              "src": "geeks4drisony/drawing/drawing 3.webp",
+              "alt": "Drawing 3",
+              "title": "Drawing 3"
+            }
+          ]
         },
         {
           "src": "geeks4drisony/drawing/drawing 18.webp",
@@ -178,7 +558,29 @@
           "alt": "Drawing 18",
           "mtimeMs": 1786435634045.7988,
           "mtime": "2026-08-11T08:07:14.046Z",
-          "type": "image"
+          "type": "image",
+          "slug": "drawing-drawing-18",
+          "year": 2026,
+          "client": "Personal / Freelance",
+          "role": "Graphic Designer & Motion Artist",
+          "brief": "A Drawing project — Drawing 18. Crafted with bold visual language, refined composition, and attention to detail across every stage of the creative process.",
+          "processStills": [
+            {
+              "src": "geeks4drisony/drawing/drawing 1.jpg",
+              "alt": "Drawing 1",
+              "title": "Drawing 1"
+            },
+            {
+              "src": "geeks4drisony/drawing/drawing 2.webp",
+              "alt": "Drawing 2",
+              "title": "Drawing 2"
+            },
+            {
+              "src": "geeks4drisony/drawing/drawing 3.webp",
+              "alt": "Drawing 3",
+              "title": "Drawing 3"
+            }
+          ]
         },
         {
           "src": "geeks4drisony/drawing/drawing 19.webp",
@@ -187,7 +589,29 @@
           "alt": "Drawing 19",
           "mtimeMs": 1786435633150.798,
           "mtime": "2026-08-11T08:07:13.151Z",
-          "type": "image"
+          "type": "image",
+          "slug": "drawing-drawing-19",
+          "year": 2026,
+          "client": "Personal / Freelance",
+          "role": "Graphic Designer & Motion Artist",
+          "brief": "A Drawing project — Drawing 19. Crafted with bold visual language, refined composition, and attention to detail across every stage of the creative process.",
+          "processStills": [
+            {
+              "src": "geeks4drisony/drawing/drawing 1.jpg",
+              "alt": "Drawing 1",
+              "title": "Drawing 1"
+            },
+            {
+              "src": "geeks4drisony/drawing/drawing 2.webp",
+              "alt": "Drawing 2",
+              "title": "Drawing 2"
+            },
+            {
+              "src": "geeks4drisony/drawing/drawing 3.webp",
+              "alt": "Drawing 3",
+              "title": "Drawing 3"
+            }
+          ]
         },
         {
           "src": "geeks4drisony/drawing/drawing 20.webp",
@@ -196,7 +620,29 @@
           "alt": "Drawing 20",
           "mtimeMs": 1786435632302.7102,
           "mtime": "2026-08-11T08:07:12.303Z",
-          "type": "image"
+          "type": "image",
+          "slug": "drawing-drawing-20",
+          "year": 2026,
+          "client": "Personal / Freelance",
+          "role": "Graphic Designer & Motion Artist",
+          "brief": "A Drawing project — Drawing 20. Crafted with bold visual language, refined composition, and attention to detail across every stage of the creative process.",
+          "processStills": [
+            {
+              "src": "geeks4drisony/drawing/drawing 1.jpg",
+              "alt": "Drawing 1",
+              "title": "Drawing 1"
+            },
+            {
+              "src": "geeks4drisony/drawing/drawing 2.webp",
+              "alt": "Drawing 2",
+              "title": "Drawing 2"
+            },
+            {
+              "src": "geeks4drisony/drawing/drawing 3.webp",
+              "alt": "Drawing 3",
+              "title": "Drawing 3"
+            }
+          ]
         },
         {
           "src": "geeks4drisony/drawing/drawing 21.webp",
@@ -205,7 +651,29 @@
           "alt": "Drawing 21",
           "mtimeMs": 1786435631008.9426,
           "mtime": "2026-08-11T08:07:11.009Z",
-          "type": "image"
+          "type": "image",
+          "slug": "drawing-drawing-21",
+          "year": 2026,
+          "client": "Personal / Freelance",
+          "role": "Graphic Designer & Motion Artist",
+          "brief": "A Drawing project — Drawing 21. Crafted with bold visual language, refined composition, and attention to detail across every stage of the creative process.",
+          "processStills": [
+            {
+              "src": "geeks4drisony/drawing/drawing 1.jpg",
+              "alt": "Drawing 1",
+              "title": "Drawing 1"
+            },
+            {
+              "src": "geeks4drisony/drawing/drawing 2.webp",
+              "alt": "Drawing 2",
+              "title": "Drawing 2"
+            },
+            {
+              "src": "geeks4drisony/drawing/drawing 3.webp",
+              "alt": "Drawing 3",
+              "title": "Drawing 3"
+            }
+          ]
         },
         {
           "src": "geeks4drisony/drawing/drawing 22.webp",
@@ -214,7 +682,29 @@
           "alt": "Drawing 22",
           "mtimeMs": 1786435630799.9463,
           "mtime": "2026-08-11T08:07:10.800Z",
-          "type": "image"
+          "type": "image",
+          "slug": "drawing-drawing-22",
+          "year": 2026,
+          "client": "Personal / Freelance",
+          "role": "Graphic Designer & Motion Artist",
+          "brief": "A Drawing project — Drawing 22. Crafted with bold visual language, refined composition, and attention to detail across every stage of the creative process.",
+          "processStills": [
+            {
+              "src": "geeks4drisony/drawing/drawing 1.jpg",
+              "alt": "Drawing 1",
+              "title": "Drawing 1"
+            },
+            {
+              "src": "geeks4drisony/drawing/drawing 2.webp",
+              "alt": "Drawing 2",
+              "title": "Drawing 2"
+            },
+            {
+              "src": "geeks4drisony/drawing/drawing 3.webp",
+              "alt": "Drawing 3",
+              "title": "Drawing 3"
+            }
+          ]
         },
         {
           "src": "geeks4drisony/drawing/drawing 23.webp",
@@ -223,7 +713,29 @@
           "alt": "Drawing 23",
           "mtimeMs": 1786435630311.7488,
           "mtime": "2026-08-11T08:07:10.312Z",
-          "type": "image"
+          "type": "image",
+          "slug": "drawing-drawing-23",
+          "year": 2026,
+          "client": "Personal / Freelance",
+          "role": "Graphic Designer & Motion Artist",
+          "brief": "A Drawing project — Drawing 23. Crafted with bold visual language, refined composition, and attention to detail across every stage of the creative process.",
+          "processStills": [
+            {
+              "src": "geeks4drisony/drawing/drawing 1.jpg",
+              "alt": "Drawing 1",
+              "title": "Drawing 1"
+            },
+            {
+              "src": "geeks4drisony/drawing/drawing 2.webp",
+              "alt": "Drawing 2",
+              "title": "Drawing 2"
+            },
+            {
+              "src": "geeks4drisony/drawing/drawing 3.webp",
+              "alt": "Drawing 3",
+              "title": "Drawing 3"
+            }
+          ]
         },
         {
           "src": "geeks4drisony/drawing/drawing 24.webp",
@@ -232,7 +744,29 @@
           "alt": "Drawing 24",
           "mtimeMs": 1786435629738.753,
           "mtime": "2026-08-11T08:07:09.739Z",
-          "type": "image"
+          "type": "image",
+          "slug": "drawing-drawing-24",
+          "year": 2026,
+          "client": "Personal / Freelance",
+          "role": "Graphic Designer & Motion Artist",
+          "brief": "A Drawing project — Drawing 24. Crafted with bold visual language, refined composition, and attention to detail across every stage of the creative process.",
+          "processStills": [
+            {
+              "src": "geeks4drisony/drawing/drawing 1.jpg",
+              "alt": "Drawing 1",
+              "title": "Drawing 1"
+            },
+            {
+              "src": "geeks4drisony/drawing/drawing 2.webp",
+              "alt": "Drawing 2",
+              "title": "Drawing 2"
+            },
+            {
+              "src": "geeks4drisony/drawing/drawing 3.webp",
+              "alt": "Drawing 3",
+              "title": "Drawing 3"
+            }
+          ]
         },
         {
           "src": "geeks4drisony/drawing/drawing 25.webp",
@@ -241,7 +775,29 @@
           "alt": "Drawing 25",
           "mtimeMs": 1786435629433.9834,
           "mtime": "2026-08-11T08:07:09.434Z",
-          "type": "image"
+          "type": "image",
+          "slug": "drawing-drawing-25",
+          "year": 2026,
+          "client": "Personal / Freelance",
+          "role": "Graphic Designer & Motion Artist",
+          "brief": "A Drawing project — Drawing 25. Crafted with bold visual language, refined composition, and attention to detail across every stage of the creative process.",
+          "processStills": [
+            {
+              "src": "geeks4drisony/drawing/drawing 1.jpg",
+              "alt": "Drawing 1",
+              "title": "Drawing 1"
+            },
+            {
+              "src": "geeks4drisony/drawing/drawing 2.webp",
+              "alt": "Drawing 2",
+              "title": "Drawing 2"
+            },
+            {
+              "src": "geeks4drisony/drawing/drawing 3.webp",
+              "alt": "Drawing 3",
+              "title": "Drawing 3"
+            }
+          ]
         },
         {
           "src": "geeks4drisony/drawing/drawing 26.webp",
@@ -250,7 +806,29 @@
           "alt": "Drawing 26",
           "mtimeMs": 1786435628980.9795,
           "mtime": "2026-08-11T08:07:08.981Z",
-          "type": "image"
+          "type": "image",
+          "slug": "drawing-drawing-26",
+          "year": 2026,
+          "client": "Personal / Freelance",
+          "role": "Graphic Designer & Motion Artist",
+          "brief": "A Drawing project — Drawing 26. Crafted with bold visual language, refined composition, and attention to detail across every stage of the creative process.",
+          "processStills": [
+            {
+              "src": "geeks4drisony/drawing/drawing 1.jpg",
+              "alt": "Drawing 1",
+              "title": "Drawing 1"
+            },
+            {
+              "src": "geeks4drisony/drawing/drawing 2.webp",
+              "alt": "Drawing 2",
+              "title": "Drawing 2"
+            },
+            {
+              "src": "geeks4drisony/drawing/drawing 3.webp",
+              "alt": "Drawing 3",
+              "title": "Drawing 3"
+            }
+          ]
         },
         {
           "src": "geeks4drisony/drawing/drawing 27.webp",
@@ -259,7 +837,29 @@
           "alt": "Drawing 27",
           "mtimeMs": 1786435628771.9827,
           "mtime": "2026-08-11T08:07:08.772Z",
-          "type": "image"
+          "type": "image",
+          "slug": "drawing-drawing-27",
+          "year": 2026,
+          "client": "Personal / Freelance",
+          "role": "Graphic Designer & Motion Artist",
+          "brief": "A Drawing project — Drawing 27. Crafted with bold visual language, refined composition, and attention to detail across every stage of the creative process.",
+          "processStills": [
+            {
+              "src": "geeks4drisony/drawing/drawing 1.jpg",
+              "alt": "Drawing 1",
+              "title": "Drawing 1"
+            },
+            {
+              "src": "geeks4drisony/drawing/drawing 2.webp",
+              "alt": "Drawing 2",
+              "title": "Drawing 2"
+            },
+            {
+              "src": "geeks4drisony/drawing/drawing 3.webp",
+              "alt": "Drawing 3",
+              "title": "Drawing 3"
+            }
+          ]
         },
         {
           "src": "geeks4drisony/drawing/drawing 28.webp",
@@ -268,7 +868,29 @@
           "alt": "Drawing 28",
           "mtimeMs": 1786435628574.9824,
           "mtime": "2026-08-11T08:07:08.575Z",
-          "type": "image"
+          "type": "image",
+          "slug": "drawing-drawing-28",
+          "year": 2026,
+          "client": "Personal / Freelance",
+          "role": "Graphic Designer & Motion Artist",
+          "brief": "A Drawing project — Drawing 28. Crafted with bold visual language, refined composition, and attention to detail across every stage of the creative process.",
+          "processStills": [
+            {
+              "src": "geeks4drisony/drawing/drawing 1.jpg",
+              "alt": "Drawing 1",
+              "title": "Drawing 1"
+            },
+            {
+              "src": "geeks4drisony/drawing/drawing 2.webp",
+              "alt": "Drawing 2",
+              "title": "Drawing 2"
+            },
+            {
+              "src": "geeks4drisony/drawing/drawing 3.webp",
+              "alt": "Drawing 3",
+              "title": "Drawing 3"
+            }
+          ]
         },
         {
           "src": "geeks4drisony/drawing/drawing 29.webp",
@@ -277,7 +899,29 @@
           "alt": "Drawing 29",
           "mtimeMs": 1786435628333.98,
           "mtime": "2026-08-11T08:07:08.334Z",
-          "type": "image"
+          "type": "image",
+          "slug": "drawing-drawing-29",
+          "year": 2026,
+          "client": "Personal / Freelance",
+          "role": "Graphic Designer & Motion Artist",
+          "brief": "A Drawing project — Drawing 29. Crafted with bold visual language, refined composition, and attention to detail across every stage of the creative process.",
+          "processStills": [
+            {
+              "src": "geeks4drisony/drawing/drawing 1.jpg",
+              "alt": "Drawing 1",
+              "title": "Drawing 1"
+            },
+            {
+              "src": "geeks4drisony/drawing/drawing 2.webp",
+              "alt": "Drawing 2",
+              "title": "Drawing 2"
+            },
+            {
+              "src": "geeks4drisony/drawing/drawing 3.webp",
+              "alt": "Drawing 3",
+              "title": "Drawing 3"
+            }
+          ]
         },
         {
           "src": "geeks4drisony/drawing/drawing 31.webp",
@@ -286,7 +930,29 @@
           "alt": "Drawing 31",
           "mtimeMs": 1786435627825.2126,
           "mtime": "2026-08-11T08:07:07.825Z",
-          "type": "image"
+          "type": "image",
+          "slug": "drawing-drawing-31",
+          "year": 2026,
+          "client": "Personal / Freelance",
+          "role": "Graphic Designer & Motion Artist",
+          "brief": "A Drawing project — Drawing 31. Crafted with bold visual language, refined composition, and attention to detail across every stage of the creative process.",
+          "processStills": [
+            {
+              "src": "geeks4drisony/drawing/drawing 1.jpg",
+              "alt": "Drawing 1",
+              "title": "Drawing 1"
+            },
+            {
+              "src": "geeks4drisony/drawing/drawing 2.webp",
+              "alt": "Drawing 2",
+              "title": "Drawing 2"
+            },
+            {
+              "src": "geeks4drisony/drawing/drawing 3.webp",
+              "alt": "Drawing 3",
+              "title": "Drawing 3"
+            }
+          ]
         },
         {
           "src": "geeks4drisony/drawing/drawing 30.webp",
@@ -295,7 +961,29 @@
           "alt": "Drawing 30",
           "mtimeMs": 1786435627306.8196,
           "mtime": "2026-08-11T08:07:07.307Z",
-          "type": "image"
+          "type": "image",
+          "slug": "drawing-drawing-30",
+          "year": 2026,
+          "client": "Personal / Freelance",
+          "role": "Graphic Designer & Motion Artist",
+          "brief": "A Drawing project — Drawing 30. Crafted with bold visual language, refined composition, and attention to detail across every stage of the creative process.",
+          "processStills": [
+            {
+              "src": "geeks4drisony/drawing/drawing 1.jpg",
+              "alt": "Drawing 1",
+              "title": "Drawing 1"
+            },
+            {
+              "src": "geeks4drisony/drawing/drawing 2.webp",
+              "alt": "Drawing 2",
+              "title": "Drawing 2"
+            },
+            {
+              "src": "geeks4drisony/drawing/drawing 3.webp",
+              "alt": "Drawing 3",
+              "title": "Drawing 3"
+            }
+          ]
         },
         {
           "src": "geeks4drisony/drawing/drawing 33.webp",
@@ -304,7 +992,29 @@
           "alt": "Drawing 33",
           "mtimeMs": 1786435626863.9407,
           "mtime": "2026-08-11T08:07:06.864Z",
-          "type": "image"
+          "type": "image",
+          "slug": "drawing-drawing-33",
+          "year": 2026,
+          "client": "Personal / Freelance",
+          "role": "Graphic Designer & Motion Artist",
+          "brief": "A Drawing project — Drawing 33. Crafted with bold visual language, refined composition, and attention to detail across every stage of the creative process.",
+          "processStills": [
+            {
+              "src": "geeks4drisony/drawing/drawing 1.jpg",
+              "alt": "Drawing 1",
+              "title": "Drawing 1"
+            },
+            {
+              "src": "geeks4drisony/drawing/drawing 2.webp",
+              "alt": "Drawing 2",
+              "title": "Drawing 2"
+            },
+            {
+              "src": "geeks4drisony/drawing/drawing 3.webp",
+              "alt": "Drawing 3",
+              "title": "Drawing 3"
+            }
+          ]
         },
         {
           "src": "geeks4drisony/drawing/drawing 32.webp",
@@ -313,7 +1023,29 @@
           "alt": "Drawing 32",
           "mtimeMs": 1786435626247.861,
           "mtime": "2026-08-11T08:07:06.248Z",
-          "type": "image"
+          "type": "image",
+          "slug": "drawing-drawing-32",
+          "year": 2026,
+          "client": "Personal / Freelance",
+          "role": "Graphic Designer & Motion Artist",
+          "brief": "A Drawing project — Drawing 32. Crafted with bold visual language, refined composition, and attention to detail across every stage of the creative process.",
+          "processStills": [
+            {
+              "src": "geeks4drisony/drawing/drawing 1.jpg",
+              "alt": "Drawing 1",
+              "title": "Drawing 1"
+            },
+            {
+              "src": "geeks4drisony/drawing/drawing 2.webp",
+              "alt": "Drawing 2",
+              "title": "Drawing 2"
+            },
+            {
+              "src": "geeks4drisony/drawing/drawing 3.webp",
+              "alt": "Drawing 3",
+              "title": "Drawing 3"
+            }
+          ]
         },
         {
           "src": "geeks4drisony/drawing/drawing 34.webp",
@@ -322,7 +1054,29 @@
           "alt": "Drawing 34",
           "mtimeMs": 1786435626073.86,
           "mtime": "2026-08-11T08:07:06.074Z",
-          "type": "image"
+          "type": "image",
+          "slug": "drawing-drawing-34",
+          "year": 2026,
+          "client": "Personal / Freelance",
+          "role": "Graphic Designer & Motion Artist",
+          "brief": "A Drawing project — Drawing 34. Crafted with bold visual language, refined composition, and attention to detail across every stage of the creative process.",
+          "processStills": [
+            {
+              "src": "geeks4drisony/drawing/drawing 1.jpg",
+              "alt": "Drawing 1",
+              "title": "Drawing 1"
+            },
+            {
+              "src": "geeks4drisony/drawing/drawing 2.webp",
+              "alt": "Drawing 2",
+              "title": "Drawing 2"
+            },
+            {
+              "src": "geeks4drisony/drawing/drawing 3.webp",
+              "alt": "Drawing 3",
+              "title": "Drawing 3"
+            }
+          ]
         },
         {
           "src": "geeks4drisony/drawing/drawing 36.webp",
@@ -331,7 +1085,29 @@
           "alt": "Drawing 36",
           "mtimeMs": 1786435625560.7893,
           "mtime": "2026-08-11T08:07:05.561Z",
-          "type": "image"
+          "type": "image",
+          "slug": "drawing-drawing-36",
+          "year": 2026,
+          "client": "Personal / Freelance",
+          "role": "Graphic Designer & Motion Artist",
+          "brief": "A Drawing project — Drawing 36. Crafted with bold visual language, refined composition, and attention to detail across every stage of the creative process.",
+          "processStills": [
+            {
+              "src": "geeks4drisony/drawing/drawing 1.jpg",
+              "alt": "Drawing 1",
+              "title": "Drawing 1"
+            },
+            {
+              "src": "geeks4drisony/drawing/drawing 2.webp",
+              "alt": "Drawing 2",
+              "title": "Drawing 2"
+            },
+            {
+              "src": "geeks4drisony/drawing/drawing 3.webp",
+              "alt": "Drawing 3",
+              "title": "Drawing 3"
+            }
+          ]
         },
         {
           "src": "geeks4drisony/drawing/drawing 35.webp",
@@ -340,7 +1116,29 @@
           "alt": "Drawing 35",
           "mtimeMs": 1786435625085.2612,
           "mtime": "2026-08-11T08:07:05.085Z",
-          "type": "image"
+          "type": "image",
+          "slug": "drawing-drawing-35",
+          "year": 2026,
+          "client": "Personal / Freelance",
+          "role": "Graphic Designer & Motion Artist",
+          "brief": "A Drawing project — Drawing 35. Crafted with bold visual language, refined composition, and attention to detail across every stage of the creative process.",
+          "processStills": [
+            {
+              "src": "geeks4drisony/drawing/drawing 1.jpg",
+              "alt": "Drawing 1",
+              "title": "Drawing 1"
+            },
+            {
+              "src": "geeks4drisony/drawing/drawing 2.webp",
+              "alt": "Drawing 2",
+              "title": "Drawing 2"
+            },
+            {
+              "src": "geeks4drisony/drawing/drawing 3.webp",
+              "alt": "Drawing 3",
+              "title": "Drawing 3"
+            }
+          ]
         },
         {
           "src": "geeks4drisony/drawing/drawing 37.webp",
@@ -349,7 +1147,29 @@
           "alt": "Drawing 37",
           "mtimeMs": 1786435624397.7742,
           "mtime": "2026-08-11T08:07:04.398Z",
-          "type": "image"
+          "type": "image",
+          "slug": "drawing-drawing-37",
+          "year": 2026,
+          "client": "Personal / Freelance",
+          "role": "Graphic Designer & Motion Artist",
+          "brief": "A Drawing project — Drawing 37. Crafted with bold visual language, refined composition, and attention to detail across every stage of the creative process.",
+          "processStills": [
+            {
+              "src": "geeks4drisony/drawing/drawing 1.jpg",
+              "alt": "Drawing 1",
+              "title": "Drawing 1"
+            },
+            {
+              "src": "geeks4drisony/drawing/drawing 2.webp",
+              "alt": "Drawing 2",
+              "title": "Drawing 2"
+            },
+            {
+              "src": "geeks4drisony/drawing/drawing 3.webp",
+              "alt": "Drawing 3",
+              "title": "Drawing 3"
+            }
+          ]
         },
         {
           "src": "geeks4drisony/drawing/drawing 39.webp",
@@ -358,7 +1178,29 @@
           "alt": "Drawing 39",
           "mtimeMs": 1786435623892.092,
           "mtime": "2026-08-11T08:07:03.892Z",
-          "type": "image"
+          "type": "image",
+          "slug": "drawing-drawing-39",
+          "year": 2026,
+          "client": "Personal / Freelance",
+          "role": "Graphic Designer & Motion Artist",
+          "brief": "A Drawing project — Drawing 39. Crafted with bold visual language, refined composition, and attention to detail across every stage of the creative process.",
+          "processStills": [
+            {
+              "src": "geeks4drisony/drawing/drawing 1.jpg",
+              "alt": "Drawing 1",
+              "title": "Drawing 1"
+            },
+            {
+              "src": "geeks4drisony/drawing/drawing 2.webp",
+              "alt": "Drawing 2",
+              "title": "Drawing 2"
+            },
+            {
+              "src": "geeks4drisony/drawing/drawing 3.webp",
+              "alt": "Drawing 3",
+              "title": "Drawing 3"
+            }
+          ]
         },
         {
           "src": "geeks4drisony/drawing/drawing 38.webp",
@@ -367,7 +1209,29 @@
           "alt": "Drawing 38",
           "mtimeMs": 1786435623448.594,
           "mtime": "2026-08-11T08:07:03.449Z",
-          "type": "image"
+          "type": "image",
+          "slug": "drawing-drawing-38",
+          "year": 2026,
+          "client": "Personal / Freelance",
+          "role": "Graphic Designer & Motion Artist",
+          "brief": "A Drawing project — Drawing 38. Crafted with bold visual language, refined composition, and attention to detail across every stage of the creative process.",
+          "processStills": [
+            {
+              "src": "geeks4drisony/drawing/drawing 1.jpg",
+              "alt": "Drawing 1",
+              "title": "Drawing 1"
+            },
+            {
+              "src": "geeks4drisony/drawing/drawing 2.webp",
+              "alt": "Drawing 2",
+              "title": "Drawing 2"
+            },
+            {
+              "src": "geeks4drisony/drawing/drawing 3.webp",
+              "alt": "Drawing 3",
+              "title": "Drawing 3"
+            }
+          ]
         }
       ]
     },
@@ -381,7 +1245,24 @@
           "alt": "Logo Design 1",
           "mtimeMs": 1786435580872.2744,
           "mtime": "2026-08-11T08:06:20.872Z",
-          "type": "image"
+          "type": "image",
+          "slug": "logo-design-logo-design-1",
+          "year": 2026,
+          "client": "Personal / Freelance",
+          "role": "Graphic Designer & Motion Artist",
+          "brief": "A Logo Design project — Logo Design 1. Crafted with bold visual language, refined composition, and attention to detail across every stage of the creative process.",
+          "processStills": [
+            {
+              "src": "geeks4drisony/logo design/Logo design.webp",
+              "alt": "Logo Design",
+              "title": "Logo Design"
+            },
+            {
+              "src": "geeks4drisony/logo design/logo moke-up.webp",
+              "alt": "Logo Moke Up",
+              "title": "Logo Moke Up"
+            }
+          ]
         },
         {
           "src": "geeks4drisony/logo design/Logo design.webp",
@@ -390,7 +1271,24 @@
           "alt": "Logo Design",
           "mtimeMs": 1786435580308.9685,
           "mtime": "2026-08-11T08:06:20.309Z",
-          "type": "image"
+          "type": "image",
+          "slug": "logo-design-logo-design",
+          "year": 2026,
+          "client": "Personal / Freelance",
+          "role": "Graphic Designer & Motion Artist",
+          "brief": "A Logo Design project — Logo Design. Crafted with bold visual language, refined composition, and attention to detail across every stage of the creative process.",
+          "processStills": [
+            {
+              "src": "geeks4drisony/logo design/logo design 1.webp",
+              "alt": "Logo Design 1",
+              "title": "Logo Design 1"
+            },
+            {
+              "src": "geeks4drisony/logo design/logo moke-up.webp",
+              "alt": "Logo Moke Up",
+              "title": "Logo Moke Up"
+            }
+          ]
         },
         {
           "src": "geeks4drisony/logo design/logo moke-up.webp",
@@ -399,7 +1297,24 @@
           "alt": "Logo Moke Up",
           "mtimeMs": 1786435579404.969,
           "mtime": "2026-08-11T08:06:19.405Z",
-          "type": "image"
+          "type": "image",
+          "slug": "logo-design-logo-moke-up",
+          "year": 2026,
+          "client": "Personal / Freelance",
+          "role": "Graphic Designer & Motion Artist",
+          "brief": "A Logo Design project — Logo Moke Up. Crafted with bold visual language, refined composition, and attention to detail across every stage of the creative process.",
+          "processStills": [
+            {
+              "src": "geeks4drisony/logo design/logo design 1.webp",
+              "alt": "Logo Design 1",
+              "title": "Logo Design 1"
+            },
+            {
+              "src": "geeks4drisony/logo design/Logo design.webp",
+              "alt": "Logo Design",
+              "title": "Logo Design"
+            }
+          ]
         }
       ]
     },
@@ -413,7 +1328,19 @@
           "alt": "Inspiration",
           "mtimeMs": 1786435645515.0305,
           "mtime": "2026-08-11T08:07:25.515Z",
-          "type": "video"
+          "type": "video",
+          "slug": "motion-graphic-inspiration",
+          "year": 2026,
+          "client": "Personal / Freelance",
+          "role": "Graphic Designer & Motion Artist",
+          "brief": "A Motion Graphic project — Inspiration. Crafted with bold visual language, refined composition, and attention to detail across every stage of the creative process.",
+          "processStills": [
+            {
+              "src": "geeks4drisony/motion graphic/after effects charactor rigging.jpg",
+              "alt": "After Effects Charactor Rigging",
+              "title": "After Effects Charactor Rigging"
+            }
+          ]
         },
         {
           "src": "geeks4drisony/motion graphic/UI motion graphics.mp4",
@@ -422,7 +1349,19 @@
           "alt": "UI Motion Graphics",
           "mtimeMs": 1786435622182.5217,
           "mtime": "2026-08-11T08:07:02.183Z",
-          "type": "video"
+          "type": "video",
+          "slug": "motion-graphic-ui-motion-graphics",
+          "year": 2026,
+          "client": "Personal / Freelance",
+          "role": "Graphic Designer & Motion Artist",
+          "brief": "A Motion Graphic project — UI Motion Graphics. Crafted with bold visual language, refined composition, and attention to detail across every stage of the creative process.",
+          "processStills": [
+            {
+              "src": "geeks4drisony/motion graphic/after effects charactor rigging.jpg",
+              "alt": "After Effects Charactor Rigging",
+              "title": "After Effects Charactor Rigging"
+            }
+          ]
         },
         {
           "src": "geeks4drisony/motion graphic/Logo animation.mp4",
@@ -431,7 +1370,19 @@
           "alt": "Logo Animation",
           "mtimeMs": 1786435620286.2688,
           "mtime": "2026-08-11T08:07:00.286Z",
-          "type": "video"
+          "type": "video",
+          "slug": "motion-graphic-logo-animation",
+          "year": 2026,
+          "client": "Personal / Freelance",
+          "role": "Graphic Designer & Motion Artist",
+          "brief": "A Motion Graphic project — Logo Animation. Crafted with bold visual language, refined composition, and attention to detail across every stage of the creative process.",
+          "processStills": [
+            {
+              "src": "geeks4drisony/motion graphic/after effects charactor rigging.jpg",
+              "alt": "After Effects Charactor Rigging",
+              "title": "After Effects Charactor Rigging"
+            }
+          ]
         },
         {
           "src": "geeks4drisony/motion graphic/house motion graphic.mp4",
@@ -440,7 +1391,19 @@
           "alt": "House Motion Graphic",
           "mtimeMs": 1786435618529.4797,
           "mtime": "2026-08-11T08:06:58.529Z",
-          "type": "video"
+          "type": "video",
+          "slug": "motion-graphic-house-motion-graphic",
+          "year": 2026,
+          "client": "Personal / Freelance",
+          "role": "Graphic Designer & Motion Artist",
+          "brief": "A Motion Graphic project — House Motion Graphic. Crafted with bold visual language, refined composition, and attention to detail across every stage of the creative process.",
+          "processStills": [
+            {
+              "src": "geeks4drisony/motion graphic/after effects charactor rigging.jpg",
+              "alt": "After Effects Charactor Rigging",
+              "title": "After Effects Charactor Rigging"
+            }
+          ]
         },
         {
           "src": "geeks4drisony/motion graphic/circle motion graphic.mp4",
@@ -449,7 +1412,19 @@
           "alt": "Circle Motion Graphic",
           "mtimeMs": 1786435616321.1453,
           "mtime": "2026-08-11T08:06:56.321Z",
-          "type": "video"
+          "type": "video",
+          "slug": "motion-graphic-circle-motion-graphic",
+          "year": 2026,
+          "client": "Personal / Freelance",
+          "role": "Graphic Designer & Motion Artist",
+          "brief": "A Motion Graphic project — Circle Motion Graphic. Crafted with bold visual language, refined composition, and attention to detail across every stage of the creative process.",
+          "processStills": [
+            {
+              "src": "geeks4drisony/motion graphic/after effects charactor rigging.jpg",
+              "alt": "After Effects Charactor Rigging",
+              "title": "After Effects Charactor Rigging"
+            }
+          ]
         },
         {
           "src": "geeks4drisony/motion graphic/illusion stars motion.mp4",
@@ -458,7 +1433,19 @@
           "alt": "Illusion Stars Motion",
           "mtimeMs": 1786435614582.306,
           "mtime": "2026-08-11T08:06:54.582Z",
-          "type": "video"
+          "type": "video",
+          "slug": "motion-graphic-illusion-stars-motion",
+          "year": 2026,
+          "client": "Personal / Freelance",
+          "role": "Graphic Designer & Motion Artist",
+          "brief": "A Motion Graphic project — Illusion Stars Motion. Crafted with bold visual language, refined composition, and attention to detail across every stage of the creative process.",
+          "processStills": [
+            {
+              "src": "geeks4drisony/motion graphic/after effects charactor rigging.jpg",
+              "alt": "After Effects Charactor Rigging",
+              "title": "After Effects Charactor Rigging"
+            }
+          ]
         },
         {
           "src": "geeks4drisony/motion graphic/baki beauty motion graphic.mp4",
@@ -467,7 +1454,19 @@
           "alt": "Baki Beauty Motion Graphic",
           "mtimeMs": 1786435610926.7097,
           "mtime": "2026-08-11T08:06:50.927Z",
-          "type": "video"
+          "type": "video",
+          "slug": "motion-graphic-baki-beauty-motion-graphic",
+          "year": 2026,
+          "client": "Personal / Freelance",
+          "role": "Graphic Designer & Motion Artist",
+          "brief": "A Motion Graphic project — Baki Beauty Motion Graphic. Crafted with bold visual language, refined composition, and attention to detail across every stage of the creative process.",
+          "processStills": [
+            {
+              "src": "geeks4drisony/motion graphic/after effects charactor rigging.jpg",
+              "alt": "After Effects Charactor Rigging",
+              "title": "After Effects Charactor Rigging"
+            }
+          ]
         },
         {
           "src": "geeks4drisony/motion graphic/baki beauty loo animation.mp4",
@@ -476,7 +1475,19 @@
           "alt": "Baki Beauty Loo Animation",
           "mtimeMs": 1786435608826.37,
           "mtime": "2026-08-11T08:06:48.826Z",
-          "type": "video"
+          "type": "video",
+          "slug": "motion-graphic-baki-beauty-loo-animation",
+          "year": 2026,
+          "client": "Personal / Freelance",
+          "role": "Graphic Designer & Motion Artist",
+          "brief": "A Motion Graphic project — Baki Beauty Loo Animation. Crafted with bold visual language, refined composition, and attention to detail across every stage of the creative process.",
+          "processStills": [
+            {
+              "src": "geeks4drisony/motion graphic/after effects charactor rigging.jpg",
+              "alt": "After Effects Charactor Rigging",
+              "title": "After Effects Charactor Rigging"
+            }
+          ]
         },
         {
           "src": "geeks4drisony/motion graphic/geeks4drisony_1689234583_3145849512941923589_59524439200.mp4",
@@ -485,7 +1496,19 @@
           "alt": "Geeks4drisony 1689234583 3145849512941923589 59524439200",
           "mtimeMs": 1786435606914.7825,
           "mtime": "2026-08-11T08:06:46.915Z",
-          "type": "video"
+          "type": "video",
+          "slug": "motion-graphic-geeks4drisony-1689234583-3145849512941923589-59524439200",
+          "year": 2026,
+          "client": "Personal / Freelance",
+          "role": "Graphic Designer & Motion Artist",
+          "brief": "A Motion Graphic project — Geeks4drisony 1689234583 3145849512941923589 59524439200. Crafted with bold visual language, refined composition, and attention to detail across every stage of the creative process.",
+          "processStills": [
+            {
+              "src": "geeks4drisony/motion graphic/after effects charactor rigging.jpg",
+              "alt": "After Effects Charactor Rigging",
+              "title": "After Effects Charactor Rigging"
+            }
+          ]
         },
         {
           "src": "geeks4drisony/motion graphic/mental health awareness.mp4",
@@ -494,7 +1517,19 @@
           "alt": "Mental Health Awareness",
           "mtimeMs": 1786435604121.7856,
           "mtime": "2026-08-11T08:06:44.122Z",
-          "type": "video"
+          "type": "video",
+          "slug": "motion-graphic-mental-health-awareness",
+          "year": 2026,
+          "client": "Personal / Freelance",
+          "role": "Graphic Designer & Motion Artist",
+          "brief": "A Motion Graphic project — Mental Health Awareness. Crafted with bold visual language, refined composition, and attention to detail across every stage of the creative process.",
+          "processStills": [
+            {
+              "src": "geeks4drisony/motion graphic/after effects charactor rigging.jpg",
+              "alt": "After Effects Charactor Rigging",
+              "title": "After Effects Charactor Rigging"
+            }
+          ]
         },
         {
           "src": "geeks4drisony/motion graphic/charactor head animation.mp4",
@@ -503,7 +1538,19 @@
           "alt": "Charactor Head Animation",
           "mtimeMs": 1786435601222.2021,
           "mtime": "2026-08-11T08:06:41.222Z",
-          "type": "video"
+          "type": "video",
+          "slug": "motion-graphic-charactor-head-animation",
+          "year": 2026,
+          "client": "Personal / Freelance",
+          "role": "Graphic Designer & Motion Artist",
+          "brief": "A Motion Graphic project — Charactor Head Animation. Crafted with bold visual language, refined composition, and attention to detail across every stage of the creative process.",
+          "processStills": [
+            {
+              "src": "geeks4drisony/motion graphic/after effects charactor rigging.jpg",
+              "alt": "After Effects Charactor Rigging",
+              "title": "After Effects Charactor Rigging"
+            }
+          ]
         },
         {
           "src": "geeks4drisony/motion graphic/after effects charactor rigging.jpg",
@@ -512,7 +1559,13 @@
           "alt": "After Effects Charactor Rigging",
           "mtimeMs": 1786435598414.713,
           "mtime": "2026-08-11T08:06:38.415Z",
-          "type": "image"
+          "type": "image",
+          "slug": "motion-graphic-after-effects-charactor-rigging",
+          "year": 2026,
+          "client": "Personal / Freelance",
+          "role": "Graphic Designer & Motion Artist",
+          "brief": "A Motion Graphic project — After Effects Charactor Rigging. Crafted with bold visual language, refined composition, and attention to detail across every stage of the creative process.",
+          "processStills": []
         },
         {
           "src": "geeks4drisony/motion graphic/charactor animation 1.mp4",
@@ -521,7 +1574,19 @@
           "alt": "Charactor Animation 1",
           "mtimeMs": 1786435596815.7554,
           "mtime": "2026-08-11T08:06:36.816Z",
-          "type": "video"
+          "type": "video",
+          "slug": "motion-graphic-charactor-animation-1",
+          "year": 2026,
+          "client": "Personal / Freelance",
+          "role": "Graphic Designer & Motion Artist",
+          "brief": "A Motion Graphic project — Charactor Animation 1. Crafted with bold visual language, refined composition, and attention to detail across every stage of the creative process.",
+          "processStills": [
+            {
+              "src": "geeks4drisony/motion graphic/after effects charactor rigging.jpg",
+              "alt": "After Effects Charactor Rigging",
+              "title": "After Effects Charactor Rigging"
+            }
+          ]
         },
         {
           "src": "geeks4drisony/motion graphic/charactor animation 2.mp4",
@@ -530,7 +1595,19 @@
           "alt": "Charactor Animation 2",
           "mtimeMs": 1786435594910.424,
           "mtime": "2026-08-11T08:06:34.910Z",
-          "type": "video"
+          "type": "video",
+          "slug": "motion-graphic-charactor-animation-2",
+          "year": 2026,
+          "client": "Personal / Freelance",
+          "role": "Graphic Designer & Motion Artist",
+          "brief": "A Motion Graphic project — Charactor Animation 2. Crafted with bold visual language, refined composition, and attention to detail across every stage of the creative process.",
+          "processStills": [
+            {
+              "src": "geeks4drisony/motion graphic/after effects charactor rigging.jpg",
+              "alt": "After Effects Charactor Rigging",
+              "title": "After Effects Charactor Rigging"
+            }
+          ]
         },
         {
           "src": "geeks4drisony/motion graphic/charactor animation 3.mp4",
@@ -539,7 +1616,19 @@
           "alt": "Charactor Animation 3",
           "mtimeMs": 1786435592822.11,
           "mtime": "2026-08-11T08:06:32.822Z",
-          "type": "video"
+          "type": "video",
+          "slug": "motion-graphic-charactor-animation-3",
+          "year": 2026,
+          "client": "Personal / Freelance",
+          "role": "Graphic Designer & Motion Artist",
+          "brief": "A Motion Graphic project — Charactor Animation 3. Crafted with bold visual language, refined composition, and attention to detail across every stage of the creative process.",
+          "processStills": [
+            {
+              "src": "geeks4drisony/motion graphic/after effects charactor rigging.jpg",
+              "alt": "After Effects Charactor Rigging",
+              "title": "After Effects Charactor Rigging"
+            }
+          ]
         },
         {
           "src": "geeks4drisony/motion graphic/charactor animation 4.mp4",
@@ -548,7 +1637,19 @@
           "alt": "Charactor Animation 4",
           "mtimeMs": 1786435591073.8638,
           "mtime": "2026-08-11T08:06:31.074Z",
-          "type": "video"
+          "type": "video",
+          "slug": "motion-graphic-charactor-animation-4",
+          "year": 2026,
+          "client": "Personal / Freelance",
+          "role": "Graphic Designer & Motion Artist",
+          "brief": "A Motion Graphic project — Charactor Animation 4. Crafted with bold visual language, refined composition, and attention to detail across every stage of the creative process.",
+          "processStills": [
+            {
+              "src": "geeks4drisony/motion graphic/after effects charactor rigging.jpg",
+              "alt": "After Effects Charactor Rigging",
+              "title": "After Effects Charactor Rigging"
+            }
+          ]
         }
       ]
     },
@@ -562,7 +1663,29 @@
           "alt": "Photography 1",
           "mtimeMs": 1786435590428.553,
           "mtime": "2026-08-11T08:06:30.429Z",
-          "type": "image"
+          "type": "image",
+          "slug": "photography-photography-1",
+          "year": 2026,
+          "client": "Personal / Freelance",
+          "role": "Graphic Designer & Motion Artist",
+          "brief": "A Photography project — Photography 1. Crafted with bold visual language, refined composition, and attention to detail across every stage of the creative process.",
+          "processStills": [
+            {
+              "src": "geeks4drisony/photography/photography 3.webp",
+              "alt": "Photography 3",
+              "title": "Photography 3"
+            },
+            {
+              "src": "geeks4drisony/photography/photography 2.webp",
+              "alt": "Photography 2",
+              "title": "Photography 2"
+            },
+            {
+              "src": "geeks4drisony/photography/photography 4.webp",
+              "alt": "Photography 4",
+              "title": "Photography 4"
+            }
+          ]
         },
         {
           "src": "geeks4drisony/photography/photography 3.webp",
@@ -571,7 +1694,29 @@
           "alt": "Photography 3",
           "mtimeMs": 1786435589836.1826,
           "mtime": "2026-08-11T08:06:29.836Z",
-          "type": "image"
+          "type": "image",
+          "slug": "photography-photography-3",
+          "year": 2026,
+          "client": "Personal / Freelance",
+          "role": "Graphic Designer & Motion Artist",
+          "brief": "A Photography project — Photography 3. Crafted with bold visual language, refined composition, and attention to detail across every stage of the creative process.",
+          "processStills": [
+            {
+              "src": "geeks4drisony/photography/photography 1.webp",
+              "alt": "Photography 1",
+              "title": "Photography 1"
+            },
+            {
+              "src": "geeks4drisony/photography/photography 2.webp",
+              "alt": "Photography 2",
+              "title": "Photography 2"
+            },
+            {
+              "src": "geeks4drisony/photography/photography 4.webp",
+              "alt": "Photography 4",
+              "title": "Photography 4"
+            }
+          ]
         },
         {
           "src": "geeks4drisony/photography/photography 2.webp",
@@ -580,7 +1725,29 @@
           "alt": "Photography 2",
           "mtimeMs": 1786435589389.1858,
           "mtime": "2026-08-11T08:06:29.389Z",
-          "type": "image"
+          "type": "image",
+          "slug": "photography-photography-2",
+          "year": 2026,
+          "client": "Personal / Freelance",
+          "role": "Graphic Designer & Motion Artist",
+          "brief": "A Photography project — Photography 2. Crafted with bold visual language, refined composition, and attention to detail across every stage of the creative process.",
+          "processStills": [
+            {
+              "src": "geeks4drisony/photography/photography 1.webp",
+              "alt": "Photography 1",
+              "title": "Photography 1"
+            },
+            {
+              "src": "geeks4drisony/photography/photography 3.webp",
+              "alt": "Photography 3",
+              "title": "Photography 3"
+            },
+            {
+              "src": "geeks4drisony/photography/photography 4.webp",
+              "alt": "Photography 4",
+              "title": "Photography 4"
+            }
+          ]
         },
         {
           "src": "geeks4drisony/photography/photography 4.webp",
@@ -589,7 +1756,29 @@
           "alt": "Photography 4",
           "mtimeMs": 1786435588866.0366,
           "mtime": "2026-08-11T08:06:28.866Z",
-          "type": "image"
+          "type": "image",
+          "slug": "photography-photography-4",
+          "year": 2026,
+          "client": "Personal / Freelance",
+          "role": "Graphic Designer & Motion Artist",
+          "brief": "A Photography project — Photography 4. Crafted with bold visual language, refined composition, and attention to detail across every stage of the creative process.",
+          "processStills": [
+            {
+              "src": "geeks4drisony/photography/photography 1.webp",
+              "alt": "Photography 1",
+              "title": "Photography 1"
+            },
+            {
+              "src": "geeks4drisony/photography/photography 3.webp",
+              "alt": "Photography 3",
+              "title": "Photography 3"
+            },
+            {
+              "src": "geeks4drisony/photography/photography 2.webp",
+              "alt": "Photography 2",
+              "title": "Photography 2"
+            }
+          ]
         },
         {
           "src": "geeks4drisony/photography/photography 6.webp",
@@ -598,7 +1787,29 @@
           "alt": "Photography 6",
           "mtimeMs": 1786435588688.7798,
           "mtime": "2026-08-11T08:06:28.689Z",
-          "type": "image"
+          "type": "image",
+          "slug": "photography-photography-6",
+          "year": 2026,
+          "client": "Personal / Freelance",
+          "role": "Graphic Designer & Motion Artist",
+          "brief": "A Photography project — Photography 6. Crafted with bold visual language, refined composition, and attention to detail across every stage of the creative process.",
+          "processStills": [
+            {
+              "src": "geeks4drisony/photography/photography 1.webp",
+              "alt": "Photography 1",
+              "title": "Photography 1"
+            },
+            {
+              "src": "geeks4drisony/photography/photography 3.webp",
+              "alt": "Photography 3",
+              "title": "Photography 3"
+            },
+            {
+              "src": "geeks4drisony/photography/photography 2.webp",
+              "alt": "Photography 2",
+              "title": "Photography 2"
+            }
+          ]
         },
         {
           "src": "geeks4drisony/photography/photography 5.webp",
@@ -607,7 +1818,29 @@
           "alt": "Photography 5",
           "mtimeMs": 1786435588092.7742,
           "mtime": "2026-08-11T08:06:28.093Z",
-          "type": "image"
+          "type": "image",
+          "slug": "photography-photography-5",
+          "year": 2026,
+          "client": "Personal / Freelance",
+          "role": "Graphic Designer & Motion Artist",
+          "brief": "A Photography project — Photography 5. Crafted with bold visual language, refined composition, and attention to detail across every stage of the creative process.",
+          "processStills": [
+            {
+              "src": "geeks4drisony/photography/photography 1.webp",
+              "alt": "Photography 1",
+              "title": "Photography 1"
+            },
+            {
+              "src": "geeks4drisony/photography/photography 3.webp",
+              "alt": "Photography 3",
+              "title": "Photography 3"
+            },
+            {
+              "src": "geeks4drisony/photography/photography 2.webp",
+              "alt": "Photography 2",
+              "title": "Photography 2"
+            }
+          ]
         },
         {
           "src": "geeks4drisony/photography/photography 8.webp",
@@ -616,7 +1849,29 @@
           "alt": "Photography 8",
           "mtimeMs": 1786435587575.5278,
           "mtime": "2026-08-11T08:06:27.576Z",
-          "type": "image"
+          "type": "image",
+          "slug": "photography-photography-8",
+          "year": 2026,
+          "client": "Personal / Freelance",
+          "role": "Graphic Designer & Motion Artist",
+          "brief": "A Photography project — Photography 8. Crafted with bold visual language, refined composition, and attention to detail across every stage of the creative process.",
+          "processStills": [
+            {
+              "src": "geeks4drisony/photography/photography 1.webp",
+              "alt": "Photography 1",
+              "title": "Photography 1"
+            },
+            {
+              "src": "geeks4drisony/photography/photography 3.webp",
+              "alt": "Photography 3",
+              "title": "Photography 3"
+            },
+            {
+              "src": "geeks4drisony/photography/photography 2.webp",
+              "alt": "Photography 2",
+              "title": "Photography 2"
+            }
+          ]
         },
         {
           "src": "geeks4drisony/photography/photography 7.webp",
@@ -625,7 +1880,29 @@
           "alt": "Photography 7",
           "mtimeMs": 1786435587118.574,
           "mtime": "2026-08-11T08:06:27.119Z",
-          "type": "image"
+          "type": "image",
+          "slug": "photography-photography-7",
+          "year": 2026,
+          "client": "Personal / Freelance",
+          "role": "Graphic Designer & Motion Artist",
+          "brief": "A Photography project — Photography 7. Crafted with bold visual language, refined composition, and attention to detail across every stage of the creative process.",
+          "processStills": [
+            {
+              "src": "geeks4drisony/photography/photography 1.webp",
+              "alt": "Photography 1",
+              "title": "Photography 1"
+            },
+            {
+              "src": "geeks4drisony/photography/photography 3.webp",
+              "alt": "Photography 3",
+              "title": "Photography 3"
+            },
+            {
+              "src": "geeks4drisony/photography/photography 2.webp",
+              "alt": "Photography 2",
+              "title": "Photography 2"
+            }
+          ]
         },
         {
           "src": "geeks4drisony/photography/photography 9.webp",
@@ -634,7 +1911,29 @@
           "alt": "Photography 9",
           "mtimeMs": 1786435586597.5603,
           "mtime": "2026-08-11T08:06:26.598Z",
-          "type": "image"
+          "type": "image",
+          "slug": "photography-photography-9",
+          "year": 2026,
+          "client": "Personal / Freelance",
+          "role": "Graphic Designer & Motion Artist",
+          "brief": "A Photography project — Photography 9. Crafted with bold visual language, refined composition, and attention to detail across every stage of the creative process.",
+          "processStills": [
+            {
+              "src": "geeks4drisony/photography/photography 1.webp",
+              "alt": "Photography 1",
+              "title": "Photography 1"
+            },
+            {
+              "src": "geeks4drisony/photography/photography 3.webp",
+              "alt": "Photography 3",
+              "title": "Photography 3"
+            },
+            {
+              "src": "geeks4drisony/photography/photography 2.webp",
+              "alt": "Photography 2",
+              "title": "Photography 2"
+            }
+          ]
         },
         {
           "src": "geeks4drisony/photography/photography 10.webp",
@@ -643,7 +1942,29 @@
           "alt": "Photography 10",
           "mtimeMs": 1786435586419.0217,
           "mtime": "2026-08-11T08:06:26.419Z",
-          "type": "image"
+          "type": "image",
+          "slug": "photography-photography-10",
+          "year": 2026,
+          "client": "Personal / Freelance",
+          "role": "Graphic Designer & Motion Artist",
+          "brief": "A Photography project — Photography 10. Crafted with bold visual language, refined composition, and attention to detail across every stage of the creative process.",
+          "processStills": [
+            {
+              "src": "geeks4drisony/photography/photography 1.webp",
+              "alt": "Photography 1",
+              "title": "Photography 1"
+            },
+            {
+              "src": "geeks4drisony/photography/photography 3.webp",
+              "alt": "Photography 3",
+              "title": "Photography 3"
+            },
+            {
+              "src": "geeks4drisony/photography/photography 2.webp",
+              "alt": "Photography 2",
+              "title": "Photography 2"
+            }
+          ]
         },
         {
           "src": "geeks4drisony/photography/photography 11.webp",
@@ -652,7 +1973,29 @@
           "alt": "Photography 11",
           "mtimeMs": 1786435578255.0674,
           "mtime": "2026-08-11T08:06:18.255Z",
-          "type": "image"
+          "type": "image",
+          "slug": "photography-photography-11",
+          "year": 2026,
+          "client": "Personal / Freelance",
+          "role": "Graphic Designer & Motion Artist",
+          "brief": "A Photography project — Photography 11. Crafted with bold visual language, refined composition, and attention to detail across every stage of the creative process.",
+          "processStills": [
+            {
+              "src": "geeks4drisony/photography/photography 1.webp",
+              "alt": "Photography 1",
+              "title": "Photography 1"
+            },
+            {
+              "src": "geeks4drisony/photography/photography 3.webp",
+              "alt": "Photography 3",
+              "title": "Photography 3"
+            },
+            {
+              "src": "geeks4drisony/photography/photography 2.webp",
+              "alt": "Photography 2",
+              "title": "Photography 2"
+            }
+          ]
         },
         {
           "src": "geeks4drisony/photography/photography 12.webp",
@@ -661,7 +2004,29 @@
           "alt": "Photography 12",
           "mtimeMs": 1786435576831.0713,
           "mtime": "2026-08-11T08:06:16.831Z",
-          "type": "image"
+          "type": "image",
+          "slug": "photography-photography-12",
+          "year": 2026,
+          "client": "Personal / Freelance",
+          "role": "Graphic Designer & Motion Artist",
+          "brief": "A Photography project — Photography 12. Crafted with bold visual language, refined composition, and attention to detail across every stage of the creative process.",
+          "processStills": [
+            {
+              "src": "geeks4drisony/photography/photography 1.webp",
+              "alt": "Photography 1",
+              "title": "Photography 1"
+            },
+            {
+              "src": "geeks4drisony/photography/photography 3.webp",
+              "alt": "Photography 3",
+              "title": "Photography 3"
+            },
+            {
+              "src": "geeks4drisony/photography/photography 2.webp",
+              "alt": "Photography 2",
+              "title": "Photography 2"
+            }
+          ]
         },
         {
           "src": "geeks4drisony/photography/photography 13.webp",
@@ -670,7 +2035,29 @@
           "alt": "Photography 13",
           "mtimeMs": 1786435576280.7488,
           "mtime": "2026-08-11T08:06:16.281Z",
-          "type": "image"
+          "type": "image",
+          "slug": "photography-photography-13",
+          "year": 2026,
+          "client": "Personal / Freelance",
+          "role": "Graphic Designer & Motion Artist",
+          "brief": "A Photography project — Photography 13. Crafted with bold visual language, refined composition, and attention to detail across every stage of the creative process.",
+          "processStills": [
+            {
+              "src": "geeks4drisony/photography/photography 1.webp",
+              "alt": "Photography 1",
+              "title": "Photography 1"
+            },
+            {
+              "src": "geeks4drisony/photography/photography 3.webp",
+              "alt": "Photography 3",
+              "title": "Photography 3"
+            },
+            {
+              "src": "geeks4drisony/photography/photography 2.webp",
+              "alt": "Photography 2",
+              "title": "Photography 2"
+            }
+          ]
         },
         {
           "src": "geeks4drisony/photography/photography 14.webp",
@@ -679,7 +2066,29 @@
           "alt": "Photography 14",
           "mtimeMs": 1786435575699.4294,
           "mtime": "2026-08-11T08:06:15.699Z",
-          "type": "image"
+          "type": "image",
+          "slug": "photography-photography-14",
+          "year": 2026,
+          "client": "Personal / Freelance",
+          "role": "Graphic Designer & Motion Artist",
+          "brief": "A Photography project — Photography 14. Crafted with bold visual language, refined composition, and attention to detail across every stage of the creative process.",
+          "processStills": [
+            {
+              "src": "geeks4drisony/photography/photography 1.webp",
+              "alt": "Photography 1",
+              "title": "Photography 1"
+            },
+            {
+              "src": "geeks4drisony/photography/photography 3.webp",
+              "alt": "Photography 3",
+              "title": "Photography 3"
+            },
+            {
+              "src": "geeks4drisony/photography/photography 2.webp",
+              "alt": "Photography 2",
+              "title": "Photography 2"
+            }
+          ]
         },
         {
           "src": "geeks4drisony/photography/photography 15.webp",
@@ -688,7 +2097,29 @@
           "alt": "Photography 15",
           "mtimeMs": 1786435575451.428,
           "mtime": "2026-08-11T08:06:15.451Z",
-          "type": "image"
+          "type": "image",
+          "slug": "photography-photography-15",
+          "year": 2026,
+          "client": "Personal / Freelance",
+          "role": "Graphic Designer & Motion Artist",
+          "brief": "A Photography project — Photography 15. Crafted with bold visual language, refined composition, and attention to detail across every stage of the creative process.",
+          "processStills": [
+            {
+              "src": "geeks4drisony/photography/photography 1.webp",
+              "alt": "Photography 1",
+              "title": "Photography 1"
+            },
+            {
+              "src": "geeks4drisony/photography/photography 3.webp",
+              "alt": "Photography 3",
+              "title": "Photography 3"
+            },
+            {
+              "src": "geeks4drisony/photography/photography 2.webp",
+              "alt": "Photography 2",
+              "title": "Photography 2"
+            }
+          ]
         },
         {
           "src": "geeks4drisony/photography/photography 16.webp",
@@ -697,7 +2128,29 @@
           "alt": "Photography 16",
           "mtimeMs": 1786435574230.301,
           "mtime": "2026-08-11T08:06:14.230Z",
-          "type": "image"
+          "type": "image",
+          "slug": "photography-photography-16",
+          "year": 2026,
+          "client": "Personal / Freelance",
+          "role": "Graphic Designer & Motion Artist",
+          "brief": "A Photography project — Photography 16. Crafted with bold visual language, refined composition, and attention to detail across every stage of the creative process.",
+          "processStills": [
+            {
+              "src": "geeks4drisony/photography/photography 1.webp",
+              "alt": "Photography 1",
+              "title": "Photography 1"
+            },
+            {
+              "src": "geeks4drisony/photography/photography 3.webp",
+              "alt": "Photography 3",
+              "title": "Photography 3"
+            },
+            {
+              "src": "geeks4drisony/photography/photography 2.webp",
+              "alt": "Photography 2",
+              "title": "Photography 2"
+            }
+          ]
         },
         {
           "src": "geeks4drisony/photography/photography 17.webp",
@@ -706,7 +2159,29 @@
           "alt": "Photography 17",
           "mtimeMs": 1786435572960.3633,
           "mtime": "2026-08-11T08:06:12.960Z",
-          "type": "image"
+          "type": "image",
+          "slug": "photography-photography-17",
+          "year": 2026,
+          "client": "Personal / Freelance",
+          "role": "Graphic Designer & Motion Artist",
+          "brief": "A Photography project — Photography 17. Crafted with bold visual language, refined composition, and attention to detail across every stage of the creative process.",
+          "processStills": [
+            {
+              "src": "geeks4drisony/photography/photography 1.webp",
+              "alt": "Photography 1",
+              "title": "Photography 1"
+            },
+            {
+              "src": "geeks4drisony/photography/photography 3.webp",
+              "alt": "Photography 3",
+              "title": "Photography 3"
+            },
+            {
+              "src": "geeks4drisony/photography/photography 2.webp",
+              "alt": "Photography 2",
+              "title": "Photography 2"
+            }
+          ]
         },
         {
           "src": "geeks4drisony/photography/photography 18.webp",
@@ -715,7 +2190,29 @@
           "alt": "Photography 18",
           "mtimeMs": 1786435572632.3643,
           "mtime": "2026-08-11T08:06:12.632Z",
-          "type": "image"
+          "type": "image",
+          "slug": "photography-photography-18",
+          "year": 2026,
+          "client": "Personal / Freelance",
+          "role": "Graphic Designer & Motion Artist",
+          "brief": "A Photography project — Photography 18. Crafted with bold visual language, refined composition, and attention to detail across every stage of the creative process.",
+          "processStills": [
+            {
+              "src": "geeks4drisony/photography/photography 1.webp",
+              "alt": "Photography 1",
+              "title": "Photography 1"
+            },
+            {
+              "src": "geeks4drisony/photography/photography 3.webp",
+              "alt": "Photography 3",
+              "title": "Photography 3"
+            },
+            {
+              "src": "geeks4drisony/photography/photography 2.webp",
+              "alt": "Photography 2",
+              "title": "Photography 2"
+            }
+          ]
         },
         {
           "src": "geeks4drisony/photography/photography 19.webp",
@@ -724,7 +2221,29 @@
           "alt": "Photography 19",
           "mtimeMs": 1786435571865.2185,
           "mtime": "2026-08-11T08:06:11.865Z",
-          "type": "image"
+          "type": "image",
+          "slug": "photography-photography-19",
+          "year": 2026,
+          "client": "Personal / Freelance",
+          "role": "Graphic Designer & Motion Artist",
+          "brief": "A Photography project — Photography 19. Crafted with bold visual language, refined composition, and attention to detail across every stage of the creative process.",
+          "processStills": [
+            {
+              "src": "geeks4drisony/photography/photography 1.webp",
+              "alt": "Photography 1",
+              "title": "Photography 1"
+            },
+            {
+              "src": "geeks4drisony/photography/photography 3.webp",
+              "alt": "Photography 3",
+              "title": "Photography 3"
+            },
+            {
+              "src": "geeks4drisony/photography/photography 2.webp",
+              "alt": "Photography 2",
+              "title": "Photography 2"
+            }
+          ]
         },
         {
           "src": "geeks4drisony/photography/photography 21.webp",
@@ -733,7 +2252,29 @@
           "alt": "Photography 21",
           "mtimeMs": 1786435570928.9373,
           "mtime": "2026-08-11T08:06:10.929Z",
-          "type": "image"
+          "type": "image",
+          "slug": "photography-photography-21",
+          "year": 2026,
+          "client": "Personal / Freelance",
+          "role": "Graphic Designer & Motion Artist",
+          "brief": "A Photography project — Photography 21. Crafted with bold visual language, refined composition, and attention to detail across every stage of the creative process.",
+          "processStills": [
+            {
+              "src": "geeks4drisony/photography/photography 1.webp",
+              "alt": "Photography 1",
+              "title": "Photography 1"
+            },
+            {
+              "src": "geeks4drisony/photography/photography 3.webp",
+              "alt": "Photography 3",
+              "title": "Photography 3"
+            },
+            {
+              "src": "geeks4drisony/photography/photography 2.webp",
+              "alt": "Photography 2",
+              "title": "Photography 2"
+            }
+          ]
         },
         {
           "src": "geeks4drisony/photography/photography 20.webp",
@@ -742,7 +2283,29 @@
           "alt": "Photography 20",
           "mtimeMs": 1786435570262.0981,
           "mtime": "2026-08-11T08:06:10.262Z",
-          "type": "image"
+          "type": "image",
+          "slug": "photography-photography-20",
+          "year": 2026,
+          "client": "Personal / Freelance",
+          "role": "Graphic Designer & Motion Artist",
+          "brief": "A Photography project — Photography 20. Crafted with bold visual language, refined composition, and attention to detail across every stage of the creative process.",
+          "processStills": [
+            {
+              "src": "geeks4drisony/photography/photography 1.webp",
+              "alt": "Photography 1",
+              "title": "Photography 1"
+            },
+            {
+              "src": "geeks4drisony/photography/photography 3.webp",
+              "alt": "Photography 3",
+              "title": "Photography 3"
+            },
+            {
+              "src": "geeks4drisony/photography/photography 2.webp",
+              "alt": "Photography 2",
+              "title": "Photography 2"
+            }
+          ]
         },
         {
           "src": "geeks4drisony/photography/photography 22.webp",
@@ -751,7 +2314,29 @@
           "alt": "Photography 22",
           "mtimeMs": 1786435569716.788,
           "mtime": "2026-08-11T08:06:09.717Z",
-          "type": "image"
+          "type": "image",
+          "slug": "photography-photography-22",
+          "year": 2026,
+          "client": "Personal / Freelance",
+          "role": "Graphic Designer & Motion Artist",
+          "brief": "A Photography project — Photography 22. Crafted with bold visual language, refined composition, and attention to detail across every stage of the creative process.",
+          "processStills": [
+            {
+              "src": "geeks4drisony/photography/photography 1.webp",
+              "alt": "Photography 1",
+              "title": "Photography 1"
+            },
+            {
+              "src": "geeks4drisony/photography/photography 3.webp",
+              "alt": "Photography 3",
+              "title": "Photography 3"
+            },
+            {
+              "src": "geeks4drisony/photography/photography 2.webp",
+              "alt": "Photography 2",
+              "title": "Photography 2"
+            }
+          ]
         },
         {
           "src": "geeks4drisony/photography/photography 24.webp",
@@ -760,7 +2345,29 @@
           "alt": "Photography 24",
           "mtimeMs": 1786435568886.017,
           "mtime": "2026-08-11T08:06:08.886Z",
-          "type": "image"
+          "type": "image",
+          "slug": "photography-photography-24",
+          "year": 2026,
+          "client": "Personal / Freelance",
+          "role": "Graphic Designer & Motion Artist",
+          "brief": "A Photography project — Photography 24. Crafted with bold visual language, refined composition, and attention to detail across every stage of the creative process.",
+          "processStills": [
+            {
+              "src": "geeks4drisony/photography/photography 1.webp",
+              "alt": "Photography 1",
+              "title": "Photography 1"
+            },
+            {
+              "src": "geeks4drisony/photography/photography 3.webp",
+              "alt": "Photography 3",
+              "title": "Photography 3"
+            },
+            {
+              "src": "geeks4drisony/photography/photography 2.webp",
+              "alt": "Photography 2",
+              "title": "Photography 2"
+            }
+          ]
         },
         {
           "src": "geeks4drisony/photography/photography 23.webp",
@@ -769,7 +2376,29 @@
           "alt": "Photography 23",
           "mtimeMs": 1786435568306.5588,
           "mtime": "2026-08-11T08:06:08.307Z",
-          "type": "image"
+          "type": "image",
+          "slug": "photography-photography-23",
+          "year": 2026,
+          "client": "Personal / Freelance",
+          "role": "Graphic Designer & Motion Artist",
+          "brief": "A Photography project — Photography 23. Crafted with bold visual language, refined composition, and attention to detail across every stage of the creative process.",
+          "processStills": [
+            {
+              "src": "geeks4drisony/photography/photography 1.webp",
+              "alt": "Photography 1",
+              "title": "Photography 1"
+            },
+            {
+              "src": "geeks4drisony/photography/photography 3.webp",
+              "alt": "Photography 3",
+              "title": "Photography 3"
+            },
+            {
+              "src": "geeks4drisony/photography/photography 2.webp",
+              "alt": "Photography 2",
+              "title": "Photography 2"
+            }
+          ]
         }
       ]
     },
@@ -783,7 +2412,19 @@
           "alt": "Poster 1",
           "mtimeMs": 1786435579093.117,
           "mtime": "2026-08-11T08:06:19.093Z",
-          "type": "image"
+          "type": "image",
+          "slug": "posters-poster-1",
+          "year": 2026,
+          "client": "Personal / Freelance",
+          "role": "Graphic Designer & Motion Artist",
+          "brief": "A Posters project — Poster 1. Crafted with bold visual language, refined composition, and attention to detail across every stage of the creative process.",
+          "processStills": [
+            {
+              "src": "geeks4drisony/posters/poster 2.webp",
+              "alt": "Poster 2",
+              "title": "Poster 2"
+            }
+          ]
         },
         {
           "src": "geeks4drisony/posters/poster 2.webp",
@@ -792,7 +2433,19 @@
           "alt": "Poster 2",
           "mtimeMs": 1786435578743.0667,
           "mtime": "2026-08-11T08:06:18.743Z",
-          "type": "image"
+          "type": "image",
+          "slug": "posters-poster-2",
+          "year": 2026,
+          "client": "Personal / Freelance",
+          "role": "Graphic Designer & Motion Artist",
+          "brief": "A Posters project — Poster 2. Crafted with bold visual language, refined composition, and attention to detail across every stage of the creative process.",
+          "processStills": [
+            {
+              "src": "geeks4drisony/posters/poster 1.webp",
+              "alt": "Poster 1",
+              "title": "Poster 1"
+            }
+          ]
         }
       ]
     }
