@@ -1,0 +1,94 @@
+/* Masonry grid for the Featured Work section.
+   Uses CSS columns so cards flow naturally by height —
+   horizontal banners sit wide-short, vertical rollups sit tall,
+   nothing gets cropped. */
+
+.masonry-grid {
+  columns: 3 260px; /* responsive column count based on min card width */
+  column-gap: 24px;
+}
+
+@media (max-width: 768px) {
+  .masonry-grid {
+    columns: 2 200px;
+  }
+}
+
+@media (max-width: 480px) {
+  .masonry-grid {
+    columns: 1;
+  }
+}
+
+.project-card {
+  display: block;
+  break-inside: avoid;
+  margin-bottom: 24px;
+  text-decoration: none;
+  color: inherit;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #f5f2f7; /* soft neutral mat, tinted toward brand purple */
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.project-card:hover {
+  transform: translateY(-4px) scale(1.01);
+  box-shadow: 0 12px 24px rgba(66, 13, 88, 0.15); /* brand purple #420D58 tint */
+}
+
+.project-card-media {
+  width: 100%;
+  background: #f5f2f7;
+}
+
+.project-card-media img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain; /* full image always visible, never cropped */
+}
+
+.project-card-info {
+  padding: 12px 14px 16px;
+}
+
+.project-card-info h3 {
+  margin: 0 0 4px;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.project-card-category {
+  display: inline-block;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #420d58;
+  margin-bottom: 6px;
+}
+
+.project-card-info p {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #555;
+  line-height: 1.4;
+}
+
+/* Dark theme compatibility */
+[data-theme="dark"] .project-card,
+[data-theme="dark"] .project-card-media {
+  background: rgba(66, 13, 88, 0.12);
+}
+
+[data-theme="dark"] .project-card-info h3 {
+  color: var(--text-light, #f4edf9);
+}
+
+[data-theme="dark"] .project-card-info p {
+  color: var(--muted-text, #b8aadb);
+}
+
+[data-theme="dark"] .project-card-category {
+  color: var(--accent-pink, #c75baa);
+}

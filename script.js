@@ -11,6 +11,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let currentGalleryItems = [];
   let currentLightboxIndex = -1;
+  let projectsCache = null;
+
+  const CMS = window.CMS_CONFIG || {};
+  const DEFAULT_CATEGORIES = CMS.categories || ['Branding', 'Motion', 'Illustration', 'Graphic'];
+
+  function getApiBase() {
+    return (CMS.apiBase || '').replace(/\/$/, '');
+  }
 
   function categoryHref(categoryName) {
     return `work.html?cat=${encodeURIComponent(categoryName)}`;
@@ -28,26 +36,200 @@ document.addEventListener('DOMContentLoaded', () => {
     return `${count} project${count === 1 ? '' : 's'}`;
   }
 
+  function stripHtml(html) {
+    const el = document.createElement('div');
+    el.innerHTML = html || '';
+    return (el.textContent || el.innerText || '').trim();
+  }
+
   function makeSlug(category, filename) {
     const base = (filename || '').replace(/\.[^.]+$/, '');
     return `${category}-${base}`.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
   }
 
+  function normalizeDimensions(width, height) {
+    const w = Number(width) || null;
+    const h = Number(height) || null;
+    return {
+      width: w,
+      height: h,
+      aspectRatio: w && h ? w / h : null,
+    };
+  }
+
+  function normalizeProject(raw) {
+    const dims = normalizeDimensions(raw.width, raw.height);
+    return {
+      id: raw.id || raw.slug,
+      slug: raw.slug,
+      title: raw.title || '',
+      category: raw.category || 'Graphic',
+      brief: raw.brief || raw.desc || '',
+      client: raw.client || 'Personal / Freelance',
+      role: raw.role || 'Graphic Designer & Motion Artist',
+      year: raw.year || new Date().getFullYear(),
+      featured: Boolean(raw.featured),
+      type: raw.type || 'image',
+      src: raw.src || '',
+      poster: raw.poster || raw.src || '',
+      alt: raw.alt || raw.title || '',
+      width: dims.width,
+      height: dims.height,
+      aspectRatio: raw.aspect_ratio || raw.aspectRatio || dims.aspectRatio,
+      processStills: (raw.process_stills || raw.processStills || []).map((still) => ({
+        src: still.src,
+        alt: still.alt || still.title || '',
+        title: still.title || '',
+        width: still.width || null,
+        height: still.height || null,
+      })),
+      filename: raw.filename || '',
+      mtime: raw.date || raw.mtime || null,
+    };
+  }
+
   function enrichItem(item, categoryName, categoryItems) {
-    const enriched = Object.assign({}, item);
-    enriched.category = enriched.category || categoryName;
-    enriched.slug = enriched.slug || makeSlug(enriched.category, enriched.filename);
-    enriched.year = enriched.year || new Date(enriched.mtime || Date.now()).getFullYear();
-    enriched.client = enriched.client || 'Personal / Freelance';
-    enriched.role = enriched.role || 'Graphic Designer & Motion Artist';
-    enriched.brief = enriched.brief || `A ${formatCategoryLabel(enriched.category)} project — ${enriched.title}. Crafted with bold visual language and refined attention to detail.`;
+    const enriched = normalizeProject(Object.assign({}, item, { category: item.category || categoryName }));
+    if (!enriched.slug) enriched.slug = makeSlug(enriched.category, enriched.filename || enriched.title);
     if (!enriched.processStills?.length && categoryItems) {
       enriched.processStills = categoryItems
         .filter((other) => other.src !== enriched.src && other.type === 'image')
         .slice(0, 3)
-        .map((other) => ({ src: other.src, alt: other.alt, title: other.title }));
+        .map((other) => ({
+          src: other.src,
+          alt: other.alt,
+          title: other.title,
+          width: other.width,
+          height: other.height,
+        }));
     }
     return enriched;
+  }
+
+  async function fetchWpProjects() {
+    const apiBase = getApiBase();
+    if (!apiBase) throw new Error('WordPress API not configured');
+
+    const perPage = CMS.perPage || 100;
+    let pageNum = 1;
+    const all = [];
+
+    while (true) {
+      const url = `${apiBase}/wp-json/wp/v2/projects?per_page=${perPage}&page=${pageNum}&_embed`;
+      const resp = await fetch(url, { cache: 'no-store' });
+      if (!resp.ok) throw new Error(`WordPress API error: ${resp.status}`);
+      const batch = await resp.json();
+      if (!Array.isArray(batch) || !batch.length) break;
+      all.push(...batch);
+      if (batch.length < perPage) break;
+      pageNum += 1;
+    }
+
+    return all.map((post) => {
+      if (post.portfolio) return normalizeProject(post.portfolio);
+      const media = post._embedded?.['wp:featuredmedia']?.[0];
+      const terms = (post._embedded?.['wp:term'] || []).flat();
+      const categoryTerm = terms.find((t) => t.taxonomy === 'project_category');
+      const details = post.featured_media_details || {};
+      const meta = media?.media_details || {};
+
+      return normalizeProject({
+        id: post.id,
+        slug: post.slug,
+        title: stripHtml(post.title?.rendered),
+        brief: stripHtml(post.excerpt?.rendered) || stripHtml(post.content?.rendered),
+        category: categoryTerm?.name || 'Graphic',
+        client: post.meta?.client,
+        role: post.meta?.role,
+        year: post.meta?.project_date || new Date(post.date).getFullYear(),
+        featured: post.meta?.featured,
+        type: post.meta?.video_url ? 'video' : 'image',
+        src: post.meta?.video_url || details.src || media?.source_url || '',
+        poster: details.src || media?.source_url || '',
+        alt: details.alt || media?.alt_text || stripHtml(post.title?.rendered),
+        width: details.width || meta.width,
+        height: details.height || meta.height,
+        aspect_ratio: details.aspect_ratio,
+        process_stills: post.meta?.process_stills,
+        date: post.date,
+      });
+    });
+  }
+
+  async function loadManifestProjects() {
+    const resp = await fetch('geeks4drisony/manifest.json', { cache: 'no-store' });
+    if (!resp.ok) throw new Error('Manifest not found');
+    const manifest = await resp.json();
+    const items = [];
+
+    (manifest.categories || []).forEach((cat) => {
+      (cat.items || []).forEach((item) => {
+        items.push(enrichItem(item, cat.name, cat.items));
+      });
+    });
+
+    return items;
+  }
+
+  async function loadProjects() {
+    if (projectsCache) return projectsCache;
+
+    try {
+      if (getApiBase()) {
+        projectsCache = await fetchWpProjects();
+        return projectsCache;
+      }
+    } catch (err) {
+      console.warn('WordPress fetch failed, using manifest fallback:', err);
+    }
+
+    projectsCache = await loadManifestProjects();
+    return projectsCache;
+  }
+
+  function groupByCategory(projects) {
+    const map = new Map();
+    projects.forEach((project) => {
+      const key = project.category || 'Graphic';
+      if (!map.has(key)) map.set(key, []);
+      map.get(key).push(project);
+    });
+    return map;
+  }
+
+  function getCategoriesFromProjects(projects) {
+    const byCategory = groupByCategory(projects);
+    return Array.from(byCategory.entries())
+      .filter(([, items]) => items.length)
+      .map(([name, items]) => ({ name, items }))
+      .sort((a, b) => a.name.localeCompare(b.name));
+  }
+
+  function getFeaturedPerCategory(projects) {
+    const byCategory = groupByCategory(projects);
+    const featured = [];
+
+    byCategory.forEach((items) => {
+      if (!items.length) return;
+      const pinned = items.find((item) => item.featured);
+      featured.push(pinned || items[0]);
+    });
+
+    return featured;
+  }
+
+  function buildProjectIndex(projects) {
+    const bySlug = new Map();
+    const byCategory = new Map();
+
+    projects.forEach((project) => {
+      bySlug.set(project.slug, project);
+      const cat = project.category || 'Graphic';
+      if (!byCategory.has(cat)) byCategory.set(cat, []);
+      byCategory.get(cat).push(project);
+    });
+
+    return { bySlug, byCategory, categories: getCategoriesFromProjects(projects) };
   }
 
   function applyTheme(theme) {
@@ -74,10 +256,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.classList.toggle('menu-open', isOpen);
   }
 
-  menuToggle?.addEventListener('click', () => {
-    setMenuState(!nav?.classList.contains('is-open'));
-  });
-
+  menuToggle?.addEventListener('click', () => setMenuState(!nav?.classList.contains('is-open')));
   navLinks.forEach((link) => link.addEventListener('click', () => setMenuState(false)));
 
   document.addEventListener('click', (event) => {
@@ -92,41 +271,18 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  function openLightboxItem(item, index) {
-    if (!lightbox) return;
-    try { if (lbVideo) { lbVideo.pause(); lbVideo.src = ''; lbVideo.hidden = true; } } catch (e) {}
-    try { if (lbImage) { lbImage.src = ''; lbImage.hidden = true; } } catch (e) {}
-
-    lbTitle.textContent = item.title || '';
-    lbDesc.textContent = item.desc || item.brief || '';
-
-    if (item.type === 'video' && lbVideo) {
-      lbVideo.src = item.src;
-      if (item.poster) lbVideo.setAttribute('poster', item.poster);
-      else lbVideo.removeAttribute('poster');
-      lbVideo.hidden = false;
-      lbVideo.controls = true;
-      lbVideo.muted = true;
-      lbVideo.playsInline = true;
-    } else if (lbImage) {
-      lbImage.src = item.src;
-      lbImage.alt = item.alt || item.title || '';
-      lbImage.hidden = false;
+  function applyMediaAspect(figure, item) {
+    if (item.aspectRatio) {
+      figure.style.aspectRatio = `${item.width} / ${item.height}`;
+    } else {
+      figure.style.removeProperty('aspect-ratio');
     }
-
-    lightbox.setAttribute('aria-hidden', 'false');
-    document.body.style.overflow = 'hidden';
-    currentLightboxIndex = index;
-    lbClose?.focus();
   }
 
-  function openLightboxByIndex(idx) {
-    if (!Array.isArray(currentGalleryItems) || idx < 0 || idx >= currentGalleryItems.length) return;
-    openLightboxItem(currentGalleryItems[idx], idx);
-  }
-
-  function buildCardMedia(item) {
+  function buildCardMedia(item, { contain = true } = {}) {
     const figure = document.createElement('figure');
+    figure.className = contain ? 'card-media card-media--contain' : 'card-media';
+    applyMediaAspect(figure, item);
 
     if (item.category) {
       const tag = document.createElement('span');
@@ -153,6 +309,8 @@ document.addEventListener('DOMContentLoaded', () => {
       const img = document.createElement('img');
       img.src = item.src;
       img.alt = item.alt || item.title || '';
+      if (item.width) img.width = item.width;
+      if (item.height) img.height = item.height;
       img.loading = 'lazy';
       img.decoding = 'async';
       img.onerror = () => {
@@ -169,7 +327,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const cap = document.createElement('div');
     cap.className = 'card-caption';
-    cap.textContent = item.title || item.filename || '';
+    cap.textContent = item.title || '';
     figure.appendChild(cap);
 
     return figure;
@@ -193,13 +351,15 @@ document.addEventListener('DOMContentLoaded', () => {
     if (parentReveal) parentReveal.classList.add('is-visible');
   }
 
-  function renderGallery(items) {
+  function renderGallery(items, { masonry = true } = {}) {
     if (!gallery) return;
     currentGalleryItems = items || [];
     gallery.innerHTML = '';
+    gallery.classList.toggle('gallery-masonry', masonry);
 
     if (!currentGalleryItems.length) {
       gallery.innerHTML = '<p class="gallery-empty">No projects in this category yet.</p>';
+      gallery.classList.remove('gallery-masonry');
       return;
     }
 
@@ -207,16 +367,6 @@ document.addEventListener('DOMContentLoaded', () => {
     currentGalleryItems.forEach((item) => frag.appendChild(createCard(item)));
     gallery.appendChild(frag);
     animateStaggerContainer(gallery);
-  }
-
-  function getFeaturedPerCategory(categories) {
-    return categories
-      .map((cat) => {
-        const items = cat.items || [];
-        if (!items.length) return null;
-        return enrichItem(items[0], cat.name, items);
-      })
-      .filter(Boolean);
   }
 
   function renderCategoryGrid(categories) {
@@ -230,11 +380,18 @@ document.addEventListener('DOMContentLoaded', () => {
       const count = (cat.items || []).length;
       if (!count) return;
 
+      const cover = cat.items[0];
       const link = document.createElement('a');
       link.className = 'category-card';
       link.href = categoryHref(cat.name);
       link.style.setProperty('--stagger', idx);
+
+      const coverHtml = cover?.src
+        ? `<div class="category-card-cover"><img src="${cover.poster || cover.src}" alt="${cover.alt || formatCategoryLabel(cat.name)} cover" loading="lazy" width="${cover.width || ''}" height="${cover.height || ''}"></div>`
+        : '';
+
       link.innerHTML = `
+        ${coverHtml}
         <span class="category-card-name">${formatCategoryLabel(cat.name)}</span>
         <span class="category-card-count">${projectCountLabel(count)}</span>
         <span class="category-card-cta" aria-hidden="true">View collection →</span>
@@ -271,38 +428,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function showGalleryError(message) {
     if (!gallery) return;
+    gallery.classList.remove('gallery-masonry');
     gallery.innerHTML = `<p class="gallery-empty">${message}</p>`;
-  }
-
-  async function loadManifest() {
-    const resp = await fetch('geeks4drisony/manifest.json', { cache: 'no-store' });
-    if (!resp.ok) throw new Error('Manifest not found');
-    return resp.json();
-  }
-
-  function flattenManifest(manifest) {
-    const categories = manifest.categories || [];
-    const bySlug = new Map();
-    const byCategory = new Map();
-
-    categories.forEach((cat) => {
-      const enriched = (cat.items || []).map((item) => enrichItem(item, cat.name, cat.items));
-      byCategory.set(cat.name, enriched);
-      enriched.forEach((item) => bySlug.set(item.slug, item));
-    });
-
-    return { categories, bySlug, byCategory };
   }
 
   async function initHomePage() {
     try {
-      const manifest = await loadManifest();
-      const { categories } = flattenManifest(manifest);
-      renderGallery(getFeaturedPerCategory(categories));
+      const projects = await loadProjects();
+      const categories = getCategoriesFromProjects(projects);
+      renderGallery(getFeaturedPerCategory(projects));
       renderCategoryGrid(categories);
     } catch (err) {
-      console.warn('Could not load manifest:', err);
-      showGalleryError('Projects could not load. Open this site through a local server so the gallery can read the project manifest.');
+      console.warn('Could not load projects:', err);
+      showGalleryError('Projects could not load. Check the WordPress API URL in cms-config.js or serve the site locally.');
     }
   }
 
@@ -321,11 +459,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     try {
-      const manifest = await loadManifest();
-      const { categories, byCategory } = flattenManifest(manifest);
+      const projects = await loadProjects();
+      const { byCategory, categories } = buildProjectIndex(projects);
       const items = byCategory.get(categoryName);
 
-      if (!items) {
+      if (!items?.length) {
         if (titleEl) titleEl.textContent = 'Category not found';
         if (leadEl) leadEl.textContent = `"${formatCategoryLabel(categoryName)}" does not exist.`;
         showGalleryError('Category not found. <a href="index.html#portfolio">Back to featured work</a>');
@@ -344,14 +482,15 @@ document.addEventListener('DOMContentLoaded', () => {
       renderCategoryNav(categories, categoryName);
       renderGallery(items);
     } catch (err) {
-      console.warn('Could not load manifest:', err);
-      showGalleryError('Projects could not load. Open this site through a local server so the gallery can read the project manifest.');
+      console.warn('Could not load projects:', err);
+      showGalleryError('Projects could not load. Check the WordPress API URL in cms-config.js.');
     }
   }
 
   function renderFinalMedia(item, container) {
     if (!container) return;
     container.innerHTML = '';
+    container.className = 'case-final case-final--contain';
 
     if (item.type === 'video') {
       const vid = document.createElement('video');
@@ -365,6 +504,8 @@ document.addEventListener('DOMContentLoaded', () => {
       const img = document.createElement('img');
       img.src = item.src;
       img.alt = item.alt || item.title || '';
+      if (item.width) img.width = item.width;
+      if (item.height) img.height = item.height;
       img.loading = 'eager';
       img.decoding = 'async';
       container.appendChild(img);
@@ -382,10 +523,12 @@ document.addEventListener('DOMContentLoaded', () => {
     container.innerHTML = '';
     stills.forEach((still) => {
       const figure = document.createElement('figure');
-      figure.className = 'process-item';
+      figure.className = 'process-item process-item--contain';
       const img = document.createElement('img');
       img.src = still.src;
       img.alt = still.alt || still.title || 'Process still';
+      if (still.width) img.width = still.width;
+      if (still.height) img.height = still.height;
       img.loading = 'lazy';
       figure.appendChild(img);
       if (still.title) {
@@ -438,8 +581,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     try {
-      const manifest = await loadManifest();
-      const { bySlug, byCategory } = flattenManifest(manifest);
+      const projects = await loadProjects();
+      const { bySlug, byCategory } = buildProjectIndex(projects);
       const item = bySlug.get(slug);
 
       if (!item) {
@@ -467,8 +610,7 @@ document.addEventListener('DOMContentLoaded', () => {
         breadcrumbCategory.textContent = label;
         breadcrumbCategory.href = categoryHref(item.category);
       }
-      const breadcrumbCurrent = document.getElementById('breadcrumbCurrent');
-      if (breadcrumbCurrent) breadcrumbCurrent.textContent = item.title;
+      document.getElementById('breadcrumbCurrent').textContent = item.title;
 
       renderProcessStills(item.processStills, document.getElementById('processStills'), document.getElementById('processSection'));
       renderFinalMedia(item, document.getElementById('finalPiece'));
@@ -504,7 +646,6 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('mousemove', (event) => {
       const card = event.target.closest('.card-tilt');
       if (!card) return;
-
       const rect = card.getBoundingClientRect();
       const x = (event.clientX - rect.left) / rect.width - 0.5;
       const y = (event.clientY - rect.top) / rect.height - 0.5;
@@ -530,17 +671,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   lightbox?.addEventListener('click', (ev) => {
     if (ev.target === lightbox) lbClose?.click();
-  });
-
-  document.addEventListener('keydown', (ev) => {
-    if (ev.key === 'Escape' && lightbox?.getAttribute('aria-hidden') === 'false') {
-      lbClose?.click();
-      return;
-    }
-    if (lightbox?.getAttribute('aria-hidden') === 'false') {
-      if (ev.key === 'ArrowLeft' && currentLightboxIndex > 0) openLightboxByIndex(currentLightboxIndex - 1);
-      if (ev.key === 'ArrowRight' && currentLightboxIndex < currentGalleryItems.length - 1) openLightboxByIndex(currentLightboxIndex + 1);
-    }
   });
 
   initScrollReveal();

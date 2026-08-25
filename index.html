@@ -20,6 +20,7 @@
     <meta name="twitter:image" content="https://aliciagiks4art.netlify.app/logo/Logo.webp" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="wordpress-grid-styles.css" />
     <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
     <link rel="apple-touch-icon" sizes="180x180" href="favicon_io/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="favicon_io/favicon-32x32.png">
@@ -105,9 +106,7 @@
             <p class="section-lead">One standout from each discipline — open a case study or browse the full collection.</p>
           </div>
         </div>
-        <div class="gallery featured-picks reveal-stagger" id="gallery" aria-live="polite">
-          <!-- One featured project per category -->
-        </div>
+        <div id="featured-work-grid" class="masonry-grid" aria-live="polite"></div>
         <div class="category-browse reveal">
           <h3 class="category-browse-title">Browse by category</h3>
           <div class="category-grid reveal-stagger" id="categoryGrid"></div>
@@ -216,7 +215,9 @@
       </div>
     </div>
 
+    <script src="cms-config.js"></script>
     <script src="script.js" defer></script>
+    <script src="wordpress-grid-fetch.js" defer></script>
   </body>
 </html>
 

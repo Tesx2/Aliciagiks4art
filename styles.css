@@ -536,9 +536,63 @@ a.filter-btn {
 .gallery {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
-  gap: clamp(1rem, 2.5vw, 1.5rem);
+  gap: var(--space-3);
   align-items: start;
-  margin-top: 1.25rem;
+  margin-top: var(--space-3);
+}
+
+/* Masonry — natural aspect ratios, no crop */
+.gallery-masonry {
+  display: block;
+  columns: 3;
+  column-gap: var(--space-3);
+}
+
+.gallery-masonry .card {
+  break-inside: avoid;
+  margin-bottom: var(--space-3);
+  display: inline-block;
+  width: 100%;
+}
+
+.gallery-masonry .card figure,
+.gallery-masonry .card-media {
+  aspect-ratio: unset;
+  min-height: 0;
+}
+
+.gallery-masonry .card img,
+.gallery-masonry .card video {
+  width: 100%;
+  height: auto;
+  max-height: none;
+  object-fit: contain;
+}
+
+@media (max-width: 900px) {
+  .gallery-masonry { columns: 2; }
+}
+
+@media (max-width: 560px) {
+  .gallery-masonry { columns: 1; }
+}
+
+.card-media {
+  margin: 0;
+  position: relative;
+  overflow: hidden;
+  background: rgba(66, 13, 88, 0.12);
+  background-image: radial-gradient(circle at center, rgba(255, 255, 255, 0.04) 0%, transparent 75%);
+}
+
+.card-media--contain .card img,
+.card-media--contain .card video,
+.card-media--contain img,
+.card-media--contain video {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  object-position: center;
 }
 
 .gallery-empty {
@@ -583,20 +637,31 @@ a.filter-btn {
   margin: 0;
   position: relative;
   overflow: hidden;
+  min-height: 0;
+  background: rgba(66, 13, 88, 0.12);
+  background-image: radial-gradient(circle at center, rgba(255, 255, 255, 0.04) 0%, transparent 75%);
+}
+
+.gallery:not(.gallery-masonry) .card figure {
   aspect-ratio: 4 / 5;
   min-height: clamp(220px, 52vw, 360px);
-  background: var(--surface-strong);
-  background-image: radial-gradient(circle at center, rgba(255, 255, 255, 0.04) 0%, transparent 75%);
 }
 
 .card img,
 .card video {
   display: block;
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: auto;
+  object-fit: contain;
+  object-position: center;
   pointer-events: none;
   transition: transform 120ms ease;
+}
+
+.gallery:not(.gallery-masonry) .card img,
+.gallery:not(.gallery-masonry) .card video {
+  height: 100%;
+  object-fit: cover;
 }
 
 .card:hover img,
@@ -719,6 +784,25 @@ a.filter-btn {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr));
   gap: 0.85rem;
+}
+
+.category-card-cover {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  margin-bottom: var(--space-1);
+  border-radius: 12px;
+  overflow: hidden;
+  background: rgba(66, 13, 88, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.category-card-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
 }
 
 .category-card {
@@ -873,10 +957,35 @@ a.filter-btn {
   background: var(--surface);
 }
 
-.process-item img {
+.case-final--contain {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(66, 13, 88, 0.12);
+  min-height: 240px;
+}
+
+.case-final--contain img,
+.case-final--contain video {
   width: 100%;
-  aspect-ratio: 4 / 5;
-  object-fit: cover;
+  height: auto;
+  max-height: 80vh;
+  object-fit: contain;
+  object-position: center;
+}
+
+.process-item--contain {
+  background: rgba(66, 13, 88, 0.12);
+  display: flex;
+  flex-direction: column;
+}
+
+.process-item--contain img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: auto;
+  object-fit: contain;
+  object-position: center;
 }
 
 .process-item figcaption {
