@@ -677,6 +677,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initCardTilt();
 
   if (page === 'category') initCategoryPage();
-  else if (page === 'project') initProjectPage();
+  else if (page === 'project' && !document.getElementById('case-study-container')) initProjectPage();
   else initHomePage();
 });

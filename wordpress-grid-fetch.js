@@ -69,7 +69,7 @@ async function renderProjectGrid(containerSelector) {
       .join(", ");
 
     const card = document.createElement("a");
-    card.href = post.slug ? `project.html?slug=${encodeURIComponent(post.slug)}` : `#project-${post.id}`;
+    card.href = `project.html?id=${post.id}`;
     card.className = "project-card";
     card.style.setProperty("--aspect-ratio", `${width} / ${height}`);
 
