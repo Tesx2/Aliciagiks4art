@@ -10,6 +10,9 @@
 
 const API_BASE = "https://public-api.wordpress.com/wp/v2/sites/aliciagiks4art.wordpress.com";
 
+// "About" category (id 9) is excluded — bio content, not portfolio.
+const EXCLUDED_CATEGORY_IDS = [9];
+
 function getProjectIdFromUrl() {
   // Expects project.html?id=9 (or legacy #project-9 hash).
   const params = new URLSearchParams(window.location.search);
@@ -42,6 +45,49 @@ async function fetchProject(id) {
   return res.json();
 }
 
+function getPrimaryCategoryId(post) {
+  return post.categories.find((id) => !EXCLUDED_CATEGORY_IDS.includes(id)) ?? null;
+}
+
+async function fetchRelatedPosts(categoryId, excludeId) {
+  const res = await fetch(
+    `${API_BASE}/posts?categories=${categoryId}&exclude=${excludeId}&per_page=12`
+  );
+  if (!res.ok) return [];
+  const posts = await res.json();
+  return posts.filter(
+    (p) =>
+      p.id !== excludeId &&
+      (p.jetpack_featured_media_url || p._embedded?.["wp:featuredmedia"]?.[0]?.source_url)
+  );
+}
+
+function renderRelatedSection(relatedPosts, categoryName) {
+  if (!relatedPosts.length) return "";
+
+  const cards = relatedPosts
+    .map((p) => {
+      const imageUrl =
+        p.jetpack_featured_media_url || p._embedded?.["wp:featuredmedia"]?.[0]?.source_url;
+      return `
+        <a class="case-study-related-card" href="project.html?id=${p.id}">
+          <div class="case-study-related-card-media">
+            <img src="${imageUrl}" alt="${p.title.rendered}" loading="lazy" />
+          </div>
+          <span class="case-study-related-card-title">${p.title.rendered}</span>
+        </a>
+      `;
+    })
+    .join("");
+
+  return `
+    <section class="case-study-related" aria-labelledby="caseStudyRelatedHeading">
+      <h2 class="case-study-related-heading" id="caseStudyRelatedHeading">More from ${categoryName}</h2>
+      <div class="case-study-related-row">${cards}</div>
+    </section>
+  `;
+}
+
 async function renderCaseStudy(containerSelector) {
   const container = document.querySelector(containerSelector);
   if (!container) return;
@@ -67,6 +113,13 @@ async function renderCaseStudy(containerSelector) {
 
   const isPortrait = height > width;
   const categoryNames = post.categories.map((cid) => categoryMap[cid]).filter(Boolean).join(", ");
+  const primaryCategoryId = getPrimaryCategoryId(post);
+  const primaryCategoryName = primaryCategoryId ? categoryMap[primaryCategoryId] : null;
+
+  const relatedPosts =
+    primaryCategoryId != null
+      ? await fetchRelatedPosts(primaryCategoryId, post.id)
+      : [];
 
   container.className = isPortrait ? "case-study side-by-side" : "case-study stacked";
 
@@ -78,6 +131,7 @@ async function renderCaseStudy(containerSelector) {
       <span class="case-study-category">${categoryNames || "—"}</span>
       <h1>${post.title.rendered}</h1>
       <div class="case-study-body">${post.content.rendered}</div>
+      ${renderRelatedSection(relatedPosts, primaryCategoryName || "this category")}
     </div>
   `;
 }
