@@ -1,4 +1,2 @@
 # Keep the admin route canonical when Vite assets use a relative base.
 /admin/ /admin 301
-# Cloudflare Pages SPA fallback redirect
-/* /index.html 200
