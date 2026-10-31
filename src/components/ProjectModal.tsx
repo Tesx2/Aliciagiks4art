@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { X, ExternalLink, Play, Film, Image as ImageIcon, Calendar, Briefcase, Wrench } from 'lucide-react';
 import { PortfolioItem } from '../data/portfolioData';
 
@@ -15,15 +15,41 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
   onNext,
   onPrev,
 }) => {
+  const dialogRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
+    if (!project) return;
+    const previousFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    dialogRef.current?.querySelector<HTMLElement>('button')?.focus();
+
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
       if (e.key === 'ArrowRight' && onNext) onNext();
       if (e.key === 'ArrowLeft' && onPrev) onPrev();
+      if (e.key === 'Tab' && dialogRef.current) {
+        const focusable = Array.from(dialogRef.current.querySelectorAll<HTMLElement>(
+          'button:not([disabled]), a[href], video[controls], [tabindex]:not([tabindex="-1"])',
+        ));
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last?.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first?.focus();
+        }
+      }
     };
     window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [onClose, onNext, onPrev]);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = previousOverflow;
+      previousFocus?.focus();
+    };
+  }, [project, onClose, onNext, onPrev]);
 
   if (!project) return null;
 
@@ -36,6 +62,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
       aria-labelledby="modal-project-title"
     >
       <div
+        ref={dialogRef}
         className="relative w-full max-w-4xl bg-white rounded-xl border border-neutral-200 shadow-xl overflow-hidden flex flex-col max-h-[90vh]"
         onClick={(e) => e.stopPropagation()}
       >

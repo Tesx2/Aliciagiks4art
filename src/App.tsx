@@ -4,6 +4,7 @@
  */
 
 import React from 'react';
+import { MotionConfig } from 'motion/react';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
 import { MarqueeTicker } from './components/MarqueeTicker';
@@ -19,18 +20,21 @@ export default function App() {
   if (window.location.pathname.replace(/\/+$/, '') === '/admin') return <AdminPage />;
 
   return (
-    <div className="min-h-screen flex flex-col selection:bg-purple-200 selection:text-purple-950">
-      <MagneticCursor />
-      <Header />
-      <main className="flex-1">
-        <Hero />
-        <MarqueeTicker />
-        <PortfolioGrid />
-        <ServicesSection />
-        <AboutSection />
-        <ContactSection />
-      </main>
-      <Footer />
-    </div>
+    <MotionConfig reducedMotion="user">
+      <div className="min-h-screen flex flex-col selection:bg-purple-200 selection:text-purple-950">
+        <a href="#main-content" className="skip-link">Skip to content</a>
+        <MagneticCursor />
+        <Header />
+        <main id="main-content" className="flex-1" tabIndex={-1}>
+          <Hero />
+          <MarqueeTicker />
+          <PortfolioGrid />
+          <ServicesSection />
+          <AboutSection />
+          <ContactSection />
+        </main>
+        <Footer />
+      </div>
+    </MotionConfig>
   );
 }

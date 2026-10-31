@@ -40,7 +40,7 @@ export const Hero: React.FC = () => {
             </div>
 
             {/* Display Headline with purple gradient italic word */}
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.35rem] font-bold text-neutral-900 tracking-tight leading-[1.12] text-balance">
+            <h1 className="max-w-3xl text-4xl sm:text-5xl md:text-6xl lg:text-[4.15rem] font-bold text-neutral-900 tracking-[-0.045em] leading-[1.04] text-balance">
               Creative ideas, made visible in{' '}
               <span className="italic font-serif font-normal bg-gradient-to-r from-[#420D58] via-[#7E22CE] to-[#C026D3] bg-clip-text text-transparent">
                 motion
@@ -122,7 +122,8 @@ export const Hero: React.FC = () => {
                   <div className="relative w-full h-full">
                     <img
                       src="assets/profile-image/mary-alicia.jpg"
-                      alt="Alicia - Graphic & Motion Designer"
+                      alt="Mary Alicia, graphic designer and motion artist"
+                      loading="eager"
                       className="w-full h-full object-cover grayscale contrast-105 group-hover:scale-102 transition-transform duration-700"
                       onError={(e) => {
                         (e.target as HTMLElement).style.display = 'none';

@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Menu, X, ArrowUpRight, Globe } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { Menu, X, ArrowUpRight } from 'lucide-react';
 import { motion } from 'motion/react';
 import { ARTIST_PROFILE } from '../data/portfolioData';
 import { MagneticWrapper } from './MagneticWrapper';
@@ -11,6 +11,8 @@ interface HeaderProps {
 export const Header: React.FC<HeaderProps> = ({ onNavigate }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState('top');
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -20,9 +22,36 @@ export const Header: React.FC<HeaderProps> = ({ onNavigate }) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    const sections = ['portfolio', 'services', 'about', 'contact']
+      .map((id) => document.getElementById(id))
+      .filter((section): section is HTMLElement => Boolean(section));
+    const observer = new IntersectionObserver((entries) => {
+      const visible = entries
+        .filter((entry) => entry.isIntersecting)
+        .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+      if (visible) setActiveSection(visible.target.id);
+      else if (window.scrollY < 120) setActiveSection('top');
+    }, { rootMargin: '-22% 0px -62% 0px', threshold: [0, 0.15, 0.35, 0.6] });
+    sections.forEach((section) => observer.observe(section));
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setMobileMenuOpen(false);
+        menuButtonRef.current?.focus();
+      }
+    };
+    window.addEventListener('keydown', closeOnEscape);
+    return () => window.removeEventListener('keydown', closeOnEscape);
+  }, []);
+
   const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
     e.preventDefault();
     setMobileMenuOpen(false);
+    if (mobileMenuOpen) menuButtonRef.current?.focus();
     const element = document.getElementById(targetId);
     if (element) {
       const headerOffset = 80;
@@ -67,32 +96,36 @@ export const Header: React.FC<HeaderProps> = ({ onNavigate }) => {
         </a>
 
         {/* Zone 2: Navigation Links (concise, single line) */}
-        <nav className="hidden lg:flex items-center gap-6 text-xs sm:text-sm font-medium text-neutral-600">
+        <nav aria-label="Main navigation" className="hidden lg:flex items-center gap-6 text-xs sm:text-sm font-medium text-neutral-600">
           <a
             href="#portfolio"
             onClick={(e) => handleLinkClick(e, 'portfolio')}
-            className="hover:text-purple-900 transition-colors whitespace-nowrap shrink-0 py-1"
+            aria-current={activeSection === 'portfolio' ? 'location' : undefined}
+            className={`transition-colors whitespace-nowrap shrink-0 py-1 ${activeSection === 'portfolio' ? 'text-purple-900' : 'hover:text-purple-900'}`}
           >
             Work
           </a>
           <a
             href="#services"
             onClick={(e) => handleLinkClick(e, 'services')}
-            className="hover:text-purple-900 transition-colors whitespace-nowrap shrink-0 py-1"
+            aria-current={activeSection === 'services' ? 'location' : undefined}
+            className={`transition-colors whitespace-nowrap shrink-0 py-1 ${activeSection === 'services' ? 'text-purple-900' : 'hover:text-purple-900'}`}
           >
             Services
           </a>
           <a
             href="#about"
             onClick={(e) => handleLinkClick(e, 'about')}
-            className="hover:text-purple-900 transition-colors whitespace-nowrap shrink-0 py-1"
+            aria-current={activeSection === 'about' ? 'location' : undefined}
+            className={`transition-colors whitespace-nowrap shrink-0 py-1 ${activeSection === 'about' ? 'text-purple-900' : 'hover:text-purple-900'}`}
           >
             About
           </a>
           <a
             href="#contact"
             onClick={(e) => handleLinkClick(e, 'contact')}
-            className="hover:text-purple-900 transition-colors whitespace-nowrap shrink-0 py-1"
+            aria-current={activeSection === 'contact' ? 'location' : undefined}
+            className={`transition-colors whitespace-nowrap shrink-0 py-1 ${activeSection === 'contact' ? 'text-purple-900' : 'hover:text-purple-900'}`}
           >
             Contact
           </a>
@@ -115,11 +148,13 @@ export const Header: React.FC<HeaderProps> = ({ onNavigate }) => {
         {/* Mobile menu hamburger toggle */}
         <div className="flex lg:hidden items-center">
           <button
+            ref={menuButtonRef}
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="p-2 text-neutral-700 hover:text-purple-900 hover:bg-purple-100/70 rounded-md transition-colors focus:outline-hidden focus:ring-2 focus:ring-purple-400"
             aria-label="Toggle navigation menu"
             aria-expanded={mobileMenuOpen}
+            aria-controls="mobile-navigation"
           >
             {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
@@ -131,34 +166,41 @@ export const Header: React.FC<HeaderProps> = ({ onNavigate }) => {
         <motion.div
           initial={{ opacity: 0, y: -8 }}
           animate={{ opacity: 1, y: 0 }}
+          id="mobile-navigation"
+          role="region"
+          aria-label="Mobile navigation"
           exit={{ opacity: 0, y: -8 }}
           className="lg:hidden border-b border-purple-200/80 bg-[#FAF7FC] px-4 pt-2 pb-6 space-y-2 shadow-lg shadow-purple-950/5"
         >
           <a
             href="#portfolio"
             onClick={(e) => handleLinkClick(e, 'portfolio')}
-            className="block px-3 py-2 text-sm font-medium text-neutral-800 hover:text-purple-950 hover:bg-purple-100/70 rounded-md transition-colors"
+            aria-current={activeSection === 'portfolio' ? 'location' : undefined}
+            className={`block px-3 py-2 text-sm font-medium rounded-md transition-colors ${activeSection === 'portfolio' ? 'bg-purple-100 text-purple-950' : 'text-neutral-800 hover:text-purple-950 hover:bg-purple-100/70'}`}
           >
             Work
           </a>
           <a
             href="#services"
             onClick={(e) => handleLinkClick(e, 'services')}
-            className="block px-3 py-2 text-sm font-medium text-neutral-800 hover:text-purple-950 hover:bg-purple-100/70 rounded-md transition-colors"
+            aria-current={activeSection === 'services' ? 'location' : undefined}
+            className={`block px-3 py-2 text-sm font-medium rounded-md transition-colors ${activeSection === 'services' ? 'bg-purple-100 text-purple-950' : 'text-neutral-800 hover:text-purple-950 hover:bg-purple-100/70'}`}
           >
             Services
           </a>
           <a
             href="#about"
             onClick={(e) => handleLinkClick(e, 'about')}
-            className="block px-3 py-2 text-sm font-medium text-neutral-800 hover:text-purple-950 hover:bg-purple-100/70 rounded-md transition-colors"
+            aria-current={activeSection === 'about' ? 'location' : undefined}
+            className={`block px-3 py-2 text-sm font-medium rounded-md transition-colors ${activeSection === 'about' ? 'bg-purple-100 text-purple-950' : 'text-neutral-800 hover:text-purple-950 hover:bg-purple-100/70'}`}
           >
             About
           </a>
           <a
             href="#contact"
             onClick={(e) => handleLinkClick(e, 'contact')}
-            className="block px-3 py-2 text-sm font-medium text-neutral-800 hover:text-purple-950 hover:bg-purple-100/70 rounded-md transition-colors"
+            aria-current={activeSection === 'contact' ? 'location' : undefined}
+            className={`block px-3 py-2 text-sm font-medium rounded-md transition-colors ${activeSection === 'contact' ? 'bg-purple-100 text-purple-950' : 'text-neutral-800 hover:text-purple-950 hover:bg-purple-100/70'}`}
           >
             Contact
           </a>

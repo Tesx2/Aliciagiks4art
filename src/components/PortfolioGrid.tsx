@@ -22,7 +22,7 @@ export const PortfolioGrid: React.FC = () => {
       .then((data: unknown) => {
         if (cancelled || !data || typeof data !== 'object' || !('projects' in data) || !Array.isArray(data.projects)) return;
 
-        // The admin API is the live source for uploaded work. Keep the bundled
+        // The published project feed is the live source for uploaded work. Keep the bundled
         // projects as the initial portfolio and fallback when R2 has no uploads.
         const uploaded = data.projects.filter((project): project is PortfolioItem =>
           Boolean(
@@ -183,7 +183,7 @@ export const PortfolioGrid: React.FC = () => {
         <div className="mt-8 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
           
           {/* Category Filter Tabs with royal purple styling */}
-          <div className="flex items-center gap-1.5 overflow-x-auto pb-2 sm:pb-0 scrollbar-none p-1 bg-purple-50/80 rounded-lg border border-purple-200/60">
+          <div role="group" aria-label="Filter projects by category" className="flex items-center gap-1.5 overflow-x-auto pb-2 sm:pb-0 scrollbar-none p-1 bg-purple-50/80 rounded-lg border border-purple-200/60">
             {CATEGORY_FILTERS.map((cat) => {
               const isActive = selectedCategory === cat.id;
               return (
@@ -191,6 +191,7 @@ export const PortfolioGrid: React.FC = () => {
                   key={cat.id}
                   type="button"
                   onClick={() => setSelectedCategory(cat.id)}
+                  aria-pressed={isActive}
                   className={`px-3 py-1.5 text-xs font-medium rounded-md whitespace-nowrap transition-all ${
                     isActive
                       ? 'bg-gradient-to-r from-[#420D58] to-[#6B21A8] text-white shadow-xs shadow-purple-900/30'
@@ -206,7 +207,9 @@ export const PortfolioGrid: React.FC = () => {
           {/* Quick Search with purple focus ring */}
           <div className="relative w-full sm:w-60 shrink-0">
             <Search className="w-3.5 h-3.5 text-purple-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+            <label className="sr-only" htmlFor="portfolio-search">Search projects</label>
             <input
+              id="portfolio-search"
               type="text"
               placeholder="Search works..."
               value={searchQuery}
@@ -215,6 +218,12 @@ export const PortfolioGrid: React.FC = () => {
             />
           </div>
         </div>
+
+        <p className="mt-4 text-xs text-neutral-500" aria-live="polite" aria-atomic="true">
+          Showing <span className="font-semibold text-neutral-700">{filteredItems.length}</span> {filteredItems.length === 1 ? 'project' : 'projects'}
+          {selectedCategory !== 'all' ? ` in ${CATEGORY_FILTERS.find((category) => category.id === selectedCategory)?.label || selectedCategory}` : ''}
+          {searchQuery.trim() ? ` matching “${searchQuery.trim()}”` : ''}.
+        </p>
 
         {/* Project Grid with motion & hover elevation */}
         <motion.div 
@@ -230,9 +239,19 @@ export const PortfolioGrid: React.FC = () => {
                 exit={{ opacity: 0, scale: 0.95 }}
                 transition={{ duration: 0.25 }}
                 key={project.id}
+                role="button"
+                tabIndex={0}
+                aria-label={`View project: ${project.title}`}
                 data-cursor={project.type === 'video' ? 'play' : 'inspect'}
                 data-cursor-text={project.type === 'video' ? 'PLAY REEL' : 'INSPECT'}
                 onClick={() => setActiveModalProject(project)}
+                onKeyDown={(event) => {
+                  if (event.target !== event.currentTarget) return;
+                  if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    setActiveModalProject(project);
+                  }
+                }}
                 className="group cursor-pointer rounded-2xl border border-purple-200/80 bg-white hover:border-purple-300 transition-all duration-300 hover:shadow-xl hover:shadow-purple-950/8 hover:-translate-y-1 flex flex-col overflow-hidden"
               >
                 {/* Media Container */}
@@ -241,6 +260,7 @@ export const PortfolioGrid: React.FC = () => {
                     <div className="relative w-full h-full">
                       <video
                         src={project.src}
+                        aria-label={project.alt || project.title}
                         muted
                         loop
                         playsInline
@@ -282,6 +302,12 @@ export const PortfolioGrid: React.FC = () => {
                         <ImageIcon className="w-3 h-3" />
                         <span>STILL</span>
                       </div>
+                    </div>
+                  )}
+                  {project.featured && (
+                    <div className="absolute top-3 left-3 px-2 py-1 bg-white/95 text-purple-950 text-2xs font-semibold rounded-md flex items-center gap-1 shadow-sm">
+                      <Sparkles className="w-3 h-3 text-purple-700" />
+                      <span>FEATURED</span>
                     </div>
                   )}
                 </div>

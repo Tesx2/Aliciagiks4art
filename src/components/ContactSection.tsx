@@ -1,13 +1,10 @@
 import React, { useState } from 'react';
-import { Mail, MessageCircle, Copy, Check, Send, ArrowUpRight, Instagram, Github, ShieldAlert } from 'lucide-react';
+import { Mail, MessageCircle, Copy, Check, Send, ArrowUpRight, Instagram, Github } from 'lucide-react';
 import { motion } from 'motion/react';
-import { CloudflareTurnstile } from './CloudflareTurnstile';
 import { MagneticWrapper } from './MagneticWrapper';
 
 export const ContactSection: React.FC = () => {
   const [copiedEmail, setCopiedEmail] = useState(false);
-  const [turnstileVerified, setTurnstileVerified] = useState(false);
-  const [showTurnstileError, setShowTurnstileError] = useState(false);
   const [formState, setFormState] = useState({
     name: '',
     email: '',
@@ -17,20 +14,19 @@ export const ContactSection: React.FC = () => {
   });
   const [submitted, setSubmitted] = useState(false);
 
-  const handleCopyEmail = () => {
-    navigator.clipboard.writeText('aliciagiks@gmail.com');
-    setCopiedEmail(true);
-    setTimeout(() => setCopiedEmail(false), 2500);
+  const handleCopyEmail = async () => {
+    try {
+      await navigator.clipboard.writeText('aliciagiks@gmail.com');
+      setCopiedEmail(true);
+      setTimeout(() => setCopiedEmail(false), 2500);
+    } catch {
+      window.location.href = 'mailto:aliciagiks@gmail.com';
+    }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!turnstileVerified) {
-      setShowTurnstileError(true);
-      return;
-    }
-    setShowTurnstileError(false);
-    // Build mailto link so it functions in 100% static hosting without a server backend
+    // This static form prepares a message in the visitor's email app.
     const subject = encodeURIComponent(`Project Inquiry: ${formState.service} - ${formState.name}`);
     const body = encodeURIComponent(
       `Hi Alicia,\n\nMy name is ${formState.name} (${formState.email}).\n\nProject Type: ${formState.service}\nTimeline: ${formState.timeline}\n\nProject Details:\n${formState.message}\n\nLooking forward to hearing from you!`
@@ -53,7 +49,7 @@ export const ContactSection: React.FC = () => {
             Let&apos;s Build Something Bold
           </h2>
           <p className="text-sm sm:text-base text-neutral-600 mt-2 max-w-xl">
-            Tell me about your project, campaign, or motion vision — I usually reply within 24 hours.
+            Tell me about your project, campaign, or motion vision. The form prepares an email for you to review and send.
           </p>
         </div>
 
@@ -185,7 +181,7 @@ export const ContactSection: React.FC = () => {
                   Project Inquiry Form
                 </h3>
                 <p className="text-xs text-neutral-500 mt-1">
-                  Fill in your details below to generate a direct project brief.
+                  Share a few details and your email app will open with a ready-to-send project brief.
                 </p>
               </div>
 
@@ -273,26 +269,6 @@ export const ContactSection: React.FC = () => {
                 />
               </div>
 
-              {/* Cloudflare Turnstile human verification */}
-              <div className="pt-1">
-                <label className="block text-2xs font-mono uppercase text-purple-800 font-semibold mb-1.5">
-                  Spam Protection &amp; Verification
-                </label>
-                <CloudflareTurnstile
-                  verified={turnstileVerified}
-                  onVerify={(val) => {
-                    setTurnstileVerified(val);
-                    if (val) setShowTurnstileError(false);
-                  }}
-                />
-                {showTurnstileError && (
-                  <p className="mt-1.5 text-xs text-rose-600 flex items-center gap-1 font-medium">
-                    <ShieldAlert className="w-3.5 h-3.5" />
-                    <span>Please complete the Cloudflare Turnstile verification challenge.</span>
-                  </p>
-                )}
-              </div>
-
               <div className="pt-2 flex items-center justify-between">
                 <MagneticWrapper strength={0.25}>
                   <button
@@ -300,7 +276,7 @@ export const ContactSection: React.FC = () => {
                     className="inline-flex items-center gap-2 px-6 py-2.5 text-xs sm:text-sm font-semibold text-white bg-gradient-to-r from-[#420D58] via-[#5F1B68] to-[#7E22CE] hover:from-[#350A47] hover:to-[#6B21A8] rounded-md transition-all shadow-md shadow-purple-900/25 hover:shadow-lg hover:shadow-purple-900/35"
                   >
                     <Send className="w-3.5 h-3.5" />
-                    <span>Send Project Inquiry</span>
+                    <span>Prepare Email Inquiry</span>
                   </button>
                 </MagneticWrapper>
 
