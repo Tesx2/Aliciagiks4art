@@ -73,9 +73,7 @@ The website is hosted in the Cloudflare account you choose. Create the R2 and D1
 2. The `wrangler.jsonc` file already declares `PORTFOLIO_BUCKET`; the bucket must exist in this hosting account.
 3. Create a D1 database named `aliciagiks4art-auth`. Copy its database ID into the `database_id` field for `AUTH_DB` in `wrangler.jsonc` before deploying. This project uses that Wrangler configuration as the source of truth for bindings.
 4. Apply `migrations/0001_better_auth.sql` to that D1 database. You can use the D1 SQL console, or run `npx wrangler d1 execute aliciagiks4art-auth --remote --file=migrations/0001_better_auth.sql` after authenticating Wrangler to the hosting Cloudflare account.
-5. In **Workers & Pages → aliciagiks4art → Settings → Variables and secrets**, add these Production values:
-   - `BETTER_AUTH_URL`: `https://aliciagiks4art.dpdns.org` (use the exact public site origin)
-   - `ADMIN_EMAIL`: the owner’s email address
+5. `BETTER_AUTH_URL` and `ADMIN_EMAIL` are configured as plain-text `vars` in `wrangler.jsonc` (currently `https://aliciagiks4art.dpdns.org` and `aliciagiks@gmail.com`). Change `ADMIN_EMAIL` there if the owner will sign in with another email. Add these two Production secrets in **Workers & Pages → aliciagiks4art → Settings → Variables and secrets**:
    - `BETTER_AUTH_SECRET`: a new, randomly generated secret of at least 32 characters
    - `SETUP_SECRET`: a separate random one-time setup code
 6. Deploy the site after replacing the D1 ID placeholder. Visit `https://aliciagiks4art.dpdns.org/admin`, enter the configured admin email, create a password of at least 12 characters, and provide the one-time setup code.

@@ -4,6 +4,10 @@
   "compatibility_date": "2026-10-30",
   "compatibility_flags": ["nodejs_compat"],
   "pages_build_output_dir": "dist",
+  "vars": {
+    "BETTER_AUTH_URL": "https://aliciagiks4art.dpdns.org",
+    "ADMIN_EMAIL": "aliciagiks@gmail.com"
+  },
   "r2_buckets": [
     {
       "binding": "PORTFOLIO_BUCKET",
