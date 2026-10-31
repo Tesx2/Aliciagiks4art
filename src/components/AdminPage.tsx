@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { ArrowLeft, ImagePlus, LoaderCircle, Save, Trash2, UploadCloud } from 'lucide-react';
+import { ArrowLeft, ImagePlus, LoaderCircle, LogOut, Save, Trash2, UploadCloud } from 'lucide-react';
 import { PortfolioItem } from '../data/portfolioData';
 
 interface ManagedProject extends PortfolioItem {
@@ -22,6 +22,11 @@ const fieldClass = 'mt-1 w-full rounded-lg border border-purple-200 bg-white px-
 export const AdminPage: React.FC = () => {
   const [projects, setProjects] = useState<ManagedProject[]>([]);
   const [authorized, setAuthorized] = useState<boolean | null>(null);
+  const [setupAvailable, setSetupAvailable] = useState(false);
+  const [authConfigured, setAuthConfigured] = useState(true);
+  const [authEmail, setAuthEmail] = useState('');
+  const [authPassword, setAuthPassword] = useState('');
+  const [setupToken, setSetupToken] = useState('');
   const [loading, setLoading] = useState(true);
   const [busy, setBusy] = useState(false);
   const [notice, setNotice] = useState('');
@@ -52,7 +57,83 @@ export const AdminPage: React.FC = () => {
     }
   }, []);
 
-  useEffect(() => { void loadProjects(); }, [loadProjects]);
+  const loadSetupState = useCallback(async () => {
+    try {
+      const response = await fetch('/api/setup', { cache: 'no-store' });
+      if (response.ok) {
+        const result = await response.json() as { available?: boolean; configured?: boolean };
+        setSetupAvailable(result.available === true);
+        setAuthConfigured(result.configured === true);
+      } else {
+        setAuthConfigured(false);
+      }
+    } catch {
+      setSetupAvailable(false);
+      setAuthConfigured(false);
+    }
+  }, []);
+
+  useEffect(() => { void loadProjects(); void loadSetupState(); }, [loadProjects, loadSetupState]);
+
+  const signIn = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setBusy(true);
+    setNotice('Signing in…');
+    try {
+      const response = await fetch('/api/auth/sign-in/email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: authEmail.trim().toLowerCase(), password: authPassword, rememberMe: false }),
+      });
+      const result = await response.json().catch(() => ({})) as { message?: string; error?: { message?: string } };
+      if (!response.ok) throw new Error(result.message || result.error?.message || 'Sign-in failed. Check the email and password.');
+      setAuthPassword('');
+      setNotice('Signed in.');
+      await loadProjects();
+    } catch (error) {
+      setNotice(error instanceof Error ? error.message : 'Sign-in failed.');
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const createAdmin = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setBusy(true);
+    setNotice('Creating the first admin account…');
+    try {
+      const response = await fetch('/api/setup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-Setup-Token': setupToken },
+        body: JSON.stringify({ email: authEmail.trim().toLowerCase(), password: authPassword }),
+      });
+      const result = await response.json().catch(() => ({})) as { error?: string };
+      if (!response.ok) throw new Error(result.error || 'Could not create the admin account.');
+      setSetupAvailable(false);
+      setSetupToken('');
+      setAuthPassword('');
+      setNotice('Admin account created. Sign in with that email and password.');
+    } catch (error) {
+      setNotice(error instanceof Error ? error.message : 'Could not create the admin account.');
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const signOut = async () => {
+    setBusy(true);
+    try {
+      const response = await fetch('/api/auth/sign-out', { method: 'POST' });
+      if (!response.ok) throw new Error('Could not sign out. Please try again.');
+      setAuthorized(false);
+      setProjects([]);
+      setNotice('You have signed out.');
+    } catch (error) {
+      setNotice(error instanceof Error ? error.message : 'Could not sign out.');
+    } finally {
+      setBusy(false);
+    }
+  };
 
   const uploadProject = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -152,6 +233,7 @@ export const AdminPage: React.FC = () => {
           <p className="mt-2 max-w-2xl text-sm leading-relaxed text-neutral-600">
             Upload artwork or video, write descriptive alt text, and update or remove projects. Uploaded media is stored in your private Cloudflare R2 bucket.
           </p>
+          {authorized === true && <button type="button" disabled={busy} onClick={() => void signOut()} className="mt-4 inline-flex items-center gap-2 rounded-lg border border-purple-200 px-3 py-2 text-sm font-medium text-purple-950 hover:bg-purple-50 disabled:opacity-60"><LogOut className="h-4 w-4" /> Sign out</button>}
         </header>
 
         {notice && <p role="status" className="mt-5 rounded-lg border border-purple-200 bg-white px-4 py-3 text-sm text-purple-950">{notice}</p>}
@@ -160,11 +242,17 @@ export const AdminPage: React.FC = () => {
           <div className="mt-10 flex items-center gap-2 text-sm text-neutral-600"><LoaderCircle className="h-4 w-4 animate-spin" /> Connecting to your admin…</div>
         ) : authorized === false ? (
           <section className="mt-8 rounded-2xl border border-purple-200 bg-white p-6 sm:p-8">
-            <h2 className="text-xl font-semibold">Admin sign-in required</h2>
+            <h2 className="text-xl font-semibold">{!authConfigured ? 'Admin authentication is not configured' : setupAvailable ? 'Set up the owner account' : 'Admin sign-in'}</h2>
             <p className="mt-2 max-w-2xl text-sm leading-relaxed text-neutral-600">
-              Open this page on <a className="font-semibold text-purple-800 underline" href="https://aliciagiks4art.dpdns.org/admin">aliciagiks4art.dpdns.org/admin</a> and sign in with the email allowed by Cloudflare Access. If you already signed in, ask the site administrator to add your email to the admin allowlist.
+              {!authConfigured ? 'Add the AUTH_DB D1 binding and Better Auth production variables/secrets in the Cloudflare account hosting this site, apply the D1 migration, and redeploy.' : setupAvailable ? 'This one-time setup is available before the first admin account is created. Use the setup code saved in your Cloudflare secret.' : 'Sign in with the owner account. Public account registration is disabled.'}
             </p>
-            <button type="button" onClick={() => void loadProjects()} className="mt-5 rounded-lg bg-purple-900 px-4 py-2.5 text-sm font-semibold text-white hover:bg-purple-800">Try again</button>
+            {authConfigured && <form onSubmit={setupAvailable ? createAdmin : signIn} className="mt-5 grid max-w-lg gap-4">
+              {setupAvailable && <label className="text-sm font-medium">One-time setup code<input className={fieldClass} type="password" autoComplete="off" required value={setupToken} onChange={(event) => setSetupToken(event.target.value)} /></label>}
+              <label className="text-sm font-medium">Admin email<input className={fieldClass} type="email" autoComplete="username" required value={authEmail} onChange={(event) => setAuthEmail(event.target.value)} /></label>
+              <label className="text-sm font-medium">Password<input className={fieldClass} type="password" minLength={12} maxLength={128} autoComplete={setupAvailable ? 'new-password' : 'current-password'} required value={authPassword} onChange={(event) => setAuthPassword(event.target.value)} /></label>
+              <button type="submit" disabled={busy} className="inline-flex w-fit items-center gap-2 rounded-lg bg-purple-900 px-4 py-2.5 text-sm font-semibold text-white hover:bg-purple-800 disabled:opacity-60">{busy && <LoaderCircle className="h-4 w-4 animate-spin" />}{setupAvailable ? 'Create admin account' : 'Sign in'}</button>
+            </form>}
+            {authConfigured && !setupAvailable && <button type="button" onClick={() => { void loadProjects(); void loadSetupState(); }} className="mt-4 text-sm font-medium text-purple-800 underline">Try again</button>}
           </section>
         ) : (
           <>
@@ -235,7 +323,7 @@ export const AdminPage: React.FC = () => {
             </section>
           </>
         )}
-        <footer className="mt-12 border-t border-purple-200 py-5 text-xs text-neutral-500">Admin changes are saved to R2 and appear in the public project grid. Keep your Cloudflare Access account secure.</footer>
+        <footer className="mt-12 border-t border-purple-200 py-5 text-xs text-neutral-500">Admin changes are saved to R2 and appear in the public project grid. Keep your admin password private.</footer>
       </div>
     </main>
   );

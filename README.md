@@ -27,7 +27,7 @@ The site brings selected visual work together in a responsive portfolio with pro
 │   └── data/portfolioData.ts
 ├── functions/
 │   ├── api/                    # Public project/media API and protected admin API
-│   └── _lib/                   # R2 and Cloudflare Access helpers
+│   └── _lib/                   # R2 and Better Auth helpers
 ├── public/
 │   ├── assets/
 │   └── geeks4drisony/
@@ -63,20 +63,25 @@ Connect the `aliciagiks-graphics/Aliciagiks4art` repository to Cloudflare Pages 
 
 ## R2 uploads and portfolio admin
 
-The upload manager is available at `/admin`. It lets the site owner upload images and videos, require descriptive alt text, update project details, and remove uploaded work. Newly uploaded projects appear alongside the existing bundled portfolio. Uploaded media and project records are stored in a private R2 bucket; the Pages Functions serve public portfolio media and require Cloudflare Access authentication plus an email allowlist for all write operations. The bucket does not need a public `r2.dev` URL.
+The upload manager is available at `/admin`. It lets the site owner upload images and videos, require descriptive alt text, update project details, and remove uploaded work. Newly uploaded projects appear alongside the existing bundled portfolio. Uploaded media and project records are stored in a private R2 bucket; Pages Functions serve public portfolio media and require a valid Better Auth session for the configured admin email before any write operation. The bucket does not need a public `r2.dev` URL.
 
 ### Cloudflare setup
 
-1. In **R2 Object Storage**, create a private bucket named `aliciagiks4art-portfolio-media`.
-2. The `wrangler.jsonc` file declares the `PORTFOLIO_BUCKET` binding. Keep the bucket name and binding in sync; alternatively add the same binding in **Workers & Pages → aliciagiks4art → Settings → Bindings → Add → R2 bucket**. Redeploy after adding or changing a dashboard binding.
-3. In **Zero Trust → Access → Applications**, create a **Self-hosted** application for `aliciagiks4art.dpdns.org/admin*`. Add an **Allow** policy for the owner’s sign-in email. This protects the admin page while leaving the public portfolio open.
-4. In **Workers & Pages → aliciagiks4art → Settings → Variables and secrets**, add these Production variables:
-   - `ACCESS_TEAM_DOMAIN`: `https://<your-team-name>.cloudflareaccess.com`
-   - `ACCESS_AUD`: the Access application’s Audience (AUD) tag
-   - `ADMIN_EMAILS`: the allowed admin email address, for example `aliciagiks@gmail.com`
-5. Deploy the project. Open `https://aliciagiks4art.dpdns.org/admin`, sign in with the allowlisted email, and upload a small image with alt text to confirm the workflow.
+The website is hosted in the Cloudflare account you choose. Create the R2 and D1 resources in that same hosting account, because a Pages project cannot bind directly to resources owned by another account. This uses the current site origin for `/admin` and `/api`; it does not require separate `admin.` or `media.` subdomains.
 
-The admin API verifies the signed Cloudflare Access JWT and checks its email against `ADMIN_EMAILS`; it does not trust a client-supplied email or a plain Access header. Write requests also have to come from the site’s own origin. The API accepts JPEG, PNG, WebP, MP4, and WebM files up to 50 MB. Existing bundled portfolio media remains available; the manager edits uploaded R2 items.
+1. In the hosting account’s **R2 Object Storage**, create a private bucket named `aliciagiks4art-portfolio-media`.
+2. The `wrangler.jsonc` file already declares `PORTFOLIO_BUCKET`; the bucket must exist in this hosting account.
+3. Create a D1 database named `aliciagiks4art-auth`. Copy its database ID into the `database_id` field for `AUTH_DB` in `wrangler.jsonc` before deploying. This project uses that Wrangler configuration as the source of truth for bindings.
+4. Apply `migrations/0001_better_auth.sql` to that D1 database. You can use the D1 SQL console, or run `npx wrangler d1 execute aliciagiks4art-auth --remote --file=migrations/0001_better_auth.sql` after authenticating Wrangler to the hosting Cloudflare account.
+5. In **Workers & Pages → aliciagiks4art → Settings → Variables and secrets**, add these Production values:
+   - `BETTER_AUTH_URL`: `https://aliciagiks4art.dpdns.org` (use the exact public site origin)
+   - `ADMIN_EMAIL`: the owner’s email address
+   - `BETTER_AUTH_SECRET`: a new, randomly generated secret of at least 32 characters
+   - `SETUP_SECRET`: a separate random one-time setup code
+6. Deploy the site after replacing the D1 ID placeholder. Visit `https://aliciagiks4art.dpdns.org/admin`, enter the configured admin email, create a password of at least 12 characters, and provide the one-time setup code.
+7. After the first admin account is created, remove `SETUP_SECRET` from the Cloudflare project settings and redeploy. Sign in at `/admin`; public sign-up is disabled.
+
+The admin API verifies the Better Auth session on the server and checks its email against `ADMIN_EMAIL`; it does not trust a client-supplied email. Write requests must also come from the site’s own origin. The API accepts JPEG, PNG, WebP, MP4, and WebM files up to 50 MB. Existing bundled portfolio media remains available; the manager edits uploaded R2 items. Password reset email is not enabled yet; it needs a configured mail provider and will be added as a later step.
 
 ## Customize
 

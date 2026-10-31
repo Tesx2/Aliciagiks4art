@@ -38,9 +38,21 @@ export interface R2Bucket {
 
 export interface Env {
   PORTFOLIO_BUCKET: R2Bucket;
-  ACCESS_TEAM_DOMAIN?: string;
-  ACCESS_AUD?: string;
-  ADMIN_EMAILS?: string;
+  AUTH_DB?: D1Database;
+  BETTER_AUTH_SECRET?: string;
+  BETTER_AUTH_URL?: string;
+  ADMIN_EMAIL?: string;
+  SETUP_SECRET?: string;
+}
+
+export interface D1Database {
+  prepare(query: string): D1PreparedStatement;
+}
+
+export interface D1PreparedStatement {
+  bind(...values: unknown[]): D1PreparedStatement;
+  first<T = Record<string, unknown>>(): Promise<T | null>;
+  run(): Promise<{ meta?: { changes?: number } }>;
 }
 
 export interface PagesContext {

@@ -1,80 +1,58 @@
+import { betterAuth } from 'better-auth';
 import { Env, PagesContext, message } from './types';
 
-interface AccessClaims {
-  iss?: string;
-  aud?: string | string[];
-  exp?: number;
-  nbf?: number;
-  email?: string;
-}
+export function createAuth(env: Env, allowInitialSetup = false) {
+  const baseURL = env.BETTER_AUTH_URL;
+  if (!env.AUTH_DB || !env.BETTER_AUTH_SECRET || !baseURL) {
+    throw new Error('Better Auth requires AUTH_DB, BETTER_AUTH_SECRET, and BETTER_AUTH_URL.');
+  }
 
-function decodeBase64Url(value: string): Uint8Array {
-  const base64 = value.replace(/-/g, '+').replace(/_/g, '/') + '='.repeat((4 - value.length % 4) % 4);
-  return Uint8Array.from(atob(base64), (character) => character.charCodeAt(0));
-}
-
-function decodePart<T>(value: string): T {
-  return JSON.parse(new TextDecoder().decode(decodeBase64Url(value))) as T;
+  return betterAuth({
+    // Cloudflare D1 is provided as a native binding. The type assertion bridges
+    // the local Pages context type to Better Auth's D1 adapter typing.
+    database: env.AUTH_DB as never,
+    secret: env.BETTER_AUTH_SECRET,
+    baseURL,
+    trustedOrigins: [baseURL],
+    emailAndPassword: {
+      enabled: true,
+      disableSignUp: !allowInitialSetup,
+      minPasswordLength: 12,
+      maxPasswordLength: 128,
+    },
+    session: { expiresIn: 60 * 60, updateAge: 60 * 60 },
+    rateLimit: {
+      enabled: true,
+      window: 60,
+      max: 10,
+      storage: 'database',
+      customRules: {
+        '/sign-in/email': { window: 300, max: 5 },
+      },
+    },
+    advanced: {
+      useSecureCookies: baseURL.startsWith('https://'),
+      defaultCookieAttributes: { httpOnly: true, sameSite: 'strict', secure: baseURL.startsWith('https://') },
+    },
+  });
 }
 
 export async function authorizeAdmin(context: PagesContext): Promise<Response | null> {
   const { env, request } = context;
-  const issuer = env.ACCESS_TEAM_DOMAIN?.replace(/\/+$/, '');
-  const audience = env.ACCESS_AUD;
-  const allowedEmails = (env.ADMIN_EMAILS || '')
-    .split(',')
-    .map((email) => email.trim().toLowerCase())
-    .filter(Boolean);
-  const cookieToken = request.headers.get('cookie')
-    ?.split(';')
-    .map((cookie) => cookie.trim())
-    .find((cookie) => cookie.startsWith('CF_Authorization='))
-    ?.slice('CF_Authorization='.length);
-  const token = request.headers.get('cf-access-jwt-assertion') || cookieToken;
-
-  if (!issuer || !audience || allowedEmails.length === 0) {
-    return message('Admin authentication is not configured.', 503);
+  const allowedEmail = env.ADMIN_EMAIL?.trim().toLowerCase();
+  if (!allowedEmail || !env.AUTH_DB || !env.BETTER_AUTH_SECRET || !env.BETTER_AUTH_URL) {
+    return message('Admin authentication is not configured yet.', 503);
   }
-  if (!token) return message('Sign in through Cloudflare Access to manage this portfolio.', 401);
 
   try {
-    if (token.length > 16_384) throw new Error('Token is too large');
-    const parts = token.split('.');
-    if (parts.length !== 3) throw new Error('Malformed token');
-    const [encodedHeader, encodedClaims, encodedSignature] = parts;
-    if (!encodedHeader || !encodedClaims || !encodedSignature) throw new Error('Malformed token');
-    const header = decodePart<{ alg?: string; kid?: string }>(encodedHeader);
-    if (header.alg !== 'RS256' || !header.kid) throw new Error('Unsupported token signature');
-    const claims = decodePart<AccessClaims>(encodedClaims);
-
-    const audiences = Array.isArray(claims.aud) ? claims.aud : [claims.aud];
-    const now = Math.floor(Date.now() / 1000);
-    if (claims.iss !== issuer || !audiences.includes(audience) || !claims.exp || claims.exp <= now || (claims.nbf && claims.nbf > now)) {
-      throw new Error('Token claims are invalid');
-    }
-
-    const certResponse = await fetch(`${issuer}/cdn-cgi/access/certs`, { cache: 'no-cache' });
-    if (!certResponse.ok) throw new Error('Unable to fetch Access signing keys');
-    const certs = await certResponse.json() as { keys?: Array<JsonWebKey & { kid?: string; alg?: string }> };
-    const jwk = certs.keys?.find((key) => key.kid === header.kid && key.alg === 'RS256');
-    if (!jwk) throw new Error('Signing key not found');
-
-    const publicKey = await crypto.subtle.importKey(
-      'jwk', jwk, { name: 'RSASSA-PKCS1-v1_5', hash: 'SHA-256' }, false, ['verify'],
-    );
-    const valid = await crypto.subtle.verify(
-      'RSASSA-PKCS1-v1_5',
-      publicKey,
-      decodeBase64Url(encodedSignature),
-      new TextEncoder().encode(`${encodedHeader}.${encodedClaims}`),
-    );
-    if (!valid) throw new Error('Invalid token signature');
-
-    if (!claims.email || !allowedEmails.includes(claims.email.toLowerCase())) {
-      return message('This Cloudflare Access account is not allowed to manage the portfolio.', 403);
+    const auth = createAuth(env);
+    const result = await auth.api.getSession({ headers: request.headers });
+    if (!result?.user) return message('Sign in to manage this portfolio.', 401);
+    if (result.user.email.toLowerCase() !== allowedEmail) {
+      return message('This account is not allowed to manage the portfolio.', 403);
     }
     return null;
   } catch {
-    return message('Cloudflare Access authentication could not be verified.', 401);
+    return message('Admin authentication could not be verified.', 401);
   }
 }

@@ -2,11 +2,19 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "aliciagiks4art",
   "compatibility_date": "2026-10-30",
+  "compatibility_flags": ["nodejs_compat"],
   "pages_build_output_dir": "dist",
   "r2_buckets": [
     {
       "binding": "PORTFOLIO_BUCKET",
       "bucket_name": "aliciagiks4art-portfolio-media"
+    }
+  ],
+  "d1_databases": [
+    {
+      "binding": "AUTH_DB",
+      "database_name": "aliciagiks4art-auth",
+      "database_id": "06c56fee-e5fb-491a-9e05-5f8d681d59d0"
     }
   ]
 }
