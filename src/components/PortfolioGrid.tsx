@@ -14,17 +14,43 @@ export const PortfolioGrid: React.FC = () => {
 
   useEffect(() => {
     let cancelled = false;
-    fetch('/api/projects', { cache: 'no-store' })
-      .then((response) => response.ok ? response.json() : [])
-      .then((projects: PortfolioItem[]) => {
-        if (cancelled || !Array.isArray(projects) || projects.length === 0) return;
+    fetch('/index.json', { cache: 'no-store' })
+      .then(async (response) => {
+        if (!response.ok) throw new Error(`Project feed returned ${response.status}.`);
+        return response.json();
+      })
+      .then((data: unknown) => {
+        if (cancelled || !data || typeof data !== 'object' || !('projects' in data) || !Array.isArray(data.projects)) return;
+
+        // The admin API is the live source for uploaded work. Keep the bundled
+        // projects as the initial portfolio and fallback when R2 has no uploads.
+        const uploaded = data.projects.filter((project): project is PortfolioItem =>
+          Boolean(
+            project &&
+            typeof project === 'object' &&
+            typeof project.id === 'string' &&
+            typeof project.title === 'string' &&
+            typeof project.category === 'string' &&
+            typeof project.src === 'string' &&
+            (project.type === 'image' || project.type === 'video'),
+          ),
+        ).map((project) => ({
+          ...project,
+          categoryLabel: project.categoryLabel || project.category,
+          alt: project.alt || project.title,
+          year: project.year || String(new Date().getFullYear()),
+        }));
+
+        if (uploaded.length === 0) return;
         setItems((current) => {
-          const merged = new Map(current.map((project) => [project.id, project]));
-          projects.forEach((project) => merged.set(project.id, project));
-          return Array.from(merged.values());
+          const uploadedIds = new Set(uploaded.map((project) => project.id));
+          const bundled = current.filter((project) => !uploadedIds.has(project.id) && !project.src.startsWith('/api/media/'));
+          return [...uploaded, ...bundled];
         });
       })
-      .catch(() => { /* Keep the bundled portfolio available if R2 is not configured. */ });
+      .catch((error) => {
+        if (!cancelled) console.warn('Could not load managed portfolio projects; keeping bundled work.', error);
+      });
     return () => { cancelled = true; };
   }, []);
 
@@ -69,8 +95,9 @@ export const PortfolioGrid: React.FC = () => {
       if (parsedItems.length > 0) {
         setItems((current) => {
           const uploaded = current.filter((project) => project.src.startsWith('/api/media/'));
-          const merged = new Map(parsedItems.map((project) => [project.id, project]));
-          uploaded.forEach((project) => merged.set(project.id, project));
+          const merged = new Map<string, PortfolioItem>();
+          [...parsedItems, ...current.filter((project) => !project.src.startsWith('/api/media/')), ...uploaded]
+            .forEach((project) => merged.set(project.id, project));
           return Array.from(merged.values());
         });
         setIsFullArchiveLoaded(true);
