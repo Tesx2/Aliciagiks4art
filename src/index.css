@@ -1,0 +1,79 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  html {
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background-color: #FAF7FC;
+    background-image: 
+      radial-gradient(circle at 12% 10%, rgba(142, 36, 170, 0.09) 0%, transparent 40%),
+      radial-gradient(circle at 88% 14%, rgba(66, 13, 88, 0.11) 0%, transparent 38%),
+      radial-gradient(circle at 50% 50%, rgba(199, 91, 170, 0.06) 0%, transparent 45%),
+      radial-gradient(circle at 20% 80%, rgba(88, 28, 135, 0.08) 0%, transparent 40%);
+    background-attachment: fixed;
+    color: #1F122B;
+  }
+
+  code, pre, .font-mono {
+    font-family: 'Space Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  }
+}
+
+/* Custom purple scrollbar */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: #FAF7FC;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(142, 36, 170, 0.35);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(107, 33, 168, 0.6);
+}
+
+/* Infinite Marquee Animation */
+@keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  display: flex;
+  width: 200%;
+  animation: marquee 28s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* Purple Glow Pulse */
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50% { opacity: 0.7; transform: scale(1.05); }
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 5s ease-in-out infinite;
+}
+
+/* Custom Magnetic Cursor Utilities */
+@media (pointer: fine) {
+  [data-cursor="play"], [data-cursor="inspect"] {
+    cursor: none !important;
+  }
+}
