@@ -55,7 +55,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-neutral-900/70 backdrop-blur-xs animate-in fade-in duration-200"
+      className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-6 bg-neutral-900/70 backdrop-blur-xs animate-in fade-in duration-200"
       onClick={onClose}
       role="dialog"
       aria-modal="true"
@@ -63,7 +63,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
     >
       <div
         ref={dialogRef}
-        className="relative w-full max-w-4xl bg-white rounded-xl border border-neutral-200 shadow-xl overflow-hidden flex flex-col max-h-[90vh]"
+        className="relative flex h-[calc(100dvh-1rem)] max-h-[calc(100dvh-1rem)] w-full max-w-4xl flex-col overflow-hidden rounded-xl border border-neutral-200 bg-white shadow-xl sm:h-auto sm:max-h-[90vh]"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Top Modal Bar */}
@@ -84,7 +84,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
           <button
             type="button"
             onClick={onClose}
-            className="p-1.5 text-neutral-500 hover:text-purple-950 hover:bg-purple-100 rounded-md transition-colors"
+            className="p-2.5 text-neutral-500 hover:text-purple-950 hover:bg-purple-100 rounded-md transition-colors"
             aria-label="Close dialog"
           >
             <X className="w-5 h-5" />
@@ -92,7 +92,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
         </div>
 
         {/* Media Container */}
-        <div className="relative bg-neutral-950 flex items-center justify-center overflow-hidden min-h-[280px] sm:min-h-[380px] max-h-[55vh]">
+        <div className="relative flex min-h-0 flex-1 items-center justify-center overflow-hidden bg-neutral-950 sm:min-h-[380px] sm:flex-none sm:max-h-[55vh]">
           {project.type === 'video' ? (
             <video
               src={project.src}
@@ -100,13 +100,13 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
               controls
               autoPlay
               playsInline
-              className="w-full max-h-[55vh] object-contain"
+              className="h-full w-full max-h-full object-contain sm:h-auto sm:max-h-[55vh]"
             />
           ) : (
             <img
               src={project.src}
               alt={project.alt || project.title}
-              className="w-full max-h-[55vh] object-contain"
+              className="h-full w-full max-h-full object-contain sm:h-auto sm:max-h-[55vh]"
               onError={(e) => {
                 const target = e.target as HTMLImageElement;
                 target.src = 'assets/tall.svg';
@@ -116,7 +116,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
         </div>
 
         {/* Content & Details Pane */}
-        <div className="p-6 sm:p-8 overflow-y-auto space-y-6">
+        <div className="max-h-[30dvh] space-y-6 overflow-y-auto overscroll-contain p-4 sm:max-h-none sm:p-8">
           <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
             <div>
               <h2 id="modal-project-title" className="text-xl sm:text-2xl font-bold text-neutral-900">
