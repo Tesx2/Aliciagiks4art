@@ -89,8 +89,8 @@ export const Header: React.FC<HeaderProps> = ({ onNavigate }) => {
           onClick={(e) => handleLinkClick(e, 'top')}
           className="group flex items-center gap-2.5 whitespace-nowrap shrink-0"
         >
-          <span className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#420D58] via-[#5F1B68] to-[#8E24AA] text-white flex items-center justify-center text-xs font-mono font-bold shadow-xs shadow-purple-900/20 group-hover:scale-105 transition-transform">
-              {content.profile.name.charAt(0) || 'M'}
+          <span className="w-8 h-8 overflow-hidden rounded-lg bg-gradient-to-br from-[#420D58] via-[#5F1B68] to-[#8E24AA] text-white flex items-center justify-center text-xs font-mono font-bold shadow-xs shadow-purple-900/20 group-hover:scale-105 transition-transform">
+              {content.profile.logoSrc ? <img src={content.profile.logoSrc} alt={content.profile.logoAlt} className="h-full w-full object-contain" /> : content.profile.name.charAt(0) || 'M'}
           </span>
           <div className="flex flex-col">
             <span className="font-bold tracking-tight text-neutral-900 text-sm sm:text-base group-hover:text-purple-950 transition-colors leading-none">

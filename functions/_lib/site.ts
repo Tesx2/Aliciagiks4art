@@ -90,6 +90,8 @@ export function normalizeSiteContent(value: unknown): SiteContent {
       whatsapp: text(profile.whatsapp, input.profile.whatsapp, 30).replace(/[^+0-9]/g, ''),
       instagram: instagram || input.profile.instagram,
       availability: text(profile.availability, input.profile.availability, 100),
+      logoSrc: assetPath(profile.logoSrc, input.profile.logoSrc),
+      logoAlt: text(profile.logoAlt, input.profile.logoAlt, 300),
     },
     navigation: {
       work: text(navigation.work, input.navigation.work, 40),

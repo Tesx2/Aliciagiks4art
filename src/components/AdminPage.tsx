@@ -120,7 +120,7 @@ export const AdminPage: React.FC = () => {
     }
   };
 
-  const uploadSiteAsset = async (assetFile: File, imageAlt: string) => {
+  const uploadSiteAsset = async (assetFile: File, imageAlt: string, target: 'portrait' | 'logo' = 'portrait') => {
     try {
       const form = new FormData();
       form.set('file', assetFile);
@@ -128,17 +128,19 @@ export const AdminPage: React.FC = () => {
       const response = await fetch('/api/admin/assets', { method: 'POST', body: form });
       const result = await response.json().catch(() => ({})) as ManagedAsset & { error?: string };
       if (!response.ok) throw new Error(result.error || 'Image upload failed.');
-      setSiteContent((current) => ({ ...current, hero: { ...current.hero, portraitSrc: result.src } }));
+      setSiteContent((current) => target === 'logo'
+        ? { ...current, profile: { ...current.profile, logoSrc: result.src, logoAlt: imageAlt } }
+        : { ...current, hero: { ...current.hero, portraitSrc: result.src, portraitAlt: imageAlt } });
       setAssets((current) => [result, ...current]);
-      setNotice('Portrait uploaded. Save site content to publish it.');
+      setNotice(`${target === 'logo' ? 'Logo' : 'Portrait'} uploaded. Save site content to publish it.`);
     } catch (error) {
       setNotice(error instanceof Error ? error.message : 'Image upload failed.');
     }
   };
 
   const deleteSiteAsset = async (asset: ManagedAsset) => {
-    if (siteContent.hero.portraitSrc === asset.src) {
-      setNotice('This image is currently used as the homepage portrait. Choose another image before deleting it.');
+    if (siteContent.hero.portraitSrc === asset.src || siteContent.profile.logoSrc === asset.src) {
+      setNotice('This image is currently in use on the site. Replace or remove it in Site editor before deleting it.');
       return;
     }
     if (!window.confirm('Permanently delete this uploaded image?')) return;
@@ -300,8 +302,8 @@ export const AdminPage: React.FC = () => {
     <main className="min-h-screen bg-[#FAF7FC] text-neutral-900">
       {authorized === true && <aside className="fixed inset-y-0 left-0 z-30 hidden w-64 flex-col border-r border-purple-200 bg-white px-4 py-5 shadow-sm md:flex">
         <a href="/" className="flex items-center gap-3 rounded-xl px-2 py-3 hover:bg-purple-50">
-          <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-purple-900 font-serif text-lg font-bold text-white">M</span>
-          <span className="min-w-0"><span className="block truncate text-sm font-bold text-neutral-900">Aliciagiks4art</span><span className="block text-xs text-neutral-500">Portfolio studio</span></span>
+          <span className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-xl bg-purple-900 font-serif text-lg font-bold text-white">{siteContent.profile.logoSrc ? <img src={siteContent.profile.logoSrc} alt={siteContent.profile.logoAlt} className="h-full w-full object-contain" /> : siteContent.profile.name.charAt(0) || 'M'}</span>
+          <span className="min-w-0"><span className="block truncate text-sm font-bold text-neutral-900">{siteContent.profile.handle}</span><span className="block truncate text-xs text-neutral-500">{siteContent.profile.name}</span></span>
         </a>
         <div className="mt-8 px-3 text-[11px] font-semibold uppercase tracking-wider text-neutral-400">Workspace</div>
         <nav aria-label="Admin areas" className="mt-2 space-y-1">
@@ -354,7 +356,7 @@ export const AdminPage: React.FC = () => {
               <article className="rounded-2xl border border-purple-200 bg-white p-5 sm:col-span-3"><h2 className="text-lg font-semibold">Publish changes</h2><p className="mt-1 text-sm text-neutral-600">Site text and layout are saved to Cloudflare R2. Project uploads are published to the portfolio automatically.</p><div className="mt-4 flex flex-wrap gap-3"><button type="button" onClick={() => setActiveTab('site')} className="rounded-lg bg-purple-900 px-4 py-2.5 text-sm font-semibold text-white">Edit website</button><a href="/" target="_blank" rel="noreferrer" className="rounded-lg border border-purple-200 px-4 py-2.5 text-sm font-semibold text-purple-950">Preview website</a></div></article>
             </section>}
 
-            {activeTab === 'site' && <div className="mt-7"><SiteEditor content={siteContent} onChange={setSiteContent} onSave={() => void saveSite()} saving={siteSaving} dirty={JSON.stringify(siteContent) !== savedSiteContent} onUploadPortrait={uploadSiteAsset} /></div>}
+            {activeTab === 'site' && <div className="mt-7"><SiteEditor content={siteContent} onChange={setSiteContent} onSave={() => void saveSite()} saving={siteSaving} dirty={JSON.stringify(siteContent) !== savedSiteContent} onUploadPortrait={uploadSiteAsset} onUploadLogo={(file, imageAlt) => uploadSiteAsset(file, imageAlt, 'logo')} /></div>}
 
             {activeTab === 'media' && <section className="mt-7"><div className="mb-4"><h2 className="text-xl font-semibold">Media library</h2><p className="mt-1 text-sm text-neutral-600">Images uploaded for the site, with the alt text recorded for accessibility.</p></div>{assets.length === 0 ? <p className="rounded-xl border border-dashed border-purple-300 bg-white p-8 text-center text-sm text-neutral-600">No site images uploaded yet. Upload a portrait from Site editor.</p> : <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">{assets.map((asset) => <article key={asset.id} className="overflow-hidden rounded-2xl border border-purple-200 bg-white"><img src={asset.src} alt={asset.alt} className="aspect-video w-full object-cover" /><div className="p-4"><p className="line-clamp-3 text-sm text-neutral-700">{asset.alt}</p><p className="mt-2 text-xs text-neutral-500">{(asset.size / 1024 / 1024).toFixed(2)} MB</p><button type="button" onClick={() => void deleteSiteAsset(asset)} className="mt-3 text-sm font-semibold text-red-700">Delete image</button></div></article>)}</div>}</section>}
 

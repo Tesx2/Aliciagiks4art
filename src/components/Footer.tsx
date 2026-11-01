@@ -24,8 +24,8 @@ export const Footer: React.FC = () => {
         {/* Top Row: Brand & Unboxed Navigation Links */}
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
           <div className="flex items-center gap-2.5">
-            <span className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#420D58] via-[#5F1B68] to-[#8E24AA] text-white flex items-center justify-center text-xs font-mono font-bold shadow-xs shadow-purple-900/20">
-              {content.profile.name.charAt(0) || 'M'}
+            <span className="w-8 h-8 overflow-hidden rounded-lg bg-gradient-to-br from-[#420D58] via-[#5F1B68] to-[#8E24AA] text-white flex items-center justify-center text-xs font-mono font-bold shadow-xs shadow-purple-900/20">
+              {content.profile.logoSrc ? <img src={content.profile.logoSrc} alt={content.profile.logoAlt} className="h-full w-full object-contain" /> : content.profile.name.charAt(0) || 'M'}
             </span>
             <div className="flex flex-col">
               <span className="text-sm font-bold text-neutral-900 tracking-tight leading-none">

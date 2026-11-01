@@ -19,13 +19,15 @@ interface SiteEditorProps {
   onChange: (content: SiteContent) => void;
   onSave: () => void;
   onUploadPortrait: (file: File, alt: string) => Promise<void>;
+  onUploadLogo: (file: File, alt: string) => Promise<void>;
   saving: boolean;
   dirty: boolean;
 }
 
-export const SiteEditor: React.FC<SiteEditorProps> = ({ content, onChange, onSave, onUploadPortrait, saving, dirty }) => {
+export const SiteEditor: React.FC<SiteEditorProps> = ({ content, onChange, onSave, onUploadPortrait, onUploadLogo, saving, dirty }) => {
   const [section, setSection] = useState<EditorSection>('home');
   const [uploadingPortrait, setUploadingPortrait] = useState(false);
+  const [uploadingLogo, setUploadingLogo] = useState(false);
 
   const update = (block: EditableBlock, field: string, value: unknown) => {
     onChange({ ...content, [block]: { ...content[block], [field]: value } } as SiteContent);
@@ -123,6 +125,28 @@ export const SiteEditor: React.FC<SiteEditorProps> = ({ content, onChange, onSav
           </>}
 
           {section === 'profile' && <>
+            <article className="rounded-2xl border border-purple-200 bg-white p-5 sm:p-7">
+              <h3 className="text-lg font-semibold">Brand logo</h3>
+              <p className="mt-1 text-sm text-neutral-500">This mark appears in the public header and footer and in the admin sidebar.</p>
+              <div className="mt-4 flex flex-wrap items-center gap-4">
+                <div className="flex h-16 w-16 items-center justify-center overflow-hidden rounded-2xl bg-purple-900 text-xl font-bold text-white">{content.profile.logoSrc ? <img src={content.profile.logoSrc} alt={content.profile.logoAlt} className="h-full w-full object-contain" /> : content.profile.name.charAt(0) || 'M'}</div>
+                <div className="min-w-0 flex-1 space-y-3">
+                  {input('Logo image URL', content.profile.logoSrc, (value) => update('profile', 'logoSrc', value), 500)}
+                  {input('Logo alt text', content.profile.logoAlt, (value) => update('profile', 'logoAlt', value), 300)}
+                </div>
+              </div>
+              <label className="mt-4 inline-flex cursor-pointer items-center gap-2 rounded-lg border border-purple-200 px-3 py-2 text-sm font-medium text-purple-950 hover:bg-purple-50">
+                <UploadCloud className="h-4 w-4" />{uploadingLogo ? 'Uploading…' : 'Upload logo image'}
+                <input type="file" accept="image/png,image/webp,image/jpeg" className="sr-only" disabled={uploadingLogo} onChange={async (event) => {
+                  const file = event.target.files?.[0];
+                  if (!file) return;
+                  setUploadingLogo(true);
+                  try { await onUploadLogo(file, content.profile.logoAlt); }
+                  finally { setUploadingLogo(false); event.target.value = ''; }
+                }} />
+              </label>
+              <p className="mt-2 text-xs text-neutral-500">Use a transparent PNG or WebP for a clean fit. JPEG, PNG, or WebP up to 20 MB; descriptive alt text is required.</p>
+            </article>
             <article className="rounded-2xl border border-purple-200 bg-white p-5 sm:p-7">
               <h3 className="text-lg font-semibold">Profile and contact details</h3>
               <p className="mt-1 text-sm text-neutral-500">These details appear in the header, profile, contact area, and footer.</p>

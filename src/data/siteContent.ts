@@ -10,6 +10,8 @@ export interface SiteContent {
     whatsapp: string;
     instagram: string;
     availability: string;
+    logoSrc: string;
+    logoAlt: string;
   };
   navigation: { work: string; services: string; about: string; contact: string; cta: string };
   hero: {
@@ -68,6 +70,8 @@ export const DEFAULT_SITE_CONTENT: SiteContent = {
     whatsapp: '+254768795272',
     instagram: 'geeks4drisony',
     availability: 'Commissions open',
+    logoSrc: '',
+    logoAlt: 'Mary Alicia portfolio logo',
   },
   navigation: { work: 'Work', services: 'Services', about: 'About', contact: 'Contact', cta: 'Get in touch' },
   hero: {
