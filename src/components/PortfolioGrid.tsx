@@ -255,7 +255,7 @@ export const PortfolioGrid: React.FC = () => {
                 className="group cursor-pointer rounded-2xl border border-purple-200/80 bg-white hover:border-purple-300 transition-all duration-300 hover:shadow-xl hover:shadow-purple-950/8 hover:-translate-y-1 flex flex-col overflow-hidden"
               >
                 {/* Media Container */}
-                <div className="relative aspect-16/10 bg-neutral-900 overflow-hidden border-b border-purple-100">
+                <div className="relative aspect-16/10 bg-neutral-100 overflow-hidden border-b border-purple-100">
                   {project.type === 'video' ? (
                     <div className="relative w-full h-full">
                       <video
@@ -274,7 +274,7 @@ export const PortfolioGrid: React.FC = () => {
                           target.pause();
                           target.currentTime = 0;
                         }}
-                        className="w-full h-full object-cover group-hover:scale-104 transition-transform duration-500"
+                        className="w-full h-full object-contain"
                       />
                       <div className="absolute top-3 right-3 px-2 py-1 bg-[#420D58]/85 backdrop-blur-xs text-white text-2xs font-mono rounded-md flex items-center gap-1 shadow-xs">
                         <Film className="w-3 h-3 text-purple-200" />
@@ -292,7 +292,7 @@ export const PortfolioGrid: React.FC = () => {
                         src={project.src}
                         alt={project.alt || project.title}
                         loading="lazy"
-                        className="w-full h-full object-cover group-hover:scale-104 transition-transform duration-500"
+                        className="w-full h-full object-contain"
                         onError={(e) => {
                           const target = e.target as HTMLImageElement;
                           target.src = 'assets/square.svg';

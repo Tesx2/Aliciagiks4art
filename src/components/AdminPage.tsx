@@ -401,7 +401,7 @@ export const AdminPage: React.FC = () => {
                 <div className="space-y-4">
                   {projects.map((project) => (
                     <article key={project.id} className="grid gap-4 rounded-2xl border border-purple-200 bg-white p-4 sm:grid-cols-[150px_1fr] sm:p-5">
-                      {project.type === 'video' ? <video src={project.src} className="aspect-video w-full rounded-lg bg-neutral-100 object-cover sm:w-[150px]" muted playsInline /> : <img src={project.src} alt={project.alt} className="aspect-video w-full rounded-lg bg-neutral-100 object-cover sm:w-[150px]" />}
+                      {project.type === 'video' ? <video src={project.src} className="aspect-video w-full rounded-lg bg-neutral-100 object-contain sm:w-[150px]" muted playsInline /> : <img src={project.src} alt={project.alt} className="aspect-video w-full rounded-lg bg-neutral-100 object-contain sm:w-[150px]" />}
                       <div className="grid gap-3 sm:grid-cols-2">
                         <label className="text-xs font-semibold text-neutral-600">Title<input className={fieldClass} value={project.title} onChange={(event) => updateDraft(project.id, 'title', event.target.value)} /></label>
                         <label className="text-xs font-semibold text-neutral-600">Category
