@@ -1,18 +1,12 @@
 import React from 'react';
 import { Sparkles } from 'lucide-react';
+import { useSiteContent } from '../context/SiteContentContext';
 
 export const MarqueeTicker: React.FC = () => {
-  const items = [
-    'Motion Graphics',
-    'Brand Identity',
-    'Campaign Visuals',
-    '3D Animation',
-    'Digital Illustration',
-    'Storyboarding & Art Direction',
-    'Logo Systems',
-    'Cinematic Visuals',
-    'Remote Available',
-  ];
+  const { marquee } = useSiteContent();
+  const items = marquee.items;
+
+  if (items.length === 0) return null;
 
   return (
     <div className="w-full overflow-hidden border-y border-purple-200/80 bg-gradient-to-r from-purple-100/70 via-purple-50/80 to-purple-100/70 py-3 backdrop-blur-xs select-none">

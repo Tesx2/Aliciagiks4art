@@ -1,8 +1,15 @@
 import React from 'react';
 import { ArrowUp, Instagram, Mail, MessageCircle } from 'lucide-react';
-import { ARTIST_PROFILE } from '../data/portfolioData';
+import { useSiteContent } from '../context/SiteContentContext';
 
 export const Footer: React.FC = () => {
+  const content = useSiteContent();
+  const sectionLinks = [
+    { id: 'portfolio', section: 'work', label: content.navigation.work },
+    { id: 'services', section: 'services', label: content.navigation.services },
+    { id: 'about', section: 'about', label: content.navigation.about },
+    { id: 'contact', section: 'contact', label: content.navigation.contact },
+  ].filter((item) => !content.page.hiddenSections.includes(item.section as 'work' | 'services' | 'about' | 'contact'));
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
@@ -18,31 +25,20 @@ export const Footer: React.FC = () => {
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
           <div className="flex items-center gap-2.5">
             <span className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#420D58] via-[#5F1B68] to-[#8E24AA] text-white flex items-center justify-center text-xs font-mono font-bold shadow-xs shadow-purple-900/20">
-              M
+              {content.profile.name.charAt(0) || 'M'}
             </span>
             <div className="flex flex-col">
               <span className="text-sm font-bold text-neutral-900 tracking-tight leading-none">
-                {ARTIST_PROFILE.name}
+                {content.profile.name}
               </span>
               <span className="text-[10px] font-mono text-purple-700 font-medium">
-                @{ARTIST_PROFILE.handle}
+                @{content.profile.handle}
               </span>
             </div>
           </div>
 
           <nav className="flex flex-wrap items-center gap-6 text-xs font-medium text-neutral-600">
-            <a href="#portfolio" className="hover:text-purple-900 transition-colors">
-              Work
-            </a>
-            <a href="#services" className="hover:text-purple-900 transition-colors">
-              Services
-            </a>
-            <a href="#about" className="hover:text-purple-900 transition-colors">
-              About
-            </a>
-            <a href="#contact" className="hover:text-purple-900 transition-colors">
-              Contact
-            </a>
+            {sectionLinks.map((item) => <a key={item.id} href={`#${item.id}`} className="hover:text-purple-900 transition-colors">{item.label}</a>)}
             <a href="/admin" className="hover:text-purple-900 transition-colors">
               Admin
             </a>
@@ -61,12 +57,12 @@ export const Footer: React.FC = () => {
         {/* Bottom Row: Social Links & Copyright */}
         <div className="pt-6 border-t border-purple-100 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-xs text-neutral-500">
           <p className="font-mono text-xs">
-            © 2026 {ARTIST_PROFILE.name} ({ARTIST_PROFILE.handle}). Visual Storytelling &amp; Motion Design.
+            © {new Date().getFullYear()} {content.profile.name} ({content.profile.handle}). {content.footer.tagline}
           </p>
 
           <div className="flex items-center gap-4 text-neutral-600">
             <a
-              href="https://www.instagram.com/geeks4drisony/"
+              href={`https://www.instagram.com/${content.profile.instagram}/`}
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-purple-900 transition-colors flex items-center gap-1 text-xs"
@@ -75,14 +71,14 @@ export const Footer: React.FC = () => {
               <span>Instagram</span>
             </a>
             <a
-              href="mailto:aliciagiks@gmail.com"
+              href={`mailto:${content.profile.email}`}
               className="hover:text-purple-900 transition-colors flex items-center gap-1 text-xs"
             >
               <Mail className="w-3.5 h-3.5" />
               <span>Email</span>
             </a>
             <a
-              href="https://wa.me/254768795272"
+              href={`https://wa.me/${content.profile.whatsapp.replace(/\D/g, '')}`}
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-emerald-700 transition-colors flex items-center gap-1 text-xs"

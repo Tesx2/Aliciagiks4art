@@ -1,9 +1,15 @@
 import { PagesContext, message, safeId, PROJECT_PREFIX } from '../../_lib/types';
+import { SITE_MEDIA_PREFIX } from '../../_lib/site';
 
 export const onRequestGet = async ({ request, env, params }: PagesContext): Promise<Response> => {
   const id = safeId(params.id);
   if (!id) return message('Media not found.', 404);
-  const metadata = await env.PORTFOLIO_BUCKET.get(`${PROJECT_PREFIX}${id}.json`);
+  let metadata = await env.PORTFOLIO_BUCKET.get(`${PROJECT_PREFIX}${id}.json`);
+  let isSiteAsset = false;
+  if (!metadata) {
+    metadata = await env.PORTFOLIO_BUCKET.get(`${SITE_MEDIA_PREFIX}${id}.json`);
+    isSiteAsset = Boolean(metadata);
+  }
   if (!metadata) return message('Media not found.', 404);
   let project;
   try {
@@ -11,7 +17,8 @@ export const onRequestGet = async ({ request, env, params }: PagesContext): Prom
   } catch {
     return message('Media metadata is invalid.', 500);
   }
-  if (!project.objectKey?.startsWith('media/') || !project.contentType || !project.size) return message('Media metadata is invalid.', 500);
+  const validPrefix = isSiteAsset ? SITE_MEDIA_PREFIX : 'media/';
+  if (!project.objectKey?.startsWith(validPrefix) || project.objectKey.includes('..') || !project.contentType || !project.size) return message('Media metadata is invalid.', 500);
 
   const rangeHeader = request.headers.get('range');
   let range: { offset: number; length: number } | undefined;

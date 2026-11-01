@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Mail, MessageCircle, Copy, Check, Send, ArrowUpRight, Instagram } from 'lucide-react';
 import { motion } from 'motion/react';
 import { MagneticWrapper } from './MagneticWrapper';
+import { useSiteContent } from '../context/SiteContentContext';
 
 export const ContactSection: React.FC = () => {
+  const content = useSiteContent();
   const [copiedEmail, setCopiedEmail] = useState(false);
   const [formState, setFormState] = useState({
     name: '',
@@ -16,11 +18,11 @@ export const ContactSection: React.FC = () => {
 
   const handleCopyEmail = async () => {
     try {
-      await navigator.clipboard.writeText('aliciagiks@gmail.com');
+      await navigator.clipboard.writeText(content.profile.email);
       setCopiedEmail(true);
       setTimeout(() => setCopiedEmail(false), 2500);
     } catch {
-      window.location.href = 'mailto:aliciagiks@gmail.com';
+      window.location.href = `mailto:${content.profile.email}`;
     }
   };
 
@@ -29,11 +31,19 @@ export const ContactSection: React.FC = () => {
     // This static form prepares a message in the visitor's email app.
     const subject = encodeURIComponent(`Project Inquiry: ${formState.service} - ${formState.name}`);
     const body = encodeURIComponent(
-      `Hi Alicia,\n\nMy name is ${formState.name} (${formState.email}).\n\nProject Type: ${formState.service}\nTimeline: ${formState.timeline}\n\nProject Details:\n${formState.message}\n\nLooking forward to hearing from you!`
+      `Hi ${content.profile.name},\n\nMy name is ${formState.name} (${formState.email}).\n\nProject Type: ${formState.service}\nTimeline: ${formState.timeline}\n\nProject Details:\n${formState.message}\n\nLooking forward to hearing from you!`
     );
-    window.location.href = `mailto:aliciagiks@gmail.com?subject=${subject}&body=${body}`;
+    window.location.href = `mailto:${content.profile.email}?subject=${subject}&body=${body}`;
     setSubmitted(true);
   };
+
+  useEffect(() => {
+    setFormState((current) => ({
+      ...current,
+      service: content.contact.serviceOptions.includes(current.service) ? current.service : content.contact.serviceOptions[0] || '',
+      timeline: content.contact.timelineOptions.includes(current.timeline) ? current.timeline : content.contact.timelineOptions[0] || '',
+    }));
+  }, [content.contact.serviceOptions, content.contact.timelineOptions]);
 
   return (
     <section id="contact" className="py-16 sm:py-24 border-b border-purple-200/70 bg-[#FAF7FC]/80 backdrop-blur-xs relative">
@@ -43,13 +53,13 @@ export const ContactSection: React.FC = () => {
         <div className="pb-10 border-b border-purple-100">
           <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-purple-900 mb-2">
             <span className="w-1.5 h-1.5 rounded-full bg-[#420D58]" />
-            <span className="font-semibold">Initiate Collaboration</span>
+            <span className="font-semibold">{content.contact.eyebrow}</span>
           </div>
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-neutral-900 tracking-tight">
-            Let&apos;s Build Something Bold
+            {content.contact.heading}
           </h2>
           <p className="text-sm sm:text-base text-neutral-600 mt-2 max-w-xl">
-            Tell me about your project, campaign, or motion vision. The form prepares an email for you to review and send.
+            {content.contact.intro}
           </p>
         </div>
 
@@ -82,7 +92,7 @@ export const ContactSection: React.FC = () => {
                 <div>
                   <p className="text-2xs font-mono text-purple-700 font-semibold uppercase">Email Directly</p>
                   <p className="text-xs sm:text-sm font-semibold text-neutral-900 font-mono">
-                    aliciagiks@gmail.com
+                    {content.profile.email}
                   </p>
                 </div>
               </div>
@@ -118,13 +128,13 @@ export const ContactSection: React.FC = () => {
                 <div>
                   <p className="text-2xs font-mono text-emerald-700 font-semibold uppercase">WhatsApp Chat</p>
                   <p className="text-xs sm:text-sm font-semibold text-neutral-900 font-mono">
-                    +254 768 795 272
+                    {content.profile.whatsapp}
                   </p>
                 </div>
               </div>
 
               <a
-                href="https://wa.me/254768795272?text=Hello%20Alicia%2C%20I%20saw%20your%20portfolio%20and%20would%20love%20to%20collaborate."
+                href={`https://wa.me/${content.profile.whatsapp.replace(/\D/g, '')}?text=${encodeURIComponent(`Hello ${content.profile.name}, I saw your portfolio and would love to collaborate.`)}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold text-white bg-gradient-to-r from-[#420D58] to-[#7E22CE] hover:from-[#350A47] hover:to-[#6B21A8] rounded-md transition-all shadow-xs shadow-purple-900/25"
@@ -141,13 +151,13 @@ export const ContactSection: React.FC = () => {
               </p>
               <div className="flex items-center gap-3">
                 <a
-                  href="https://www.instagram.com/geeks4drisony/"
+                  href={`https://www.instagram.com/${content.profile.instagram}/`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-2 px-3 py-2 rounded-md border border-purple-200 bg-white text-xs font-medium text-neutral-800 hover:text-purple-950 hover:bg-purple-50 transition-colors shadow-2xs"
                 >
                   <Instagram className="w-4 h-4 text-purple-600" />
-                  <span>@geeks4drisony</span>
+                  <span>@{content.profile.instagram}</span>
                 </a>
 
               </div>
@@ -169,10 +179,10 @@ export const ContactSection: React.FC = () => {
             >
               <div>
                 <h3 className="text-base font-bold text-neutral-900">
-                  Project Inquiry Form
+                  {content.contact.formHeading}
                 </h3>
                 <p className="text-xs text-neutral-500 mt-1">
-                  Share a few details and your email app will open with a ready-to-send project brief.
+                  {content.contact.formIntro}
                 </p>
               </div>
 
@@ -219,11 +229,7 @@ export const ContactSection: React.FC = () => {
                     onChange={(e) => setFormState({ ...formState, service: e.target.value })}
                     className="w-full px-3.5 py-2 text-xs sm:text-sm bg-purple-50/30 border border-purple-200 rounded-md focus:outline-hidden focus:border-purple-600 focus:ring-1 focus:ring-purple-600 text-neutral-900 transition-colors"
                   >
-                    <option>Motion Graphics &amp; Animation</option>
-                    <option>Branding &amp; Visual Identity</option>
-                    <option>Graphic &amp; Campaign Design</option>
-                    <option>Custom Digital Illustration</option>
-                    <option>Full Creative Direction Package</option>
+                    {content.contact.serviceOptions.map((option) => <option key={option}>{option}</option>)}
                   </select>
                 </div>
 
@@ -237,10 +243,7 @@ export const ContactSection: React.FC = () => {
                     onChange={(e) => setFormState({ ...formState, timeline: e.target.value })}
                     className="w-full px-3.5 py-2 text-xs sm:text-sm bg-purple-50/30 border border-purple-200 rounded-md focus:outline-hidden focus:border-purple-600 focus:ring-1 focus:ring-purple-600 text-neutral-900 transition-colors"
                   >
-                    <option>Urgent (&lt; 2 weeks)</option>
-                    <option>Within 2-4 weeks</option>
-                    <option>Next Quarter (1-2 months)</option>
-                    <option>Flexible / Ongoing retainer</option>
+                    {content.contact.timelineOptions.map((option) => <option key={option}>{option}</option>)}
                   </select>
                 </div>
               </div>

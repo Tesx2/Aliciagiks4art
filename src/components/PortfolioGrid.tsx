@@ -1,10 +1,22 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { Play, Film, Image as ImageIcon, Eye, Search, Layers, Grid, Sparkles } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
-import { PortfolioItem, CATEGORY_FILTERS, FEATURED_PROJECTS } from '../data/portfolioData';
+import { PortfolioItem, FEATURED_PROJECTS } from '../data/portfolioData';
 import { ProjectModal } from './ProjectModal';
+import { useSiteContent } from '../context/SiteContentContext';
 
 export const PortfolioGrid: React.FC = () => {
+  const content = useSiteContent();
+  const categories = content.work.categories;
+  const applyProjectSettings = (projects: PortfolioItem[]) => {
+    const settings = new Map(content.work.featuredProjects.map((project) => [project.id, project]));
+    return projects.flatMap((project) => {
+      const setting = settings.get(project.id);
+      if (!setting) return [project];
+      if (!setting.visible) return [];
+      return [{ ...project, title: setting.title, category: setting.category, categoryLabel: setting.categoryLabel, alt: setting.alt, year: setting.year, brief: setting.brief }];
+    });
+  };
   const [items, setItems] = useState<PortfolioItem[]>(FEATURED_PROJECTS);
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState<string>('');
@@ -63,14 +75,7 @@ export const PortfolioGrid: React.FC = () => {
       if (!res.ok) throw new Error('Failed to load manifest');
       const data = await res.json();
       
-      const categoryLabelMap: Record<string, string> = {
-        '3D': '3D Art',
-        'drawing': 'Drawing & Art',
-        'logo design': 'Brand & Logo',
-        'motion graphic': 'Motion Graphics',
-        'photography': 'Photography',
-        'posters': 'Posters & Print',
-      };
+      const categoryLabelMap = Object.fromEntries(categories.map((category) => [category.id, category.label]));
 
       const parsedItems: PortfolioItem[] = [];
       data.categories.forEach((cat: { name: string; items: any[] }) => {
@@ -106,7 +111,7 @@ export const PortfolioGrid: React.FC = () => {
 
   // Filter items
   const filteredItems = useMemo(() => {
-    return items.filter((item) => {
+    return applyProjectSettings(items).filter((item) => {
       const matchesCategory =
         selectedCategory === 'all' ||
         item.category.toLowerCase() === selectedCategory.toLowerCase();
@@ -116,7 +121,7 @@ export const PortfolioGrid: React.FC = () => {
         item.categoryLabel.toLowerCase().includes(searchQuery.toLowerCase());
       return matchesCategory && matchesQuery;
     });
-  }, [items, selectedCategory, searchQuery]);
+  }, [items, selectedCategory, searchQuery, content.work.featuredProjects]);
 
   const currentIndex = activeModalProject
     ? filteredItems.findIndex((i) => i.id === activeModalProject.id)
@@ -143,13 +148,13 @@ export const PortfolioGrid: React.FC = () => {
           <div>
             <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-purple-900 mb-2">
               <span className="w-1.5 h-1.5 rounded-full bg-[#420D58]" />
-              <span className="font-semibold">Selected Works</span>
+              <span className="font-semibold">{content.work.eyebrow}</span>
             </div>
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-neutral-900 tracking-tight">
-              Work across image, print, and motion
+              {content.work.heading}
             </h2>
             <p className="text-sm sm:text-base text-neutral-600 mt-2 max-w-xl">
-              A selection of graphic design, animation, illustration, photography, and digital art. Open a project to see it up close.
+              {content.work.intro}
             </p>
           </div>
 
@@ -179,7 +184,7 @@ export const PortfolioGrid: React.FC = () => {
           
           {/* Category Filter Tabs with royal purple styling */}
           <div role="group" aria-label="Filter projects by category" className="flex items-center gap-1.5 overflow-x-auto pb-2 sm:pb-0 scrollbar-none p-1 bg-purple-50/80 rounded-lg border border-purple-200/60">
-            {CATEGORY_FILTERS.map((cat) => {
+            {categories.map((cat) => {
               const isActive = selectedCategory === cat.id;
               return (
                 <button
@@ -206,7 +211,7 @@ export const PortfolioGrid: React.FC = () => {
             <input
               id="portfolio-search"
               type="text"
-              placeholder="Search works..."
+              placeholder={content.work.searchPlaceholder}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full pl-8 pr-3 py-1.5 text-xs bg-white border border-purple-200 rounded-md focus:outline-hidden focus:border-purple-600 focus:ring-1 focus:ring-purple-600 text-neutral-900 placeholder:text-neutral-400 transition-colors shadow-2xs"
@@ -216,7 +221,7 @@ export const PortfolioGrid: React.FC = () => {
 
         <p className="mt-4 text-xs text-neutral-500" aria-live="polite" aria-atomic="true">
           Showing <span className="font-semibold text-neutral-700">{filteredItems.length}</span> {filteredItems.length === 1 ? 'project' : 'projects'}
-          {selectedCategory !== 'all' ? ` in ${CATEGORY_FILTERS.find((category) => category.id === selectedCategory)?.label || selectedCategory}` : ''}
+          {selectedCategory !== 'all' ? ` in ${categories.find((category) => category.id === selectedCategory)?.label || selectedCategory}` : ''}
           {searchQuery.trim() ? ` matching “${searchQuery.trim()}”` : ''}.
         </p>
 

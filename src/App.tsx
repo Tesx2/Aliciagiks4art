@@ -5,6 +5,7 @@
 
 import React from 'react';
 import { MotionConfig } from 'motion/react';
+import { SiteContentProvider, useSiteContent } from './context/SiteContentContext';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
 import { MarqueeTicker } from './components/MarqueeTicker';
@@ -16,8 +17,15 @@ import { Footer } from './components/Footer';
 import { MagneticCursor } from './components/MagneticCursor';
 import { AdminPage } from './components/AdminPage';
 
-export default function App() {
-  if (window.location.pathname.replace(/\/+$/, '') === '/admin') return <AdminPage />;
+function PublicPortfolio() {
+  const content = useSiteContent();
+  const sections = {
+    marquee: <MarqueeTicker />,
+    work: <PortfolioGrid />,
+    services: <ServicesSection />,
+    about: <AboutSection />,
+    contact: <ContactSection />,
+  };
 
   return (
     <MotionConfig reducedMotion="user">
@@ -27,14 +35,17 @@ export default function App() {
         <Header />
         <main id="main-content" className="flex-1" tabIndex={-1}>
           <Hero />
-          <MarqueeTicker />
-          <PortfolioGrid />
-          <ServicesSection />
-          <AboutSection />
-          <ContactSection />
+          {content.page.sectionOrder.map((section) => content.page.hiddenSections.includes(section)
+            ? null
+            : <React.Fragment key={section}>{sections[section]}</React.Fragment>)}
         </main>
         <Footer />
       </div>
     </MotionConfig>
   );
+}
+
+export default function App() {
+  if (window.location.pathname.replace(/\/+$/, '') === '/admin') return <AdminPage />;
+  return <SiteContentProvider><PublicPortfolio /></SiteContentProvider>;
 }

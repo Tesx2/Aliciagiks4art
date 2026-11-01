@@ -1,16 +1,17 @@
 import React from 'react';
 import { ArrowUpRight, Palette, Film, Sparkles, Layers } from 'lucide-react';
 import { motion } from 'motion/react';
-import { SERVICES_LIST } from '../data/portfolioData';
+import { useSiteContent } from '../context/SiteContentContext';
 
 export const ServicesSection: React.FC = () => {
-  const getIcon = (number: string) => {
-    switch (number) {
-      case '01':
+  const content = useSiteContent();
+  const getIcon = (index: number) => {
+    switch (index) {
+      case 0:
         return <Palette className="w-5 h-5 text-purple-900" />;
-      case '02':
+      case 1:
         return <Film className="w-5 h-5 text-purple-900" />;
-      case '03':
+      case 2:
         return <Layers className="w-5 h-5 text-purple-900" />;
       default:
         return <Sparkles className="w-5 h-5 text-purple-900" />;
@@ -26,13 +27,13 @@ export const ServicesSection: React.FC = () => {
           <div>
             <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-purple-900 mb-2">
               <span className="w-1.5 h-1.5 rounded-full bg-[#420D58]" />
-              <span className="font-semibold">Disciplines &amp; Capabilities</span>
+              <span className="font-semibold">{content.services.eyebrow}</span>
             </div>
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-neutral-900 tracking-tight">
-              What I Can Help With
+              {content.services.heading}
             </h2>
             <p className="text-sm sm:text-base text-neutral-600 mt-2 max-w-xl">
-              Graphic design, animation, motion design, and visual direction for digital experiences.
+              {content.services.intro}
             </p>
           </div>
 
@@ -49,9 +50,9 @@ export const ServicesSection: React.FC = () => {
 
         {/* Core areas of work */}
         <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
-          {SERVICES_LIST.map((service, idx) => (
+          {content.services.items.map((service, idx) => (
             <motion.div
-              key={service.number}
+              key={service.id}
               initial={{ opacity: 0, y: 15 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-50px' }}
@@ -61,10 +62,10 @@ export const ServicesSection: React.FC = () => {
               <div>
                 <div className="flex items-center justify-between mb-5">
                   <div className="w-11 h-11 rounded-xl bg-purple-100/80 border border-purple-200 flex items-center justify-center group-hover:scale-105 transition-transform">
-                    {getIcon(service.number)}
+                    {getIcon(idx)}
                   </div>
                   <span className="font-mono text-sm font-bold text-purple-700 bg-purple-50 px-2 py-0.5 rounded border border-purple-200/60">
-                    {service.number}
+                    {String(idx + 1).padStart(2, '0')}
                   </span>
                 </div>
 

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Menu, X, ArrowUpRight } from 'lucide-react';
 import { motion } from 'motion/react';
-import { ARTIST_PROFILE } from '../data/portfolioData';
+import { useSiteContent } from '../context/SiteContentContext';
 import { MagneticWrapper } from './MagneticWrapper';
 
 interface HeaderProps {
@@ -9,10 +9,17 @@ interface HeaderProps {
 }
 
 export const Header: React.FC<HeaderProps> = ({ onNavigate }) => {
+  const content = useSiteContent();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('top');
   const menuButtonRef = useRef<HTMLButtonElement>(null);
+  const navItems = [
+    { id: 'portfolio', section: 'work', label: content.navigation.work },
+    { id: 'services', section: 'services', label: content.navigation.services },
+    { id: 'about', section: 'about', label: content.navigation.about },
+    { id: 'contact', section: 'contact', label: content.navigation.contact },
+  ].filter((item) => !content.page.hiddenSections.includes(item.section as 'work' | 'services' | 'about' | 'contact'));
 
   useEffect(() => {
     const handleScroll = () => {
@@ -23,7 +30,7 @@ export const Header: React.FC<HeaderProps> = ({ onNavigate }) => {
   }, []);
 
   useEffect(() => {
-    const sections = ['portfolio', 'services', 'about', 'contact']
+    const sections = navItems.map((item) => item.id)
       .map((id) => document.getElementById(id))
       .filter((section): section is HTMLElement => Boolean(section));
     const observer = new IntersectionObserver((entries) => {
@@ -35,7 +42,7 @@ export const Header: React.FC<HeaderProps> = ({ onNavigate }) => {
     }, { rootMargin: '-22% 0px -62% 0px', threshold: [0, 0.15, 0.35, 0.6] });
     sections.forEach((section) => observer.observe(section));
     return () => observer.disconnect();
-  }, []);
+  }, [content.page.hiddenSections, content.navigation]);
 
   useEffect(() => {
     const closeOnEscape = (event: KeyboardEvent) => {
@@ -83,67 +90,42 @@ export const Header: React.FC<HeaderProps> = ({ onNavigate }) => {
           className="group flex items-center gap-2.5 whitespace-nowrap shrink-0"
         >
           <span className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#420D58] via-[#5F1B68] to-[#8E24AA] text-white flex items-center justify-center text-xs font-mono font-bold shadow-xs shadow-purple-900/20 group-hover:scale-105 transition-transform">
-            M
+              {content.profile.name.charAt(0) || 'M'}
           </span>
           <div className="flex flex-col">
             <span className="font-bold tracking-tight text-neutral-900 text-sm sm:text-base group-hover:text-purple-950 transition-colors leading-none">
-              {ARTIST_PROFILE.name}
+              {content.profile.name}
             </span>
             <span className="text-[10px] font-mono text-purple-700 font-medium">
-              @{ARTIST_PROFILE.handle}
+              @{content.profile.handle}
             </span>
           </div>
         </a>
 
         {/* Zone 2: Navigation Links (concise, single line) */}
         <nav aria-label="Main navigation" className="hidden lg:flex items-center gap-6 text-xs sm:text-sm font-medium text-neutral-600">
-          <a
-            href="#portfolio"
-            onClick={(e) => handleLinkClick(e, 'portfolio')}
-            aria-current={activeSection === 'portfolio' ? 'location' : undefined}
-            className={`transition-colors whitespace-nowrap shrink-0 py-1 ${activeSection === 'portfolio' ? 'text-purple-900' : 'hover:text-purple-900'}`}
-          >
-            Work
-          </a>
-          <a
-            href="#services"
-            onClick={(e) => handleLinkClick(e, 'services')}
-            aria-current={activeSection === 'services' ? 'location' : undefined}
-            className={`transition-colors whitespace-nowrap shrink-0 py-1 ${activeSection === 'services' ? 'text-purple-900' : 'hover:text-purple-900'}`}
-          >
-            Services
-          </a>
-          <a
-            href="#about"
-            onClick={(e) => handleLinkClick(e, 'about')}
-            aria-current={activeSection === 'about' ? 'location' : undefined}
-            className={`transition-colors whitespace-nowrap shrink-0 py-1 ${activeSection === 'about' ? 'text-purple-900' : 'hover:text-purple-900'}`}
-          >
-            About
-          </a>
-          <a
-            href="#contact"
-            onClick={(e) => handleLinkClick(e, 'contact')}
-            aria-current={activeSection === 'contact' ? 'location' : undefined}
-            className={`transition-colors whitespace-nowrap shrink-0 py-1 ${activeSection === 'contact' ? 'text-purple-900' : 'hover:text-purple-900'}`}
-          >
-            Contact
-          </a>
+          {navItems.map((item) => <a
+            key={item.id}
+            href={`#${item.id}`}
+            onClick={(e) => handleLinkClick(e, item.id)}
+            aria-current={activeSection === item.id ? 'location' : undefined}
+            className={`transition-colors whitespace-nowrap shrink-0 py-1 ${activeSection === item.id ? 'text-purple-900' : 'hover:text-purple-900'}`}
+          >{item.label}</a>)}
         </nav>
 
         {/* Zone 3: Primary CTA */}
-        <div className="hidden lg:flex items-center gap-3 shrink-0">
+        {!content.page.hiddenSections.includes('contact') && <div className="hidden lg:flex items-center gap-3 shrink-0">
           <MagneticWrapper strength={0.3}>
             <a
               href="#contact"
               onClick={(e) => handleLinkClick(e, 'contact')}
               className="inline-flex items-center gap-1.5 px-4.5 py-2 text-xs font-semibold text-white bg-gradient-to-r from-[#420D58] via-[#5F1B68] to-[#7E22CE] hover:from-[#350A47] hover:to-[#6B21A8] rounded-md transition-all whitespace-nowrap shadow-xs shadow-purple-900/25 hover:shadow-md hover:shadow-purple-900/30"
             >
-              <span>Get in Touch</span>
+              <span>{content.navigation.cta}</span>
               <ArrowUpRight className="w-3.5 h-3.5" />
             </a>
           </MagneticWrapper>
-        </div>
+        </div>}
 
         {/* Mobile menu hamburger toggle */}
         <div className="flex lg:hidden items-center">
@@ -172,48 +154,23 @@ export const Header: React.FC<HeaderProps> = ({ onNavigate }) => {
           exit={{ opacity: 0, y: -8 }}
           className="lg:hidden border-b border-purple-200/80 bg-[#FAF7FC] px-4 pt-2 pb-6 space-y-2 shadow-lg shadow-purple-950/5"
         >
-          <a
-            href="#portfolio"
-            onClick={(e) => handleLinkClick(e, 'portfolio')}
-            aria-current={activeSection === 'portfolio' ? 'location' : undefined}
-            className={`block px-3 py-2 text-sm font-medium rounded-md transition-colors ${activeSection === 'portfolio' ? 'bg-purple-100 text-purple-950' : 'text-neutral-800 hover:text-purple-950 hover:bg-purple-100/70'}`}
-          >
-            Work
-          </a>
-          <a
-            href="#services"
-            onClick={(e) => handleLinkClick(e, 'services')}
-            aria-current={activeSection === 'services' ? 'location' : undefined}
-            className={`block px-3 py-2 text-sm font-medium rounded-md transition-colors ${activeSection === 'services' ? 'bg-purple-100 text-purple-950' : 'text-neutral-800 hover:text-purple-950 hover:bg-purple-100/70'}`}
-          >
-            Services
-          </a>
-          <a
-            href="#about"
-            onClick={(e) => handleLinkClick(e, 'about')}
-            aria-current={activeSection === 'about' ? 'location' : undefined}
-            className={`block px-3 py-2 text-sm font-medium rounded-md transition-colors ${activeSection === 'about' ? 'bg-purple-100 text-purple-950' : 'text-neutral-800 hover:text-purple-950 hover:bg-purple-100/70'}`}
-          >
-            About
-          </a>
-          <a
-            href="#contact"
-            onClick={(e) => handleLinkClick(e, 'contact')}
-            aria-current={activeSection === 'contact' ? 'location' : undefined}
-            className={`block px-3 py-2 text-sm font-medium rounded-md transition-colors ${activeSection === 'contact' ? 'bg-purple-100 text-purple-950' : 'text-neutral-800 hover:text-purple-950 hover:bg-purple-100/70'}`}
-          >
-            Contact
-          </a>
-          <div className="pt-2">
+          {navItems.map((item) => <a
+            key={item.id}
+            href={`#${item.id}`}
+            onClick={(e) => handleLinkClick(e, item.id)}
+            aria-current={activeSection === item.id ? 'location' : undefined}
+            className={`block px-3 py-2 text-sm font-medium rounded-md transition-colors ${activeSection === item.id ? 'bg-purple-100 text-purple-950' : 'text-neutral-800 hover:text-purple-950 hover:bg-purple-100/70'}`}
+          >{item.label}</a>)}
+          {!content.page.hiddenSections.includes('contact') && <div className="pt-2">
             <a
               href="#contact"
               onClick={(e) => handleLinkClick(e, 'contact')}
               className="w-full flex items-center justify-center gap-1.5 px-4 py-2.5 text-xs font-semibold text-white bg-gradient-to-r from-[#420D58] to-[#7E22CE] hover:from-[#350A47] hover:to-[#6B21A8] rounded-md transition-all shadow-xs shadow-purple-900/25"
             >
-              <span>Get in Touch</span>
+              <span>{content.navigation.cta}</span>
               <ArrowUpRight className="w-3.5 h-3.5" />
             </a>
-          </div>
+          </div>}
         </motion.div>
       )}
     </header>

@@ -1,6 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { ArrowLeft, ImagePlus, LoaderCircle, LogOut, Save, Trash2, UploadCloud } from 'lucide-react';
+import { ArrowLeft, ImagePlus, LoaderCircle, LogOut, Save, Trash2, UploadCloud, LayoutDashboard, PanelsTopLeft, FolderOpen, Images } from 'lucide-react';
 import { PortfolioItem } from '../data/portfolioData';
+import { DEFAULT_SITE_CONTENT, SiteContent } from '../data/siteContent';
+import { SiteEditor } from './SiteEditor';
 
 interface ManagedProject extends PortfolioItem {
   alt: string;
@@ -18,6 +20,8 @@ const categories = [
 ];
 
 const fieldClass = 'mt-1 w-full rounded-lg border border-purple-200 bg-white px-3 py-2.5 text-sm text-neutral-900 outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-100';
+type AdminTab = 'overview' | 'site' | 'projects' | 'media';
+interface ManagedAsset { id: string; alt: string; src: string; size: number; createdAt: string }
 
 export const AdminPage: React.FC = () => {
   const [projects, setProjects] = useState<ManagedProject[]>([]);
@@ -37,6 +41,11 @@ export const AdminPage: React.FC = () => {
   const [alt, setAlt] = useState('');
   const [brief, setBrief] = useState('');
   const [featured, setFeatured] = useState(true);
+  const [activeTab, setActiveTab] = useState<AdminTab>('overview');
+  const [siteContent, setSiteContent] = useState<SiteContent>(DEFAULT_SITE_CONTENT);
+  const [savedSiteContent, setSavedSiteContent] = useState(JSON.stringify(DEFAULT_SITE_CONTENT));
+  const [siteSaving, setSiteSaving] = useState(false);
+  const [assets, setAssets] = useState<ManagedAsset[]>([]);
 
   const loadProjects = useCallback(async () => {
     setLoading(true);
@@ -57,6 +66,20 @@ export const AdminPage: React.FC = () => {
     }
   }, []);
 
+  const loadSite = useCallback(async () => {
+    const response = await fetch('/api/admin/site', { cache: 'no-store' });
+    if (!response.ok) throw new Error('Could not load site content.');
+    const result = await response.json() as SiteContent;
+    setSiteContent(result);
+    setSavedSiteContent(JSON.stringify(result));
+  }, []);
+
+  const loadAssets = useCallback(async () => {
+    const response = await fetch('/api/admin/assets', { cache: 'no-store' });
+    if (!response.ok) throw new Error('Could not load site media.');
+    setAssets(await response.json());
+  }, []);
+
   const loadSetupState = useCallback(async () => {
     try {
       const response = await fetch('/api/setup', { cache: 'no-store' });
@@ -74,6 +97,57 @@ export const AdminPage: React.FC = () => {
   }, []);
 
   useEffect(() => { void loadProjects(); void loadSetupState(); }, [loadProjects, loadSetupState]);
+  useEffect(() => {
+    if (authorized !== true) return;
+    void Promise.all([loadSite(), loadAssets()]).catch((error) => setNotice(error instanceof Error ? error.message : 'Could not load site settings.'));
+  }, [authorized, loadSite, loadAssets]);
+
+  const saveSite = async () => {
+    setSiteSaving(true);
+    setNotice('Saving site content…');
+    try {
+      const response = await fetch('/api/admin/site', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(siteContent) });
+      const result = await response.json().catch(() => ({})) as { error?: string; content?: SiteContent };
+      if (!response.ok) throw new Error(result.error || 'Could not save site content.');
+      const saved = result.content || siteContent;
+      setSiteContent(saved);
+      setSavedSiteContent(JSON.stringify(saved));
+      setNotice('Site content saved and published.');
+    } catch (error) {
+      setNotice(error instanceof Error ? error.message : 'Could not save site content.');
+    } finally {
+      setSiteSaving(false);
+    }
+  };
+
+  const uploadSiteAsset = async (assetFile: File, imageAlt: string) => {
+    try {
+      const form = new FormData();
+      form.set('file', assetFile);
+      form.set('alt', imageAlt);
+      const response = await fetch('/api/admin/assets', { method: 'POST', body: form });
+      const result = await response.json().catch(() => ({})) as ManagedAsset & { error?: string };
+      if (!response.ok) throw new Error(result.error || 'Image upload failed.');
+      setSiteContent((current) => ({ ...current, hero: { ...current.hero, portraitSrc: result.src } }));
+      setAssets((current) => [result, ...current]);
+      setNotice('Portrait uploaded. Save site content to publish it.');
+    } catch (error) {
+      setNotice(error instanceof Error ? error.message : 'Image upload failed.');
+    }
+  };
+
+  const deleteSiteAsset = async (asset: ManagedAsset) => {
+    if (siteContent.hero.portraitSrc === asset.src) {
+      setNotice('This image is currently used as the homepage portrait. Choose another image before deleting it.');
+      return;
+    }
+    if (!window.confirm('Permanently delete this uploaded image?')) return;
+    const response = await fetch(`/api/admin/assets/${asset.id}`, { method: 'DELETE' });
+    const result = await response.json().catch(() => ({})) as { error?: string };
+    if (!response.ok) { setNotice(result.error || 'Could not delete image.'); return; }
+    setAssets((current) => current.filter((item) => item.id !== asset.id));
+    setNotice('Image deleted.');
+  };
 
   const signIn = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -127,6 +201,7 @@ export const AdminPage: React.FC = () => {
       if (!response.ok) throw new Error('Could not sign out. Please try again.');
       setAuthorized(false);
       setProjects([]);
+      setAssets([]);
       setNotice('You have signed out.');
     } catch (error) {
       setNotice(error instanceof Error ? error.message : 'Could not sign out.');
@@ -231,7 +306,7 @@ export const AdminPage: React.FC = () => {
           <p className="font-mono text-xs uppercase tracking-widest text-purple-700">Aliciagiks4art · Admin</p>
           <h1 className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">Manage your portfolio</h1>
           <p className="mt-2 max-w-2xl text-sm leading-relaxed text-neutral-600">
-            Upload artwork or video, write descriptive alt text, and update or remove projects. Uploaded media is stored in your private Cloudflare R2 bucket.
+            Manage the homepage, profile, work, services, contact details, page layout, search previews, and uploaded media from one place.
           </p>
           {authorized === true && <button type="button" disabled={busy} onClick={() => void signOut()} className="mt-4 inline-flex items-center gap-2 rounded-lg border border-purple-200 px-3 py-2 text-sm font-medium text-purple-950 hover:bg-purple-50 disabled:opacity-60"><LogOut className="h-4 w-4" /> Sign out</button>}
         </header>
@@ -256,6 +331,20 @@ export const AdminPage: React.FC = () => {
           </section>
         ) : (
           <>
+            <nav aria-label="Admin areas" className="mt-7 flex gap-2 overflow-x-auto rounded-xl border border-purple-200 bg-white p-2">
+              {([{ id: 'overview', label: 'Overview', icon: LayoutDashboard }, { id: 'site', label: 'Site editor', icon: PanelsTopLeft }, { id: 'projects', label: 'Projects', icon: FolderOpen }, { id: 'media', label: 'Media library', icon: Images }] as const).map(({ id, label, icon: Icon }) => <button key={id} type="button" onClick={() => setActiveTab(id)} className={`inline-flex shrink-0 items-center gap-2 rounded-lg px-4 py-2.5 text-sm font-semibold ${activeTab === id ? 'bg-purple-900 text-white' : 'text-neutral-700 hover:bg-purple-50'}`}><Icon className="h-4 w-4" />{label}</button>)}
+            </nav>
+
+            {activeTab === 'overview' && <section className="mt-7 grid gap-4 sm:grid-cols-3">
+              {[{ label: 'Uploaded projects', value: projects.length, action: 'Manage projects', tab: 'projects' as const }, { label: 'Media files', value: assets.length, action: 'Open media library', tab: 'media' as const }, { label: 'Editable sections', value: 5, action: 'Edit site content', tab: 'site' as const }].map((card) => <article key={card.label} className="rounded-2xl border border-purple-200 bg-white p-5"><p className="text-sm text-neutral-500">{card.label}</p><p className="mt-2 text-3xl font-bold text-purple-950">{card.value}</p><button type="button" onClick={() => setActiveTab(card.tab)} className="mt-4 text-sm font-semibold text-purple-800 underline">{card.action}</button></article>)}
+              <article className="rounded-2xl border border-purple-200 bg-white p-5 sm:col-span-3"><h2 className="text-lg font-semibold">Publish changes</h2><p className="mt-1 text-sm text-neutral-600">Site text and layout are saved to Cloudflare R2. Project uploads are published to the portfolio automatically.</p><div className="mt-4 flex flex-wrap gap-3"><button type="button" onClick={() => setActiveTab('site')} className="rounded-lg bg-purple-900 px-4 py-2.5 text-sm font-semibold text-white">Edit website</button><a href="/" target="_blank" rel="noreferrer" className="rounded-lg border border-purple-200 px-4 py-2.5 text-sm font-semibold text-purple-950">Preview website</a></div></article>
+            </section>}
+
+            {activeTab === 'site' && <div className="mt-7"><SiteEditor content={siteContent} onChange={setSiteContent} onSave={() => void saveSite()} saving={siteSaving} dirty={JSON.stringify(siteContent) !== savedSiteContent} onUploadPortrait={uploadSiteAsset} /></div>}
+
+            {activeTab === 'media' && <section className="mt-7"><div className="mb-4"><h2 className="text-xl font-semibold">Media library</h2><p className="mt-1 text-sm text-neutral-600">Images uploaded for the site, with the alt text recorded for accessibility.</p></div>{assets.length === 0 ? <p className="rounded-xl border border-dashed border-purple-300 bg-white p-8 text-center text-sm text-neutral-600">No site images uploaded yet. Upload a portrait from Site editor.</p> : <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">{assets.map((asset) => <article key={asset.id} className="overflow-hidden rounded-2xl border border-purple-200 bg-white"><img src={asset.src} alt={asset.alt} className="aspect-video w-full object-cover" /><div className="p-4"><p className="line-clamp-3 text-sm text-neutral-700">{asset.alt}</p><p className="mt-2 text-xs text-neutral-500">{(asset.size / 1024 / 1024).toFixed(2)} MB</p><button type="button" onClick={() => void deleteSiteAsset(asset)} className="mt-3 text-sm font-semibold text-red-700">Delete image</button></div></article>)}</div>}</section>}
+
+            {activeTab === 'projects' && <>
             <section className="mt-8 rounded-2xl border border-purple-200 bg-white p-5 sm:p-7">
               <div className="mb-5 flex items-center gap-3">
                 <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-purple-100 text-purple-900"><ImagePlus className="h-5 w-5" /></span>
@@ -321,9 +410,10 @@ export const AdminPage: React.FC = () => {
                 </div>
               )}
             </section>
+            </>}
           </>
         )}
-        <footer className="mt-12 border-t border-purple-200 py-5 text-xs text-neutral-500">Admin changes are saved to R2 and appear in the public project grid. Keep your admin password private.</footer>
+        {authorized === true && <footer className="mt-12 border-t border-purple-200 py-5 text-xs text-neutral-500">Changes to text and layout are stored in R2; project uploads are managed separately. Keep your admin password private.</footer>}
       </div>
     </main>
   );

@@ -2,9 +2,12 @@ import React, { useState } from 'react';
 import { ArrowDown, ArrowUpRight, Play, Sparkles } from 'lucide-react';
 import { motion } from 'motion/react';
 import { MagneticWrapper } from './MagneticWrapper';
+import { useSiteContent } from '../context/SiteContentContext';
 
 export const Hero: React.FC = () => {
   const [isPlayingPreview, setIsPlayingPreview] = useState(false);
+  const content = useSiteContent();
+  const hero = content.hero;
 
   return (
     <section id="top" className="relative pt-8 sm:pt-16 pb-12 sm:pb-20 border-b border-purple-200/70 overflow-hidden">
@@ -34,36 +37,31 @@ export const Hero: React.FC = () => {
             {/* Unboxed Kicker with quiet royal purple separator */}
             <div className="flex items-center gap-2 text-xs font-mono text-purple-900 tracking-wide uppercase">
               <span className="w-2 h-2 rounded-full bg-[#420D58] shadow-xs shadow-purple-500/50 animate-pulse" />
-              <span className="font-bold tracking-wider">Mary Alicia</span>
+              <span className="font-bold tracking-wider">{content.profile.name}</span>
               <span aria-hidden="true" className="text-purple-300">·</span>
-              <span className="text-purple-700">Graphic Designer · Animator · Artist</span>
+              <span className="text-purple-700">{hero.eyebrow}</span>
             </div>
 
             {/* Display Headline with purple gradient italic word */}
             <h1 className="max-w-3xl text-4xl sm:text-5xl md:text-6xl lg:text-[4.15rem] font-bold text-neutral-900 tracking-[-0.045em] leading-[1.04] text-balance">
-              Creative ideas, made visible in{' '}
+              {hero.headline}{' '}
               <span className="italic font-serif font-normal bg-gradient-to-r from-[#420D58] via-[#7E22CE] to-[#C026D3] bg-clip-text text-transparent">
-                motion
+                {hero.accent}
               </span>{' '}
-              and print.
+              {hero.ending}
             </h1>
 
             {/* Lead copy */}
             <p className="text-base sm:text-lg text-neutral-600 leading-relaxed max-w-xl">
-              I&apos;m Mary Alicia. I create graphic design, animation, motion work, and digital experiences with a focus on clear ideas and memorable visuals.
+              {hero.intro}
             </p>
 
             {/* Unboxed Specialties with purple separators */}
             <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs sm:text-sm font-medium text-neutral-800 pt-1">
-              <span className="hover:text-purple-900 transition-colors">Graphic Design</span>
-              <span aria-hidden="true" className="text-purple-300">·</span>
-              <span className="hover:text-purple-900 transition-colors">Branding &amp; Identity</span>
-              <span aria-hidden="true" className="text-purple-300">·</span>
-              <span className="hover:text-purple-900 transition-colors">Animation</span>
-              <span aria-hidden="true" className="text-purple-300">·</span>
-              <span className="hover:text-purple-900 transition-colors">Illustration</span>
-              <span aria-hidden="true" className="text-purple-300">·</span>
-              <span className="hover:text-purple-900 transition-colors">Digital Experiences</span>
+              {hero.specialties.map((specialty, index) => <React.Fragment key={`${specialty}-${index}`}>
+                {index > 0 && <span aria-hidden="true" className="text-purple-300">·</span>}
+                <span className="hover:text-purple-900 transition-colors">{specialty}</span>
+              </React.Fragment>)}
             </div>
 
             {/* CTAs with rich royal purple styling and magnetic physics */}
@@ -73,7 +71,7 @@ export const Hero: React.FC = () => {
                   href="#portfolio"
                   className="inline-flex items-center gap-2 px-5 py-2.5 text-xs sm:text-sm font-semibold text-white bg-gradient-to-r from-[#420D58] via-[#5F1B68] to-[#7E22CE] hover:from-[#350A47] hover:to-[#6B21A8] rounded-md transition-all shadow-sm shadow-purple-900/25 hover:shadow-md hover:shadow-purple-900/30"
                 >
-                  <span>View Selected Work</span>
+                  <span>{hero.workCta}</span>
                   <ArrowDown className="w-4 h-4" />
                 </a>
               </MagneticWrapper>
@@ -83,7 +81,7 @@ export const Hero: React.FC = () => {
                   href="#contact"
                   className="inline-flex items-center gap-2 px-5 py-2.5 text-xs sm:text-sm font-semibold text-purple-950 bg-white hover:bg-purple-50/70 border border-purple-200 hover:border-purple-300 rounded-md transition-all shadow-2xs"
                 >
-                  <span>Start a Project</span>
+                  <span>{hero.contactCta}</span>
                   <ArrowUpRight className="w-4 h-4 text-purple-600" />
                 </a>
               </MagneticWrapper>
@@ -111,7 +109,7 @@ export const Hero: React.FC = () => {
               <div className="relative aspect-4/3 sm:aspect-16/10 rounded-xl overflow-hidden bg-neutral-900 border border-purple-200/60 shadow-inner">
                 {isPlayingPreview ? (
                   <video
-                    src="geeks4drisony/motion graphic/inspiration.mp4"
+                      src={hero.reelSrc}
                     autoPlay
                     loop
                     controls
@@ -121,8 +119,8 @@ export const Hero: React.FC = () => {
                 ) : (
                   <div className="relative w-full h-full">
                     <img
-                      src="assets/profile-image/mary-alicia.jpg"
-                      alt="Mary Alicia, graphic designer and motion artist"
+                      src={hero.portraitSrc}
+                      alt={hero.portraitAlt}
                       loading="eager"
                       className="w-full h-full object-cover grayscale contrast-105 group-hover:scale-102 transition-transform duration-700"
                       onError={(e) => {
@@ -132,8 +130,8 @@ export const Hero: React.FC = () => {
                     <div className="absolute inset-0 bg-gradient-to-t from-[#2A0838]/90 via-[#420D58]/40 to-transparent flex flex-col justify-end p-5 text-white">
                       <div className="flex items-center justify-between">
                         <div>
-                          <p className="text-xs font-mono tracking-wider text-purple-200 uppercase">Featured Motion Reel</p>
-                          <h3 className="text-sm sm:text-base font-semibold text-white">Inspiration &amp; Brand Motion</h3>
+                          <p className="text-xs font-mono tracking-wider text-purple-200 uppercase">{hero.reelLabel}</p>
+                          <h3 className="text-sm sm:text-base font-semibold text-white">{hero.reelTitle}</h3>
                         </div>
                         <button
                           type="button"
@@ -150,41 +148,16 @@ export const Hero: React.FC = () => {
               </div>
 
               {/* Availability status */}
-              <div className="mt-3 px-2 flex items-center justify-end text-xs text-purple-900/70 font-mono">
+              {content.profile.availability && <div className="mt-3 px-2 flex items-center justify-end text-xs text-purple-900/70 font-mono">
                 <span className="text-emerald-700 font-semibold flex items-center gap-1.5">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                  COMMISSIONS OPEN
+                  {content.profile.availability}
                 </span>
-              </div>
+              </div>}
             </div>
           </motion.div>
 
         </div>
-
-        {/* Full-width Stats & Highlights Strip below the hero split */}
-        <motion.div 
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="mt-12 sm:mt-16 pt-8 border-t border-purple-200/80 grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8"
-        >
-          <div className="p-3 rounded-lg hover:bg-purple-100/40 transition-colors">
-            <div className="text-xl sm:text-2xl font-bold text-neutral-900 tracking-tight">Graphic design</div>
-            <p className="text-xs sm:text-sm text-neutral-600 mt-1">Identity, campaigns &amp; print</p>
-          </div>
-          <div className="p-3 rounded-lg hover:bg-purple-100/40 transition-colors">
-            <div className="text-xl sm:text-2xl font-bold text-neutral-900 tracking-tight">Animation</div>
-            <p className="text-xs sm:text-sm text-neutral-600 mt-1">Motion &amp; moving image</p>
-          </div>
-          <div className="p-3 rounded-lg hover:bg-purple-100/40 transition-colors">
-            <div className="text-xl sm:text-2xl font-bold text-neutral-900 tracking-tight">Digital</div>
-            <p className="text-xs sm:text-sm text-neutral-600 mt-1">Interactive experiences</p>
-          </div>
-          <div className="p-3 rounded-lg hover:bg-purple-100/40 transition-colors">
-            <div className="text-xl sm:text-2xl font-bold text-neutral-900 tracking-tight">Illustration</div>
-            <p className="text-xs sm:text-sm text-neutral-600 mt-1">Drawing, art &amp; editorial</p>
-          </div>
-        </motion.div>
 
       </div>
     </section>
