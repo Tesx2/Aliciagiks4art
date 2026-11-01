@@ -92,7 +92,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
         </div>
 
         {/* Media Container */}
-        <div className="relative flex min-h-0 flex-1 items-center justify-center overflow-hidden bg-neutral-950 sm:min-h-[380px] sm:flex-none sm:max-h-[55vh]">
+        <div className="relative flex min-h-0 flex-1 items-center justify-center overflow-hidden bg-neutral-950 sm:min-h-0 sm:w-fit sm:max-w-full sm:flex-none sm:self-center">
           {project.type === 'video' ? (
             <video
               src={project.src}
@@ -100,13 +100,13 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
               controls
               autoPlay
               playsInline
-              className="h-full w-full max-h-full object-contain sm:h-auto sm:max-h-[55vh]"
+              className="h-full w-full max-h-full object-contain sm:h-auto sm:w-auto sm:max-h-[55vh] sm:max-w-full"
             />
           ) : (
             <img
               src={project.src}
               alt={project.alt || project.title}
-              className="h-full w-full max-h-full object-contain sm:h-auto sm:max-h-[55vh]"
+              className="h-full w-full max-h-full object-contain sm:h-auto sm:w-auto sm:max-h-[55vh] sm:max-w-full"
               onError={(e) => {
                 const target = e.target as HTMLImageElement;
                 target.src = 'assets/tall.svg';
