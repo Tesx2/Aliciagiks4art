@@ -63,7 +63,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
     >
       <div
         ref={dialogRef}
-        className="relative flex h-[calc(100dvh-1rem)] max-h-[calc(100dvh-1rem)] w-full max-w-4xl flex-col overflow-hidden rounded-xl border border-neutral-200 bg-white shadow-xl sm:h-auto sm:max-h-[90vh]"
+        className="relative flex h-[calc(100dvh-1rem)] max-h-[calc(100dvh-1rem)] w-full max-w-4xl flex-col overflow-hidden rounded-xl border border-neutral-200 bg-white shadow-xl sm:h-[90dvh] sm:max-h-[90dvh]"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Top Modal Bar */}
@@ -92,7 +92,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
         </div>
 
         {/* Media Container */}
-        <div className="relative flex min-h-0 flex-1 items-center justify-center overflow-hidden bg-neutral-950 sm:min-h-0 sm:w-fit sm:max-w-full sm:flex-none sm:self-center">
+        <div className="relative flex min-h-0 flex-1 items-center justify-center overflow-hidden bg-neutral-950 sm:w-fit sm:max-w-full sm:self-center">
           {project.type === 'video' ? (
             <video
               src={project.src}
@@ -100,13 +100,13 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
               controls
               autoPlay
               playsInline
-              className="h-full w-full max-h-full object-contain sm:h-auto sm:w-auto sm:max-h-[55vh] sm:max-w-full"
+              className="h-full w-full max-h-full object-contain sm:w-auto sm:max-w-full"
             />
           ) : (
             <img
               src={project.src}
               alt={project.alt || project.title}
-              className="h-full w-full max-h-full object-contain sm:h-auto sm:w-auto sm:max-h-[55vh] sm:max-w-full"
+              className="h-full w-full max-h-full object-contain sm:w-auto sm:max-w-full"
               onError={(e) => {
                 const target = e.target as HTMLImageElement;
                 target.src = 'assets/tall.svg';
@@ -116,7 +116,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
         </div>
 
         {/* Content & Details Pane */}
-        <div className="max-h-[30dvh] space-y-6 overflow-y-auto overscroll-contain p-4 sm:max-h-none sm:p-8">
+        <div className="max-h-[24dvh] shrink-0 space-y-5 overflow-y-auto overscroll-contain p-4 sm:max-h-[25dvh] sm:p-7">
           <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
             <div>
               <h2 id="modal-project-title" className="text-xl sm:text-2xl font-bold text-neutral-900">
