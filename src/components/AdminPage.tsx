@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { ArrowLeft, ImagePlus, LoaderCircle, LogOut, Save, Trash2, UploadCloud, LayoutDashboard, PanelsTopLeft, FolderOpen, Images } from 'lucide-react';
+import { ArrowLeft, ImagePlus, LoaderCircle, LogOut, Save, Trash2, UploadCloud, LayoutDashboard, PanelsTopLeft, FolderOpen, Images, Eye } from 'lucide-react';
 import { PortfolioItem } from '../data/portfolioData';
 import { DEFAULT_SITE_CONTENT, SiteContent } from '../data/siteContent';
 import { SiteEditor } from './SiteEditor';
@@ -297,8 +297,22 @@ export const AdminPage: React.FC = () => {
   };
 
   return (
-    <main className="min-h-screen bg-[#FAF7FC] px-4 py-8 text-neutral-900 sm:px-8">
-      <div className="mx-auto max-w-5xl">
+    <main className="min-h-screen bg-[#FAF7FC] text-neutral-900">
+      {authorized === true && <aside className="fixed inset-y-0 left-0 z-30 hidden w-64 flex-col border-r border-purple-200 bg-white px-4 py-5 shadow-sm md:flex">
+        <a href="/" className="flex items-center gap-3 rounded-xl px-2 py-3 hover:bg-purple-50">
+          <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-purple-900 font-serif text-lg font-bold text-white">M</span>
+          <span className="min-w-0"><span className="block truncate text-sm font-bold text-neutral-900">Aliciagiks4art</span><span className="block text-xs text-neutral-500">Portfolio studio</span></span>
+        </a>
+        <div className="mt-8 px-3 text-[11px] font-semibold uppercase tracking-wider text-neutral-400">Workspace</div>
+        <nav aria-label="Admin areas" className="mt-2 space-y-1">
+          {([{ id: 'overview', label: 'Overview', icon: LayoutDashboard }, { id: 'site', label: 'Site editor', icon: PanelsTopLeft }, { id: 'projects', label: 'Projects', icon: FolderOpen }, { id: 'media', label: 'Media library', icon: Images }] as const).map(({ id, label, icon: Icon }) => <button key={id} type="button" onClick={() => setActiveTab(id)} aria-current={activeTab === id ? 'page' : undefined} className={`flex w-full items-center gap-3 rounded-xl px-3 py-3 text-left text-sm font-medium transition-colors ${activeTab === id ? 'bg-purple-100 text-purple-950' : 'text-neutral-600 hover:bg-purple-50 hover:text-purple-950'}`}><Icon className="h-4 w-4 shrink-0" />{label}</button>)}
+        </nav>
+        <div className="mt-auto space-y-2 border-t border-purple-100 pt-4">
+          <a href="/" target="_blank" rel="noreferrer" className="flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-medium text-neutral-600 hover:bg-purple-50 hover:text-purple-950"><Eye className="h-4 w-4" />View website</a>
+          <button type="button" disabled={busy} onClick={() => void signOut()} className="flex w-full items-center gap-3 rounded-xl px-3 py-3 text-left text-sm font-medium text-neutral-600 hover:bg-purple-50 hover:text-purple-950 disabled:opacity-60"><LogOut className="h-4 w-4" />Sign out</button>
+        </div>
+      </aside>}
+      <div className={`mx-auto max-w-7xl px-4 py-8 sm:px-8 ${authorized === true ? 'md:ml-64' : ''}`}>
         <a href="/" className="inline-flex items-center gap-2 text-sm font-medium text-purple-900 hover:text-purple-700">
           <ArrowLeft className="h-4 w-4" /> View public portfolio
         </a>
@@ -308,7 +322,7 @@ export const AdminPage: React.FC = () => {
           <p className="mt-2 max-w-2xl text-sm leading-relaxed text-neutral-600">
             Manage the homepage, profile, work, services, contact details, page layout, search previews, and uploaded media from one place.
           </p>
-          {authorized === true && <button type="button" disabled={busy} onClick={() => void signOut()} className="mt-4 inline-flex items-center gap-2 rounded-lg border border-purple-200 px-3 py-2 text-sm font-medium text-purple-950 hover:bg-purple-50 disabled:opacity-60"><LogOut className="h-4 w-4" /> Sign out</button>}
+          {authorized === true && <button type="button" disabled={busy} onClick={() => void signOut()} className="mt-4 inline-flex items-center gap-2 rounded-lg border border-purple-200 px-3 py-2 text-sm font-medium text-purple-950 hover:bg-purple-50 disabled:opacity-60 md:hidden"><LogOut className="h-4 w-4" /> Sign out</button>}
         </header>
 
         {notice && <p role="status" className="mt-5 rounded-lg border border-purple-200 bg-white px-4 py-3 text-sm text-purple-950">{notice}</p>}
@@ -331,7 +345,7 @@ export const AdminPage: React.FC = () => {
           </section>
         ) : (
           <>
-            <nav aria-label="Admin areas" className="mt-7 flex gap-2 overflow-x-auto rounded-xl border border-purple-200 bg-white p-2">
+            <nav aria-label="Admin areas" className="mt-7 flex gap-2 overflow-x-auto rounded-xl border border-purple-200 bg-white p-2 md:hidden">
               {([{ id: 'overview', label: 'Overview', icon: LayoutDashboard }, { id: 'site', label: 'Site editor', icon: PanelsTopLeft }, { id: 'projects', label: 'Projects', icon: FolderOpen }, { id: 'media', label: 'Media library', icon: Images }] as const).map(({ id, label, icon: Icon }) => <button key={id} type="button" onClick={() => setActiveTab(id)} className={`inline-flex shrink-0 items-center gap-2 rounded-lg px-4 py-2.5 text-sm font-semibold ${activeTab === id ? 'bg-purple-900 text-white' : 'text-neutral-700 hover:bg-purple-50'}`}><Icon className="h-4 w-4" />{label}</button>)}
             </nav>
 
