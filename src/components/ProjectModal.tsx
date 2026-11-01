@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import { X, ExternalLink, Film, Image as ImageIcon } from 'lucide-react';
 import { PortfolioItem } from '../data/portfolioData';
 
@@ -53,7 +54,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
 
   if (!project) return null;
 
-  return (
+  return createPortal((
     <div
       className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-6 bg-neutral-900/70 backdrop-blur-xs animate-in fade-in duration-200"
       onClick={onClose}
@@ -184,5 +185,5 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
         )}
       </div>
     </div>
-  );
+  ), document.body);
 };
