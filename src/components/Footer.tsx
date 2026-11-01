@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowUp, Instagram, Github, Mail, MessageCircle } from 'lucide-react';
+import { ArrowUp, Instagram, Mail, MessageCircle } from 'lucide-react';
 import { ARTIST_PROFILE } from '../data/portfolioData';
 
 export const Footer: React.FC = () => {
@@ -73,15 +73,6 @@ export const Footer: React.FC = () => {
             >
               <Instagram className="w-3.5 h-3.5" />
               <span>Instagram</span>
-            </a>
-            <a
-              href="https://github.com/aliciagiks-graphics/Aliciagiks4art"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-purple-900 transition-colors flex items-center gap-1 text-xs"
-            >
-              <Github className="w-3.5 h-3.5" />
-              <span>GitHub</span>
             </a>
             <a
               href="mailto:aliciagiks@gmail.com"

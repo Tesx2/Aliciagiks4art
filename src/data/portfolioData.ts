@@ -6,7 +6,7 @@ export interface PortfolioItem {
   src: string;
   type: 'video' | 'image';
   alt?: string;
-  year: number | string;
+  year?: number | string;
   client?: string;
   role?: string;
   brief?: string;
@@ -42,7 +42,6 @@ export const ARTIST_PROFILE = {
   email: 'aliciagiks@gmail.com',
   whatsapp: '+254768795272',
   instagram: '@geeks4drisony',
-  github: 'aliciagiks-graphics/Aliciagiks4art',
   availability: 'Open for selected commissions',
 };
 
@@ -64,11 +63,6 @@ export const FEATURED_PROJECTS: PortfolioItem[] = [
     categoryLabel: 'Motion Graphics',
     src: 'geeks4drisony/motion graphic/inspiration.mp4',
     type: 'video',
-    year: '2026',
-    client: 'Creative Direction',
-    role: 'Motion Artist & Animator',
-    brief: 'A cinematic motion art study exploring kinetic geometry, lighting contrast, and fluid pacing.',
-    tools: ['After Effects', 'Illustrator', 'Premiere Pro'],
     featured: true,
   },
   {
@@ -78,11 +72,6 @@ export const FEATURED_PROJECTS: PortfolioItem[] = [
     categoryLabel: 'Brand Identity',
     src: 'geeks4drisony/motion graphic/baki beauty motion graphic.mp4',
     type: 'video',
-    year: '2026',
-    client: 'Baki Beauty Brand',
-    role: 'Brand Designer & Motion Specialist',
-    brief: 'Dynamic brand reveal and motion campaign for modern organic cosmetics and personal care.',
-    tools: ['After Effects', 'Illustrator', 'Cinema 4D'],
     featured: true,
   },
   {
@@ -92,11 +81,6 @@ export const FEATURED_PROJECTS: PortfolioItem[] = [
     categoryLabel: 'Brand & Logo',
     src: 'geeks4drisony/logo design/Logo design.webp',
     type: 'image',
-    year: '2026',
-    client: 'Brand Identity Client',
-    role: 'Lead Brand Identity Designer',
-    brief: 'Precision typographic mark crafted for scalability across high-resolution displays and physical collateral.',
-    tools: ['Adobe Illustrator', 'Figma'],
     featured: true,
   },
   {
@@ -106,11 +90,6 @@ export const FEATURED_PROJECTS: PortfolioItem[] = [
     categoryLabel: 'Posters & Print',
     src: 'geeks4drisony/posters/poster 1.webp',
     type: 'image',
-    year: '2026',
-    client: 'Cultural & Event Studio',
-    role: 'Poster & Visual Designer',
-    brief: 'High-contrast promotional and cultural print design with Swiss-inspired structural typography.',
-    tools: ['InDesign', 'Photoshop', 'Illustrator'],
     featured: true,
   },
   {
@@ -120,11 +99,6 @@ export const FEATURED_PROJECTS: PortfolioItem[] = [
     categoryLabel: 'Motion Graphics',
     src: 'geeks4drisony/motion graphic/UI motion graphics.mp4',
     type: 'video',
-    year: '2026',
-    client: 'Digital Product Showcase',
-    role: 'UI Motion Designer',
-    brief: 'Silky smooth interface animations, micro-interactions, and state transitions for web and mobile.',
-    tools: ['After Effects', 'Lottie', 'Figma'],
     featured: true,
   },
   {
@@ -134,11 +108,6 @@ export const FEATURED_PROJECTS: PortfolioItem[] = [
     categoryLabel: 'Drawing & Art',
     src: 'geeks4drisony/drawing/drawing 1.jpg',
     type: 'image',
-    year: '2026',
-    client: 'Art & Character Series',
-    role: 'Illustrator & Concept Artist',
-    brief: 'Hand-crafted digital drawing with intricate linework, expressive anatomy, and atmospheric tones.',
-    tools: ['Photoshop', 'Procreate', 'Wacom'],
     featured: true,
   },
   {
@@ -148,11 +117,6 @@ export const FEATURED_PROJECTS: PortfolioItem[] = [
     categoryLabel: 'Photography',
     src: 'geeks4drisony/photography/photography 1.webp',
     type: 'image',
-    year: '2026',
-    client: 'Editorial Photography',
-    role: 'Photographer & Colorist',
-    brief: 'High-contrast studio portraiture focusing on human expression, natural ambient light, and texture.',
-    tools: ['Lightroom', 'Photoshop'],
     featured: true,
   },
   {
@@ -162,11 +126,6 @@ export const FEATURED_PROJECTS: PortfolioItem[] = [
     categoryLabel: 'Motion Graphics',
     src: 'geeks4drisony/motion graphic/Logo animation.mp4',
     type: 'video',
-    year: '2026',
-    client: 'Studio Branding',
-    role: 'Motion Designer',
-    brief: 'Precise geometric logo sequence with smooth easing curves and impactful sonic synchronization.',
-    tools: ['After Effects', 'Illustrator'],
     featured: true,
   },
   {
@@ -176,11 +135,6 @@ export const FEATURED_PROJECTS: PortfolioItem[] = [
     categoryLabel: 'Drawing & Art',
     src: 'geeks4drisony/drawing/drawing 10.webp',
     type: 'image',
-    year: '2026',
-    client: 'Editorial Art Series',
-    role: 'Illustrator',
-    brief: 'Contour line explorations focusing on human movement, gesture drawing, and minimalist composition.',
-    tools: ['Procreate', 'Photoshop'],
     featured: true,
   },
 ];
@@ -189,32 +143,22 @@ export const SERVICES_LIST = [
   {
     number: '01',
     title: 'Branding & Visual Identity',
-    description: 'Distinct brand systems, logo design, typography pairings, color architecture, and brand guidelines crafted for cohesive digital and physical impact.',
-    deliverables: ['Logo & Mark Systems', 'Brand Guidelines', 'Typography & Color Guides', 'Asset Kits'],
+    description: 'Visual identity and graphic design for brands, from the first concept through a cohesive visual direction.',
   },
   {
     number: '02',
-    title: 'Motion Graphics & 2D/3D Animation',
-    description: 'Engaging motion pieces, animated brand logos, UI motion interaction demos, explainer clips, and character animations that captivate viewers.',
-    deliverables: ['Logo Animation', 'UI Motion Interactions', 'Campaign Motion Video', 'Social Reels & Shorts'],
+    title: 'Motion Graphics & Animation',
+    description: 'Moving-image work and animation for visual stories, brand moments, and digital content.',
   },
   {
     number: '03',
     title: 'Graphic & Campaign Design',
-    description: 'Eye-catching posters, social media campaign creative, print collateral, packaging, and digital marketing materials that communicate with clarity.',
-    deliverables: ['High-Impact Posters', 'Marketing Collateral', 'Social Media Templates', 'Editorial Layouts'],
+    description: 'Graphic design for campaigns, promotional artwork, and print.',
   },
   {
     number: '04',
-    title: 'Custom Illustration & Digital Art',
-    description: 'Bespoke hand-drawn illustrations, character designs, concept sketches, and editorial visual artworks tailored to your brand personality.',
-    deliverables: ['Character Illustrations', 'Editorial Visuals', 'Digital Art Commissions', 'Vector Iconography'],
-  },
-  {
-    number: '05',
     title: 'Digital Experiences',
-    description: 'Visual concepts for digital platforms, from website graphics and interface explorations to motion-led campaign experiences.',
-    deliverables: ['Web Visuals', 'Interface Concepts', 'Digital Campaigns', 'Motion for Screen'],
+    description: 'Visual design and motion-led ideas for websites and digital experiences.',
   },
 ];
 

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { X, ExternalLink, Play, Film, Image as ImageIcon, Calendar, Briefcase, Wrench } from 'lucide-react';
+import { X, ExternalLink, Film, Image as ImageIcon } from 'lucide-react';
 import { PortfolioItem } from '../data/portfolioData';
 
 interface ProjectModalProps {
@@ -75,8 +75,10 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
               <ImageIcon className="w-3.5 h-3.5 text-purple-700" />
             )}
             <span className="font-semibold">{project.categoryLabel}</span>
-            <span aria-hidden="true" className="text-purple-300">·</span>
-            <span>{project.year}</span>
+            {project.year && <>
+              <span aria-hidden="true" className="text-purple-300">·</span>
+              <span>{project.year}</span>
+            </>}
           </div>
 
           <button
@@ -120,11 +122,11 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
               <h2 id="modal-project-title" className="text-xl sm:text-2xl font-bold text-neutral-900">
                 {project.title}
               </h2>
-              <div className="flex items-center gap-3 text-xs sm:text-sm text-neutral-500 mt-1">
-                <span className="text-purple-800 font-medium">{project.client || 'Creative Showcase'}</span>
-                <span aria-hidden="true">·</span>
-                <span>{project.role || 'Design & Art Direction'}</span>
-              </div>
+              {(project.client || project.role) && <div className="flex items-center gap-3 text-xs sm:text-sm text-neutral-500 mt-1">
+                {project.client && <span className="text-purple-800 font-medium">{project.client}</span>}
+                {project.client && project.role && <span aria-hidden="true">·</span>}
+                {project.role && <span>{project.role}</span>}
+              </div>}
             </div>
 
             <div className="flex items-center gap-2 shrink-0">
@@ -139,26 +141,18 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({
             </div>
           </div>
 
-          <div className="prose prose-neutral max-w-none text-sm text-neutral-600 leading-relaxed">
-            <p>{project.brief || 'A standout piece developed with attention to visual hierarchy, dynamic movement, and refined aesthetic polish.'}</p>
-          </div>
+          {project.brief && <div className="prose prose-neutral max-w-none text-sm text-neutral-600 leading-relaxed"><p>{project.brief}</p></div>}
 
           {/* Metadata Grid */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 pt-4 border-t border-purple-100 text-xs">
+          <div className={`grid gap-4 pt-4 border-t border-purple-100 text-xs ${project.year ? 'grid-cols-2 sm:grid-cols-3' : 'grid-cols-1'}`}>
             <div>
               <span className="text-purple-700 font-mono block mb-1">DISCIPLINE</span>
               <span className="font-semibold text-neutral-800">{project.categoryLabel}</span>
             </div>
-            <div>
-              <span className="text-purple-700 font-mono block mb-1">TIMEFRAME</span>
+            {project.year && <div>
+              <span className="text-purple-700 font-mono block mb-1">YEAR</span>
               <span className="font-semibold text-neutral-800">{project.year}</span>
-            </div>
-            <div>
-              <span className="text-purple-700 font-mono block mb-1">TOOLS USED</span>
-              <span className="font-semibold text-neutral-800">
-                {project.tools ? project.tools.join(', ') : 'Creative Suite & Motion'}
-              </span>
-            </div>
+            </div>}
           </div>
         </div>
 

@@ -149,9 +149,8 @@ export const Hero: React.FC = () => {
                 )}
               </div>
 
-              {/* Bottom card micro-meta */}
-              <div className="mt-3 px-2 flex items-center justify-between text-xs text-purple-900/70 font-mono">
-                <span>PORTFOLIO_ID: ALICIA_2026</span>
+              {/* Availability status */}
+              <div className="mt-3 px-2 flex items-center justify-end text-xs text-purple-900/70 font-mono">
                 <span className="text-emerald-700 font-semibold flex items-center gap-1.5">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
                   COMMISSIONS OPEN

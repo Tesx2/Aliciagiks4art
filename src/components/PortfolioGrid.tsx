@@ -38,7 +38,7 @@ export const PortfolioGrid: React.FC = () => {
           ...project,
           categoryLabel: project.categoryLabel || project.category,
           alt: project.alt || project.title,
-          year: project.year || String(new Date().getFullYear()),
+          year: project.year,
         }));
 
         if (uploaded.length === 0) return;
@@ -83,11 +83,6 @@ export const PortfolioGrid: React.FC = () => {
             src: item.src,
             type: item.type === 'video' ? 'video' : 'image',
             alt: item.alt || item.altText || item.title || item.filename,
-            year: item.year || '2026',
-            client: item.client || 'Creative Studio',
-            role: item.role || 'Design & Motion',
-            brief: item.brief || 'Original artwork and design exploration.',
-            tools: item.type === 'video' ? ['After Effects', 'Premiere Pro'] : ['Illustrator', 'Photoshop'],
           });
         });
       });
@@ -318,25 +313,22 @@ export const PortfolioGrid: React.FC = () => {
                     {/* Unboxed Metadata in purple */}
                     <div className="flex items-center gap-2 text-xs text-purple-900/70 font-mono">
                       <span className="font-semibold text-purple-900">{project.categoryLabel}</span>
-                      <span aria-hidden="true" className="text-purple-300">·</span>
-                      <span>{project.year}</span>
+                      {project.year && <>
+                        <span aria-hidden="true" className="text-purple-300">·</span>
+                        <span>{project.year}</span>
+                      </>}
                     </div>
 
                     <h3 className="text-base font-semibold text-neutral-900 mt-1.5 group-hover:text-purple-900 transition-colors">
                       {project.title}
                     </h3>
 
-                    <p className="text-xs text-neutral-600 line-clamp-2 mt-1 leading-relaxed">
-                      {project.brief || 'Custom art and design exploration.'}
-                    </p>
+                    {project.brief && <p className="text-xs text-neutral-600 line-clamp-2 mt-1 leading-relaxed">{project.brief}</p>}
                   </div>
 
                   <div className="pt-3 border-t border-purple-100 flex items-center justify-between text-xs text-neutral-500">
-                    <span className="font-mono text-2xs text-purple-700">
-                      {project.tools ? project.tools.slice(0, 2).join(' / ') : 'Digital Art'}
-                    </span>
                     <span className="inline-flex items-center gap-1 text-purple-900 font-semibold group-hover:underline">
-                      <span>Inspect</span>
+                      <span>View project</span>
                       <Eye className="w-3.5 h-3.5 text-purple-600 group-hover:translate-x-0.5 transition-transform" />
                     </span>
                   </div>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowUpRight, CheckCircle2, MessageCircle, Mail } from 'lucide-react';
+import { CheckCircle2, MessageCircle, Mail } from 'lucide-react';
 import { motion } from 'motion/react';
 
 export const AboutSection: React.FC = () => {
@@ -45,18 +45,11 @@ export const AboutSection: React.FC = () => {
               <div className="mt-4 px-2 space-y-2">
                 <div className="flex items-center justify-between text-xs font-mono">
                   <span className="text-purple-700 font-semibold">LOCATION</span>
-                  <span className="font-medium text-neutral-900">Remote · Global Client Delivery</span>
+                  <span className="font-medium text-neutral-900">Remote</span>
                 </div>
                 <div className="flex items-center justify-between text-xs font-mono">
                   <span className="text-purple-700 font-semibold">DISCIPLINES</span>
                   <span className="font-medium text-neutral-900">Visual Storytelling &amp; Motion</span>
-                </div>
-                <div className="flex items-center justify-between text-xs font-mono">
-                  <span className="text-purple-700 font-semibold">AVAILABILITY</span>
-                  <span className="font-medium text-emerald-700 flex items-center gap-1.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                    Open for Commissions
-                  </span>
                 </div>
               </div>
             </div>
@@ -125,23 +118,6 @@ export const AboutSection: React.FC = () => {
                 <p className="text-xs text-neutral-600">
                   Visual identities, campaign graphics, posters, and print pieces.
                 </p>
-              </div>
-            </div>
-
-            {/* Software Proficiency in purple tags */}
-            <div className="pt-4 border-t border-purple-100">
-              <p className="text-2xs font-mono uppercase tracking-wider text-purple-800 font-semibold mb-2">
-                Primary Software &amp; Toolset
-              </p>
-              <div className="flex flex-wrap gap-2 text-xs text-neutral-700">
-                {['Adobe After Effects', 'Premiere Pro', 'Adobe Illustrator', 'Photoshop', 'InDesign', 'Cinema 4D', 'Blender', 'Figma', 'Procreate'].map((tool) => (
-                  <span
-                    key={tool}
-                    className="px-2.5 py-1 bg-purple-50/90 border border-purple-200 text-purple-950 rounded-md font-mono text-2xs hover:border-purple-300 transition-colors"
-                  >
-                    {tool}
-                  </span>
-                ))}
               </div>
             </div>
 

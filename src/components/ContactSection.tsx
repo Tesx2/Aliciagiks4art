@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Mail, MessageCircle, Copy, Check, Send, ArrowUpRight, Instagram, Github } from 'lucide-react';
+import { Mail, MessageCircle, Copy, Check, Send, ArrowUpRight, Instagram } from 'lucide-react';
 import { motion } from 'motion/react';
 import { MagneticWrapper } from './MagneticWrapper';
 
@@ -137,7 +137,7 @@ export const ContactSection: React.FC = () => {
             {/* Social Links */}
             <div className="pt-2">
               <p className="text-2xs font-mono uppercase tracking-wider text-purple-800 font-semibold mb-3">
-                Online Profiles &amp; Repositories
+                Find Mary online
               </p>
               <div className="flex items-center gap-3">
                 <a
@@ -150,15 +150,6 @@ export const ContactSection: React.FC = () => {
                   <span>@geeks4drisony</span>
                 </a>
 
-                <a
-                  href="https://github.com/aliciagiks-graphics/Aliciagiks4art"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 px-3 py-2 rounded-md border border-purple-200 bg-white text-xs font-medium text-neutral-800 hover:text-purple-950 hover:bg-purple-50 transition-colors shadow-2xs"
-                >
-                  <Github className="w-4 h-4 text-neutral-700" />
-                  <span>GitHub</span>
-                </a>
               </div>
             </div>
 

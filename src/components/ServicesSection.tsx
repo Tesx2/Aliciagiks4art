@@ -32,7 +32,7 @@ export const ServicesSection: React.FC = () => {
               What I Can Help With
             </h2>
             <p className="text-sm sm:text-base text-neutral-600 mt-2 max-w-xl">
-              End-to-end creative direction spanning visual identity, dynamic motion, print collateral, and custom digital illustration.
+              Graphic design, animation, motion design, and visual direction for digital experiences.
             </p>
           </div>
 
@@ -47,7 +47,7 @@ export const ServicesSection: React.FC = () => {
           </div>
         </div>
 
-        {/* 4-Card Services Grid with purple hover glow & motion */}
+        {/* Core areas of work */}
         <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
           {SERVICES_LIST.map((service, idx) => (
             <motion.div
@@ -77,22 +77,6 @@ export const ServicesSection: React.FC = () => {
                 </p>
               </div>
 
-              {/* Deliverables unboxed list in purple accents */}
-              <div className="mt-6 pt-5 border-t border-purple-100">
-                <p className="text-2xs font-mono uppercase tracking-wider text-purple-800 font-semibold mb-2.5">
-                  Key Deliverables
-                </p>
-                <div className="flex flex-wrap gap-x-3 gap-y-1.5 text-xs text-neutral-700">
-                  {service.deliverables.map((item, dIdx) => (
-                    <React.Fragment key={item}>
-                      <span className="font-medium hover:text-purple-900 transition-colors">{item}</span>
-                      {dIdx < service.deliverables.length - 1 && (
-                        <span aria-hidden="true" className="text-purple-300">·</span>
-                      )}
-                    </React.Fragment>
-                  ))}
-                </div>
-              </div>
             </motion.div>
           ))}
         </div>
